@@ -51,11 +51,14 @@
             </mat-form-field>
         </div>
 
+
         <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Bride phone</mat-label>
                 <input matInput type="phone" formControlName="bride_phone" placeholder="Jane Doe" autocomplete="off">
             </mat-form-field>
+
+
         </div>
 
         <div class="col-md-1">
@@ -89,11 +92,13 @@
             </mat-form-field>
         </div>
 
-        <!-- <div class="col-md-2">
-            <ngx-intl-tel-input matInput appearance="fill" [preferredCountries]="preferredCountries" [maxLength]="10"
-                formControlName="bride_mom_phone">
-            </ngx-intl-tel-input>
-        </div> -->
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Bride mothers phone</mat-label>
+                <input matInput type="phone" formControlName="bride_mom_phone" placeholder="Jane Doe"
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
 
         <div class="col-md-1"></div>
 
@@ -118,11 +123,13 @@
             </mat-form-field>
         </div>
 
-        <!-- <div class="col-md-2">
-            <ngx-intl-tel-input matInput appearance="fill" [preferredCountries]="preferredCountries" [maxLength]="10"
-                formControlName="bride_dad_phone">
-            </ngx-intl-tel-input>
-        </div> -->
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Bride fathers phone</mat-label>
+                <input matInput type="phone" formControlName="bride_dad_phone" placeholder="Jane Doe"
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
 
         <div class="col-md-1"></div>
 
@@ -145,11 +152,12 @@
             </mat-form-field>
         </div>
 
-        <!-- <div class="col-md-2">
-            <ngx-intl-tel-input matInput appearance="fill" [preferredCountries]="preferredCountries" [maxLength]="10"
-                formControlName="groom_phone">
-            </ngx-intl-tel-input>
-        </div> -->
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Groom phone</mat-label>
+                <input matInput type="phone" formControlName="groom_phone" placeholder="Jane Doe" autocomplete="off">
+            </mat-form-field>
+        </div>
 
         <div class="col-md-1">
             <mat-label>Can text?</mat-label>
@@ -182,11 +190,13 @@
             </mat-form-field>
         </div>
 
-        <!-- <div class="col-md-2">
-            <ngx-intl-tel-input matInput appearance="fill" [preferredCountries]="preferredCountries" [maxLength]="10"
-                formControlName="groom_mom_phone">
-            </ngx-intl-tel-input>
-        </div> -->
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Groom mothers phone</mat-label>
+                <input matInput type="phone" formControlName="groom_mom_phone" placeholder="Jane Doe"
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
 
         <div class="col-md-1"></div>
 
@@ -211,11 +221,13 @@
             </mat-form-field>
         </div>
 
-        <!-- <div class="col-md-2">
-            <ngx-intl-tel-input matInput appearance="fill" [preferredCountries]="preferredCountries" [maxLength]="10"
-                formControlName="groom_dad_phone">
-            </ngx-intl-tel-input>
-        </div> -->
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Groom fathers phone</mat-label>
+                <input matInput type="phone" formControlName="groom_dad_phone" placeholder="Jane Doe"
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
 
         <div class="col-md-1"></div>
 
@@ -239,11 +251,12 @@
             </mat-form-field>
         </div>
 
-        <!-- <div class="col-md-2">
-            <ngx-intl-tel-input matInput appearance="fill" [preferredCountries]="preferredCountries" [maxLength]="10"
-                formControlName="planner_phone">
-            </ngx-intl-tel-input>
-        </div> -->
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Planner phone</mat-label>
+                <input matInput type="phone" formControlName="planner_phone" placeholder="Jane Doe" autocomplete="off">
+            </mat-form-field>
+        </div>
 
         <div class="col-md-1"></div>
 
@@ -315,7 +328,59 @@
 
     </div>
 
+    <h2>Contract Details</h2>
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Quote</mat-label>
+                <input matInput type="text" formControlName="quote" autocomplete="off">
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Deposit</mat-label>
+                <input matInput type="text" formControlName="deposit" autocomplete="off">
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Hours</mat-label>
+                <input matInput type="text" formControlName="hours" autocomplete="off">
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label># Staff</mat-label>
+                <input matInput type="text" formControlName="count" autocomplete="off">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+
+
+        <div class="col-md-1">
+
+            <mat-checkbox matInput type="text" formControlName="teaser" autocomplete="off">Teaser</mat-checkbox>
+
+        </div>
+        <div class="col-md-1">
+
+
+            <mat-checkbox matInput type="text" formControlName="highlights" autocomplete="off">Highlight
+            </mat-checkbox>
+
+        </div>
+        <div class="col-md-1">
+
+
+            <mat-checkbox matInput type="text" formControlName="full" autocomplete="off">Full Edit
+            </mat-checkbox>
+
+        </div>
+    </div>
+    
+
+
 
 
 </form>
- 

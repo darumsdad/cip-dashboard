@@ -16,6 +16,7 @@ import { VenueAddComponent } from '../venue-add/venue-add.component';
   ]
 })
 export class VenueSelectComponent implements OnInit {
+
   
   form: FormGroup;
 
@@ -38,12 +39,17 @@ export class VenueSelectComponent implements OnInit {
         startWith(''),
         map(venue => venue ? this._filterVenue(venue || '') : this.venues.slice()),
       );
-      console.log(this.form)
+      console.log("applying hack")
 
       // hack to get it to repaint after we have the list of venues
       this.form.get('venueId').patchValue(this.form.get('venueId').value)
       
     })
+  }
+
+  onVenueSelected($event: any) {
+   console.log("foof");
+   console.log($event);
   }
 
   openDialog(): void {
@@ -65,21 +71,23 @@ export class VenueSelectComponent implements OnInit {
 
    
 
-  displayVenue(venue: Venue): string {
+  displayVenue(venueId: any): string {
 
-    console.log('Venue: displayVenue' + venue);
+    console.log('Venue: displayVenue' + venueId);
+
+    let _venueId = Number.parseInt(venueId)
 
     if (!this.venues) {
       console.log('no venues')
       return ''
     }
-    else if (typeof venue === 'number' || venue instanceof Number) {
-      console.log('number')
-      console.log(this.venues)
-      return this.venues.filter(v => v.id === venue).length === 1 ? this.venues.find(v => v.id === venue).name : '';
-    }
+    
+    console.log('number')
+    console.log(this.venues)
+    return this.venues.filter(v => v.id === _venueId).length === 1 ? this.venues.find(v => v.id === _venueId).name : '';
+    
 
-    return ''
+    
 
   }
 
@@ -94,6 +102,7 @@ export class VenueSelectComponent implements OnInit {
     }
     
     else if (typeof value === 'number') {
+      console.log("finding")
       return this.venues.filter(venue => venue.id === value);
     }
     else

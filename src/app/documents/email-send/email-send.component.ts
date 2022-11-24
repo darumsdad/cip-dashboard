@@ -17,6 +17,7 @@ export class EmailSendComponent implements OnInit {
   emailList: any;
   html: any;
   origLink: any;
+  type: any;
 
   constructor(public s: JotFormLinkService,
     
@@ -39,6 +40,7 @@ export class EmailSendComponent implements OnInit {
     console.log(this.data)
     this.eventId = this.data.eventId;
     this.emailList = this.data.emailList;
+    this.type = this.data.type;
 
     this.s.get(this.eventId).subscribe(e => {
       this.origLink = e.link
@@ -52,20 +54,44 @@ export class EmailSendComponent implements OnInit {
     console.log(this.email_address);
     console.log(this.email_address.value)
 
-    this.e.post({
-      to: this.email_address.value.email,
-      name: this.email_address.value.name,
-      link: this.origLink,
-      id: this.eventId
-    }).subscribe( { next: (e) => {
-      console.log(e);
-      this.dialog.close(e);
+    if (this.type === 'pre')
+    {
+      this.e.post({
+        to: this.email_address.value.email,
+        name: this.email_address.value.name,
+        type: "Pre Contract",
+        link: this.origLink,
+        id: this.eventId
+      }).subscribe( { next: (e) => {
+        console.log(e);
+        this.dialog.close(e);
+  
+      }, error: (e) => {
+        console.log(e)
+        alert(e.message)
+  
+      }})
+    }
 
-    }, error: (e) => {
-      console.log(e)
-      alert(e.message)
+    if (this.type === 'proposal')
+    {
+      this.e.post_proposal({
+        to: this.email_address.value.email,
+        name: this.email_address.value.name,
+        type: "Proposal",
+        id: this.eventId
+      }).subscribe( { next: (e) => {
+        console.log(e);
+        this.dialog.close(e);
+  
+      }, error: (e) => {
+        console.log(e)
+        alert(e.message)
+  
+      }})
+    }
 
-    }})
+    
   }
 
  

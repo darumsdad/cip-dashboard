@@ -26,6 +26,7 @@ import { JotFormComponent } from './documents/jot-form/jot-form.component';
 
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,6 +39,7 @@ import { JotFormComponent } from './documents/jot-form/jot-form.component';
     DocumentsComponent,
     EmailSendComponent,
     JotFormComponent
+    
   ],
     imports: [
     NgxMaterialTimepickerModule,

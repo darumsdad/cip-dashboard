@@ -1,8 +1,47 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, FormGroupDirective, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { EventService } from 'src/app/services/event.service';
  
+
+export function phoneValidation(): ValidatorFn {
+  return (control:AbstractControl) : ValidationErrors | null => {
+
+      const value = control.value;
+      console.log(value)
+      if (!value) {
+          return null;
+      }
+
+      let valid = 
+      
+      value.length == 14 &&
+      value.charAt(0) === '('  &&
+
+      Number.isInteger(parseInt(value.charAt(1))) &&
+      Number.isInteger(parseInt(value.charAt(2))) &&
+      Number.isInteger(parseInt(value.charAt(3))) &&
+
+      value.charAt(4) === ')'  &&
+      value.charAt(5) === ' '  &&
+
+      Number.isInteger(parseInt(value.charAt(6))) &&
+      Number.isInteger(parseInt(value.charAt(7))) &&
+      Number.isInteger(parseInt(value.charAt(8))) &&
+
+      value.charAt(9) === '-'  &&
+
+      Number.isInteger(parseInt(value.charAt(10))) &&
+      Number.isInteger(parseInt(value.charAt(11))) &&
+      Number.isInteger(parseInt(value.charAt(12))) &&
+      Number.isInteger(parseInt(value.charAt(13))) 
+
+      console.log(valid)
+      
+      return !valid ? {invalidPhone:true} : null
+ 
+  }
+}
 
 @Component({
   selector: 'app-event',
@@ -33,45 +72,56 @@ export class EventComponent implements OnInit {
         status_update_date: [''],
   
         bride_name: [''],
-        bride_phone: new FormControl(''),
+        bride_phone: ['',[phoneValidation()]]
+          ,
+       
         bride_phone_text: new FormControl(''),
         bride_email: new FormControl('', Validators.email),
         bride_social: new FormControl(''),
   
         bride_mom_name: [''],
-        bride_mom_phone: new FormControl(''),
+        bride_mom_phone: ['',[phoneValidation()]],
         bride_mom_email: new FormControl('', Validators.email),
   
         bride_dad_name: [''],
-        bride_dad_phone: new FormControl(''),
+        bride_dad_phone: ['',[phoneValidation()]],
         bride_dad_email: new FormControl('', Validators.email),
   
         groom_name: [''],
-        groom_phone: new FormControl(''),
+        groom_phone: ['',[phoneValidation()]],
         groom_email: new FormControl('', Validators.email),
         groom_phone_text: new FormControl(''),
         groom_social: new FormControl(''),
   
         groom_mom_name: [''],
-        groom_mom_phone: new FormControl(''),
+        groom_mom_phone: ['',[phoneValidation()]],
         groom_mom_email: new FormControl('', Validators.email),
   
         groom_dad_name: [''],
-        groom_dad_phone: new FormControl(''),
+        groom_dad_phone: ['',[phoneValidation()]],
         groom_dad_email: new FormControl('', Validators.email),
   
         planner_name: [''],
-        planner_phone: new FormControl(''),
+        planner_phone: ['',[phoneValidation()]],
         planner_email: new FormControl('', Validators.email),
         other_contact: [''],
   
         jotform_venue: [''],
         jotform_venue_name: [''],
         jotform_venue_phone: [''],
-  
+
         venueId: [''],
         other_location: [''],
         webhook_last_error: [''],
+
+        teaser: [''],
+        highlights: [''],
+        full: [''],
+        quote: [''],
+        deposit: [''],
+        hours: [''],
+        count: [''],
+
         last_submission_id: new FormControl()
   
       })
@@ -83,6 +133,8 @@ export class EventComponent implements OnInit {
   
 
     }
+
+   
 
   ngOnInit(): void {
 
@@ -112,32 +164,39 @@ export class EventComponent implements OnInit {
   onSave(event: any) {
 
 
-     const invalid = [];
-     const controls = this.form.get('data');
-    // for (const name in controls) {
-    //     if (controls[name].invalid) {
-    //         invalid.push(name);
-    //     }
-    // }
-    console.log(this.form);
+    console.log(this.form.invalid)
+    console.log(this.form.get('data').get('bride_phone'))
 
+    let phone_invalid = false;
 
-    if (this.form.invalid)
+    ['bride_phone','bride_mom_phone','bride_dad_phone','groom_phone','groom_mom_phone','groom_dad_phone','planner_phone'].forEach( x => {
+      console.log(x)
+      console.log(this.form.get('data').get(x).invalid)
+      phone_invalid ||= this.form.get('data').get(x).invalid
+      console.log(phone_invalid)
+    })
+
+    if (this.form.invalid || phone_invalid)
+    {
+      console.log("no save")
+      console.log("no save")
       return;
+    }
+      
     
     console.log(this.form.value)
 
     
-    if (this.form.get('data').get('bride_phone').value) 
-      this.form.get('data').get('bride_phone').patchValue((this.form.get('data').get('bride_phone').value).number)
-    if (this.form.get('data').get('bride_mom_phone').value) this.form.get('data').get('bride_mom_phone').patchValue((this.form.get('data').get('bride_mom_phone').value).number)
-    if (this.form.get('data').get('bride_dad_phone').value) this.form.get('data').get('bride_dad_phone').patchValue((this.form.get('data').get('bride_dad_phone').value).number)
+    // if (this.form.get('data').get('bride_phone').value) 
+    //   this.form.get('data').get('bride_phone').patchValue((this.form.get('data').get('bride_phone').value).number)
+    // if (this.form.get('data').get('bride_mom_phone').value) this.form.get('data').get('bride_mom_phone').patchValue((this.form.get('data').get('bride_mom_phone').value).number)
+    // if (this.form.get('data').get('bride_dad_phone').value) this.form.get('data').get('bride_dad_phone').patchValue((this.form.get('data').get('bride_dad_phone').value).number)
 
-    if (this.form.get('data').get('groom_phone').value) this.form.get('data').get('groom_phone').patchValue((this.form.get('data').get('groom_phone').value).number)
-    if (this.form.get('data').get('groom_mom_phone').value) this.form.get('data').get('groom_mom_phone').patchValue((this.form.get('data').get('groom_mom_phone').value).number)
-    if (this.form.get('data').get('groom_dad_phone').value) this.form.get('data').get('groom_dad_phone').patchValue((this.form.get('data').get('groom_dad_phone').value).number)
+    // if (this.form.get('data').get('groom_phone').value) this.form.get('data').get('groom_phone').patchValue((this.form.get('data').get('groom_phone').value).number)
+    // if (this.form.get('data').get('groom_mom_phone').value) this.form.get('data').get('groom_mom_phone').patchValue((this.form.get('data').get('groom_mom_phone').value).number)
+    // if (this.form.get('data').get('groom_dad_phone').value) this.form.get('data').get('groom_dad_phone').patchValue((this.form.get('data').get('groom_dad_phone').value).number)
 
-    if (this.form.get('data').get('planner_phone').value) this.form.get('data').get('planner_phone').patchValue((this.form.get('data').get('planner_phone').value).number)
+    // if (this.form.get('data').get('planner_phone').value) this.form.get('data').get('planner_phone').patchValue((this.form.get('data').get('planner_phone').value).number)
 
     console.log(this.form.value)
 

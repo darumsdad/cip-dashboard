@@ -44,6 +44,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { OverlayModule } from '@angular/cdk/overlay';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
+import { NgxMaskModule, IConfig } from 'ngx-mask'
+
 
 
 // import { CdkMenuModule } from '@angular/cdk/menu';
@@ -51,7 +53,8 @@ import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 
 @NgModule({
   imports: [
-    GooglePlaceModule
+    GooglePlaceModule,
+    NgxMaskModule.forRoot()
   ],
   exports: [
     

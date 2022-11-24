@@ -18,4 +18,8 @@ export class EmailService {
     return this.http.post<any>(`${this.baseUrl}`, data);
   }
 
+  post_proposal(data: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/proposal`, data);
+  }
+
 }

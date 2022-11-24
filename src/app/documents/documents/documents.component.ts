@@ -64,7 +64,25 @@ export class DocumentsComponent implements OnInit {
       width: '650px',
       data: { 
         emailList: this.emailList,
-        eventId: this.eventId
+        eventId: this.eventId,
+        type: "pre"
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      this.dataSource.data.push(result)
+      this.dataSource.data = this.dataSource.data.slice();
+    });
+  }
+
+  openContract(event: any): void {
+    const dialogRef = this.dialog.open(EmailSendComponent, {
+      width: '650px',
+      data: { 
+        emailList: this.emailList,
+        eventId: this.eventId,
+        type: "proposal"
       }
     });
 
