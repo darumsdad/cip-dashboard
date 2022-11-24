@@ -9,7 +9,6 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "install:clean": "rm -rf node_modules/ && rm -rf package-lock.json && npm install && ng serve -o"
-
   },
   "private": true,
   "dependencies": {
@@ -27,6 +26,7 @@
     "@ng-bootstrap/ng-bootstrap": "^13.1.1",
     "@popperjs/core": "^2.10.2",
     "bootstrap": "^5.2.3",
+    "express": "^4.18.2",
     "google-libphonenumber": "^3.2.31",
     "intl-tel-input": "^17.0.3",
     "ngx-bootstrap": "^9.0.0",
