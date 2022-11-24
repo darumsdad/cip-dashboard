@@ -1,0 +1,321 @@
+<form [formGroup]="form">
+
+
+    <h2>Date</h2>
+    <div class="row">
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>Event date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="date">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Start Time</mat-label>
+                <input matInput placeholder="please choose a end time" [ngxTimepicker]="tepicker" [disableClick]="true"
+                    formControlName="start" readonly>
+                <mat-hint>HH:MM AM/PM</mat-hint>
+                <ngx-material-timepicker-toggle matSuffix [for]="tepicker"></ngx-material-timepicker-toggle>
+                <ngx-material-timepicker [minutesGap]="10" #tepicker>
+                </ngx-material-timepicker>
+            </mat-form-field>
+
+        </div>
+
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>End Time</mat-label>
+                <input matInput placeholder="please choose a end time" [ngxTimepicker]="tpicker" [disableClick]="true"
+                    formControlName="end" readonly>
+                <mat-hint>HH:MM AM/PM</mat-hint>
+                <ngx-material-timepicker-toggle matSuffix [for]="tpicker"></ngx-material-timepicker-toggle>
+                <ngx-material-timepicker [minutesGap]="10" #tpicker>
+                </ngx-material-timepicker>
+            </mat-form-field>
+
+        </div>
+
+    </div>
+    <p></p>
+
+    <h2>Bride</h2>
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Bride name</mat-label>
+                <input matInput type="text" formControlName="bride_name" placeholder="Jane Doe" autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Bride phone</mat-label>
+                <input matInput type="phone" formControlName="bride_phone" placeholder="Jane Doe" autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-1">
+            <mat-label>Can text?</mat-label>
+            <mat-checkbox formControlName="bride_phone_text"></mat-checkbox>
+        </div>
+
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Bride email</mat-label>
+                <input matInput type="email" formControlName="bride_email" placeholder="Jane.Doe@gmail.com"
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Bride social</mat-label>
+                <input matInput type="text" formControlName="bride_social" placeholder="#social" autocomplete="off">
+            </mat-form-field>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Bride mothers name</mat-label>
+                <input matInput type="text" formControlName="bride_mom_name" placeholder="Jane Does Mom"
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <!-- <div class="col-md-2">
+            <ngx-intl-tel-input matInput appearance="fill" [preferredCountries]="preferredCountries" [maxLength]="10"
+                formControlName="bride_mom_phone">
+            </ngx-intl-tel-input>
+        </div> -->
+
+        <div class="col-md-1"></div>
+
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Bride mothers email</mat-label>
+                <input matInput type="email" formControlName="bride_mom_email" placeholder="janedoemom@gmail.com"
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
+
+
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Bride fathers name</mat-label>
+                <input matInput type="text" formControlName="bride_dad_name" placeholder="Jane Does Dad"
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <!-- <div class="col-md-2">
+            <ngx-intl-tel-input matInput appearance="fill" [preferredCountries]="preferredCountries" [maxLength]="10"
+                formControlName="bride_dad_phone">
+            </ngx-intl-tel-input>
+        </div> -->
+
+        <div class="col-md-1"></div>
+
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Bride fathers email</mat-label>
+                <input matInput type="email" formControlName="bride_dad_email" placeholder="janedoedad@gmail.com"
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
+
+    </div>
+
+    <h2>Groom</h2>
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Groom name</mat-label>
+                <input matInput type="text" formControlName="groom_name" placeholder="John Doe" autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <!-- <div class="col-md-2">
+            <ngx-intl-tel-input matInput appearance="fill" [preferredCountries]="preferredCountries" [maxLength]="10"
+                formControlName="groom_phone">
+            </ngx-intl-tel-input>
+        </div> -->
+
+        <div class="col-md-1">
+            <mat-label>Can text?</mat-label>
+            <mat-checkbox formControlName="groom_phone_text"></mat-checkbox>
+        </div>
+
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Groom email</mat-label>
+                <input matInput type="email" formControlName="groom_email" placeholder="John.Doe@gmail.com"
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Groom social</mat-label>
+                <input matInput type="text" formControlName="groom_social" placeholder="#social" autocomplete="off">
+            </mat-form-field>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Groom mothers name</mat-label>
+                <input matInput type="text" formControlName="groom_mom_name" placeholder="John Does Mom"
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <!-- <div class="col-md-2">
+            <ngx-intl-tel-input matInput appearance="fill" [preferredCountries]="preferredCountries" [maxLength]="10"
+                formControlName="groom_mom_phone">
+            </ngx-intl-tel-input>
+        </div> -->
+
+        <div class="col-md-1"></div>
+
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Groom mothers email</mat-label>
+                <input matInput type="email" formControlName="groom_mom_email" placeholder="johndoemom@gmail.com"
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
+
+
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Groom fathers name</mat-label>
+                <input matInput type="text" formControlName="groom_dad_name" placeholder="John Does Dad"
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <!-- <div class="col-md-2">
+            <ngx-intl-tel-input matInput appearance="fill" [preferredCountries]="preferredCountries" [maxLength]="10"
+                formControlName="groom_dad_phone">
+            </ngx-intl-tel-input>
+        </div> -->
+
+        <div class="col-md-1"></div>
+
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Groom fathers email</mat-label>
+                <input matInput type="email" formControlName="groom_dad_email" placeholder="johndoedad@gmail.com"
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
+
+    </div>
+
+    <h2>Planner</h2>
+
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Planner name</mat-label>
+                <input matInput type="text" formControlName="planner_name" placeholder="planner" autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <!-- <div class="col-md-2">
+            <ngx-intl-tel-input matInput appearance="fill" [preferredCountries]="preferredCountries" [maxLength]="10"
+                formControlName="planner_phone">
+            </ngx-intl-tel-input>
+        </div> -->
+
+        <div class="col-md-1"></div>
+
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Planner email</mat-label>
+                <input matInput type="email" formControlName="planner_email" placeholder="planner@gmail.com"
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
+
+    </div>
+
+    <h2>Other</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Other contact information</mat-label>
+                <textarea matInput type="textarea" formControlName="other_contact" placeholder="bride dogs name"
+                    autocomplete="off"></textarea>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <h2>Venue</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <app-venue-select></app-venue-select>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Venue Name From JotForm</mat-label>
+                <input matInput type="textarea" rows="4" formControlName="jotform_venue_name" placeholder=""
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Venue Phone From JotForm</mat-label>
+                <input matInput type="textarea" rows="4" formControlName="jotform_venue_phone" placeholder=""
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+        </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Venue Info From JotForm</mat-label>
+                <textarea matInput type="textarea" rows="4" formControlName="jotform_venue" placeholder=""
+                    autocomplete="off"></textarea>
+            </mat-form-field>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Other location information</mat-label>
+                <textarea matInput type="textarea" formControlName="other_location" placeholder=""
+                    autocomplete="off"></textarea>
+            </mat-form-field>
+        </div>
+
+    </div>
+
+
+
+</form>
+ 
