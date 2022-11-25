@@ -1,9 +1,14 @@
 <ng-container>
-  <mat-toolbar class="example-header">
-    <mat-nav-list>
+  <mat-toolbar >
+    <mat-nav-list class="list-horizontal">
       <mat-list-item>
         <a [routerLink]="['/events']">
           Events
+        </a>
+      </mat-list-item>
+      <mat-list-item>
+        <a [routerLink]="['/venues']">
+          Venues
         </a>
       </mat-list-item>
     </mat-nav-list>

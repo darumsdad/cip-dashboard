@@ -19,6 +19,8 @@ import { VenueAddComponent } from './venue/venue-add/venue-add.component';
 import { DocumentsComponent } from './documents/documents/documents.component';
 import { EmailSendComponent } from './documents/email-send/email-send.component';
 import { JotFormComponent } from './documents/jot-form/jot-form.component';
+import { VenueListComponent } from './venue/venue-list/venue-list.component';
+import { VenueDetailComponent } from './venue/venue-detail/venue-detail.component';
 
 
 
@@ -38,7 +40,9 @@ import { JotFormComponent } from './documents/jot-form/jot-form.component';
     VenueAddComponent,
     DocumentsComponent,
     EmailSendComponent,
-    JotFormComponent
+    JotFormComponent,
+    VenueListComponent,
+    VenueDetailComponent
     
   ],
     imports: [

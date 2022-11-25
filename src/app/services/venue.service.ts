@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Venue } from '../models/venue';
 import { environment } from 'src/environments/environment';
  
@@ -10,6 +10,21 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class VenueService {
+
+  private _venues = new BehaviorSubject([])
+
+  get venues() {
+    return this._venues.asObservable()
+  }
+
+  updateThings() {
+    this.getAll().subscribe(e => {
+      console.log(e)
+      this._venues.next(e)
+    })
+     
+  }
+
 
   baseUrl = environment.baseUrl + '/venues';
 

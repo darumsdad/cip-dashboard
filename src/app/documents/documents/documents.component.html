@@ -1,10 +1,10 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-2">
-            <button mat-raised-button color="primary" (click)="openJotForm($event)" class="pull-left">Pre Contract Jot Form</button>
+            <button mat-raised-button [disabled]="!form.get('venueId').value" color="primary" (click)="openJotForm($event)" class="pull-left">Pre Contract Jot Form</button>
         </div>
         <div class="col-md-2">
-            <button mat-raised-button color="primary" (click)="openProposal($event)" class="pull-left">Proposal Email</button>
+            <button mat-raised-button  color="primary" (click)="openProposal($event)" class="pull-left">Proposal Email</button>
         </div>
         <div class="col-md-2">
             <button mat-raised-button color="primary" (click)="openContract($event)" class="pull-left">Contract</button>

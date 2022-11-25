@@ -1,0 +1,120 @@
+<form [formGroup]="form">
+    <div class="row">
+        <div class="col-md-12">
+            <mat-form-field appearance="fill">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name" placeholder="Name" type="text">
+            </mat-form-field>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <mat-form-field appearance="fill">
+                <mat-label>Address</mat-label>
+                <input matInput formControlName="address" placeholder="Address" type="text">
+            </mat-form-field>
+        </div>
+
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>City</mat-label>
+                <input matInput formControlName="city" placeholder="City" type="text">
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>State</mat-label>
+                <input matInput formControlName="state" placeholder="State" type="text">
+            </mat-form-field>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>Zip</mat-label>
+                <input matInput formControlName="zip" placeholder="Postal Code" type="text">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>Phone</mat-label>
+                <input matInput placeholder="phone" formControlName="phone" type="phone">
+            </mat-form-field>
+        </div>
+    </div>
+</form>
+
+<mat-divider></mat-divider>
+
+<form>
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>Video Key</mat-label>
+                <input matInput placeholder="key" [formControl]="videoTag" type="text">
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <button (click)="upload($event)" mat-icon-button color="primary">
+                <mat-icon>upload</mat-icon>
+            </button>
+        </div>
+        
+    </div>
+</form>
+
+<div class="row mt-3">
+    <div class="col-md-12">
+        <table mat-table [dataSource]="dataSource" appearance="fill">
+            <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef>Name</th>
+                <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="link">
+                <th mat-header-cell *matHeaderCellDef>Link</th>
+                <td mat-cell *matCellDef="let element">
+                    <a href="{{element.link}}" target="_blank"><img src="{{ element.pictures.sizes[2].link}}" alt=""></a>
+            </ng-container>
+
+            <!-- <ng-container matColumnDef="to">
+                <th mat-header-cell *matHeaderCellDef>to</th>
+                <td mat-cell *matCellDef="let element">{{ element.to }}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef>Status</th>
+                <td mat-cell *matCellDef="let element">
+                    <mat-chip-list>
+                        <span *ngFor="let update of element.updates">
+                            <mat-chip>{{update.event}}</mat-chip>
+                        </span>
+
+                    </mat-chip-list>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="actions">
+                <th mat-header-cell *matHeaderCellDef>Actions</th>
+                <td mat-cell *matCellDef="let element">
+                    <div class="button-row">
+                     <button  *ngIf="sending == undefined || (element.inputFile && element.inputFile.fileUrl != sending)" [disabled]="element.updates.length > 0" (click)="send(element)" mat-icon-button color="primary">
+                        <mat-icon>send</mat-icon>
+                    </button>
+                    <button  *ngIf="sending != undefined && element.inputFile.fileUrl === sending" mat-icon-button color="primary">
+                        <mat-icon><mat-spinner diameter="20"></mat-spinner></mat-icon>
+                    </button>
+                    </div>
+                    
+                </td>
+            </ng-container> -->
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        </table>
+    </div>
+</div>

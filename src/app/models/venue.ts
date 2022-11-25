@@ -6,4 +6,5 @@ export interface Venue {
   city: string
   state: string
   zip: string
+  venueData: any
 }
