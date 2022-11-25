@@ -121,6 +121,7 @@ export class EventComponent implements OnInit {
         deposit: [''],
         hours: [''],
         count: [''],
+        effective_date: [''],
 
         last_submission_id: new FormControl()
   

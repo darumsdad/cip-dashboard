@@ -1,16 +1,18 @@
 <ng-container>
-  <mat-toolbar class="example-header">Header</mat-toolbar>
+  <mat-toolbar class="example-header">
+    <mat-nav-list>
+      <mat-list-item>
+        <a [routerLink]="['/events']">
+          Events
+        </a>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-toolbar>
 
   <mat-sidenav-container class="example-container">
-    <mat-sidenav #sidenav mode="side" opened class="example-sidenav" [fixedInViewport]="true" [fixedTopGap]="50"
-      [fixedBottomGap]="50">
-      <mat-nav-list>
-        <mat-list-item>
-          <a [routerLink]="['/events']">
-            Events
-          </a>
-        </mat-list-item>
-      </mat-nav-list>
+    <mat-sidenav #sidenav mode="side" closed class="example-sidenav" [fixedInViewport]="true" [fixedTopGap]="50"
+      [fixedBottomGap]="1">
+     
     </mat-sidenav>
 
     <mat-sidenav-content>
@@ -18,5 +20,5 @@
     </mat-sidenav-content>
   </mat-sidenav-container>
 
-  <mat-toolbar class="example-footer">Footer</mat-toolbar>
+  <mat-toolbar class="example-footer"></mat-toolbar>
 </ng-container>
