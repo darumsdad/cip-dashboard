@@ -330,7 +330,7 @@
 
     <h2>Contract Details</h2>
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Effective date</mat-label>
                 <input matInput [matDatepicker]="pickered" formControlName="effective_date">
@@ -339,30 +339,37 @@
                 <mat-datepicker #pickered></mat-datepicker>
             </mat-form-field>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Quote</mat-label>
                 <input matInput type="text" formControlName="quote" autocomplete="off">
             </mat-form-field>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Deposit</mat-label>
                 <input matInput type="text" formControlName="deposit" autocomplete="off">
             </mat-form-field>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-3">
+    
+        <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Hours</mat-label>
                 <input matInput type="text" formControlName="hours" autocomplete="off">
             </mat-form-field>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label># Staff</mat-label>
                 <input matInput type="text" formControlName="count" autocomplete="off">
+            </mat-form-field>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>CERT Contact</mat-label>
+                <input matInput type="text" formControlName="insurance_contact" autocomplete="off">
             </mat-form-field>
         </div>
     </div>

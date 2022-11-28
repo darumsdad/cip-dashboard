@@ -11,3 +11,7 @@ table {
   mat-form-field {
     width: 100%;
   }
+
+.mat-progress-spinner circle, .mat-spinner circle {
+    stroke: #2A79FF!important;
+}

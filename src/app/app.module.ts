@@ -21,6 +21,8 @@ import { EmailSendComponent } from './documents/email-send/email-send.component'
 import { JotFormComponent } from './documents/jot-form/jot-form.component';
 import { VenueListComponent } from './venue/venue-list/venue-list.component';
 import { VenueDetailComponent } from './venue/venue-detail/venue-detail.component';
+import { PdfEditComponent } from './contract/pdf-edit/pdf-edit.component';
+import { CertEmailComponent } from './documents/cert-email/cert-email.component';
 
 
 
@@ -42,7 +44,9 @@ import { VenueDetailComponent } from './venue/venue-detail/venue-detail.componen
     EmailSendComponent,
     JotFormComponent,
     VenueListComponent,
-    VenueDetailComponent
+    VenueDetailComponent,
+    PdfEditComponent,
+    CertEmailComponent
     
   ],
     imports: [

@@ -30,7 +30,7 @@ export class EmailSendComponent implements OnInit {
   
   eventId: any
 
-  //emailList: any [] = [];
+  working: boolean = false
 
   ngOnInit(): void {
     this.dataModel = new FormControl();
@@ -46,18 +46,22 @@ export class EmailSendComponent implements OnInit {
 
   onCreate(event: any)
   {
-    
+      this.working = true;
+
       console.log(this.contact.value);
-      this.e.post({
+      this.e.post(
+        {
         
-        contactType: this.contact.value.type,
+        contact: this.contact.value,
         type: this.type,
-        id: this.eventId
+        eventId: this.eventId
       }).subscribe( { next: (e) => {
         console.log(e);
+        this.working = false;
         this.dialog.close(e);
       }, error: (e) => {
         console.log(e)
+        this.working = false
         alert(e.message)
   
       }})
