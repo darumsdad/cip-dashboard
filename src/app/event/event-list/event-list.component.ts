@@ -1,3 +1,4 @@
+import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -10,17 +11,31 @@ import { STATUS_MAP } from '../event-status/event-status.component';
 @Component({
   selector: 'app-event-list',
   templateUrl: './event-list.component.html',
-  styleUrls: ['./event-list.component.scss']
+  styleUrls: ['./event-list.component.scss'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 })
 export class EventListComponent implements OnInit, AfterViewInit {
+loading: any = false;
 
   constructor(private router: Router,
     private s: EventService
 
   ) { }
 
+  loadingFinished()
+  {
+    this,this.loading = false;
+  }
+
   ngOnInit(): void {
-    this.s.updateThings()
+    this.loading = true;
+    this.s.updateThings(this.loadingFinished.bind(this))
 
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
@@ -47,6 +62,9 @@ export class EventListComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['id', 'alert','description', 'date', 'status', 'actions'];
 
+  columnsToDisplayWithExpand = [ ...this.displayedColumns, 'expand'];
+  expandedElement: any | null;
+
   eventsAsMatTableDataSource$: Observable<MatTableDataSource<any>> =
     this.s.events.pipe(
       map((events) => {
@@ -69,6 +87,20 @@ export class EventListComponent implements OnInit, AfterViewInit {
     return STATUS_MAP.find(x => x.id === id).name
   }
 
+  formatDateTime(dateIn: any) {
+
+    if (!dateIn)
+      return "None"
+    
+    var date = new Date(Date.parse(dateIn));
+   
+
+    // Generate yyyy-mm-dd date string
+    return date.toLocaleString('en-US', { timeZone: 'UTC' })
+
+  }
+  
+
   formatDate(dateIn: any) {
 
     if (!dateIn)
@@ -85,7 +117,8 @@ export class EventListComponent implements OnInit, AfterViewInit {
   }
 
   update() {
-    this.s.updateThings();
+    this.loading = true;
+    this.s.updateThings(this.loadingFinished.bind(this));
   }
 
   applyFilter(event: Event) {

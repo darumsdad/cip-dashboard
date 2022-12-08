@@ -20,6 +20,7 @@ export class VenueDetailComponent implements OnInit {
 
   displayedColumns: string[] = ['name','link'];
   dataSource = new MatTableDataSource<any>();
+  loading: boolean = false;
 
 
   constructor(public venueService: VenueService,
@@ -48,11 +49,13 @@ export class VenueDetailComponent implements OnInit {
   }
 
   private reload() {
+    this.loading = true;
     this.venueService.get(this.venueId).subscribe({
       next: (venue) => {
         console.log(venue)
         this.form.patchValue(venue);
         this.dataSource.data = venue.venueData;
+        this.loading = false;
       },
       error: (error) => {
       }

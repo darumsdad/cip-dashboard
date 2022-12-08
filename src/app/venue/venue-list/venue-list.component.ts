@@ -12,6 +12,7 @@ import { VenueService } from 'src/app/services/venue.service';
   styleUrls: ['./venue-list.component.scss']
 })
 export class VenueListComponent implements OnInit {
+loading: any;
 
   constructor(private router: Router,
     private venueService: VenueService
@@ -19,7 +20,8 @@ export class VenueListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.venueService.updateThings()
+    this.loading = true;
+    this.venueService.updateThings(this.doneLoading.bind(this))
   }
 
   clickRow(row: any) {
@@ -49,7 +51,13 @@ export class VenueListComponent implements OnInit {
   }
 
   update() {
-    this.venueService.updateThings();
+    this.loading = true
+    this.venueService.updateThings(this.doneLoading.bind(this));
+  }
+  
+  doneLoading()
+  {
+    this.loading = false
   }
 
   applyFilter(event: Event) {

@@ -1,0 +1,16 @@
+<form>
+    <div class="row mt-5">
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>Video Key</mat-label>
+                <input matInput placeholder="key" [formControl]="videoTag" type="text">
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <button (click)="load($event)" mat-icon-button color="primary">
+                <mat-icon>cloud_download</mat-icon>
+            </button>
+        </div>
+        
+    </div>
+</form>

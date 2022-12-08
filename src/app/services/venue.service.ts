@@ -17,10 +17,17 @@ export class VenueService {
     return this._venues.asObservable()
   }
 
-  updateThings() {
-    this.getAll().subscribe(e => {
-      console.log(e)
-      this._venues.next(e)
+  updateThings(callback: Function) {
+    this.getAll().subscribe({
+      next: (e) => {
+        console.log(e)
+        this._venues.next(e)
+        callback();
+      },
+      error: (e) => {
+        alert(e.message)
+        callback();
+      }
     })
      
   }

@@ -18,6 +18,10 @@ export class VimeoService {
     return this.http.put<any>(`${this.baseUrl}/${id}`, data);
   }
 
+  get(id: any): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/${id}`);
+  }
+
   
 
 }
