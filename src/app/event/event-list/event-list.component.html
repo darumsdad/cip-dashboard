@@ -15,11 +15,27 @@
         </div>
     </div>
 
-
-    <mat-form-field appearance="fill">
-        <mat-label>Filter</mat-label>
-        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
-    </mat-form-field>
+    <form [formGroup]="form">
+        <div class="row mb-3">
+            <div class="col-md-6">
+                <mat-form-field appearance="fill">
+                    <mat-label>Filter</mat-label>
+                    <input matInput formControlName="filter" (keyup)="triggerFilter($event)" placeholder="Ex. ium"
+                        #input>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="fill">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="status" (selectionChange)="triggerFilter($event)">
+                        <mat-option *ngFor="let status of statuses" [value]="status.id">
+                            {{status.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
 
 
     <div class="row">
@@ -91,7 +107,8 @@
                                         <b>Bride:</b>
                                     </div>
                                     <div class="col-md-6 space">
-                                        {{element.data.bride_name}} | {{element.data.bride_email}} | {{element.data.bride_phone}}
+                                        {{element.data.bride_name}} | {{element.data.bride_email}} |
+                                        {{element.data.bride_phone}}
 
                                     </div>
                                     <div class="col-md-1">
@@ -109,7 +126,8 @@
                                         <b>Groom:</b>
                                     </div>
                                     <div class="col-md-6 space">
-                                        {{element.data.groom_name}} | {{element.data.groom_email}} | {{element.data.groom_phone}}
+                                        {{element.data.groom_name}} | {{element.data.groom_email}} |
+                                        {{element.data.groom_phone}}
 
                                     </div>
                                     <div class="col-md-1">
@@ -119,7 +137,6 @@
                                         {{element.data.quote}}
 
                                     </div>
-
                                 </div>
 
                                 <div class="row">
@@ -127,14 +144,16 @@
                                         <b>Venue:</b>
                                     </div>
                                     <div class="col-md-6 space">
-                                        <a routerLink="/venues/{{element.venue.id}}" routerLinkActive="active" ariaCurrentWhenActive="page">{{element.venue.name}}</a> <br> {{element.venue.address}} {{element.venue.city}} {{element.venue.zip}} 
+                                        <a routerLink="/venues/{{element.venue.id}}" routerLinkActive="active"
+                                            ariaCurrentWhenActive="page">{{element.venue.name}}</a> <br>
+                                        {{element.venue.address}} {{element.venue.city}} {{element.venue.zip}}
 
                                     </div>
                                     <div class="col-md-1">
-                                         
+
                                     </div>
                                     <div class="col-md-3 space">
-                                        
+
 
                                     </div>
 

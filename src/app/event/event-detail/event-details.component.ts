@@ -37,6 +37,23 @@ export class EventDetailsComponent implements OnInit {
     this.form = this.rootFormGroup.control.get('data') as FormGroup;
   }
  
+  onFocusOutEvent(event: any){
+  
+    console.log(event);
+    let input  = event.target.value
+    console.log(input);
+
+    if (input.length === 10)
+    {
+        if (!isNaN(input) )
+        {
+          this.form.get(event.target.name).patchValue(
+             "(" + input.substr(0,3) + ") " + input.substr(3,3) + "-" + input.substr(6) )
+        }  
+    }
+   
+ 
+ }
  
   onChangeStatus(event: any) {
     console.log(event);

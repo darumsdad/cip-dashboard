@@ -1,5 +1,6 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
@@ -22,10 +23,12 @@ import { STATUS_MAP } from '../event-status/event-status.component';
 })
 export class EventListComponent implements OnInit, AfterViewInit {
 loading: any = false;
+statuses: any = STATUS_MAP;
+  form: FormGroup;
 
   constructor(private router: Router,
-    private s: EventService
-
+    private s: EventService,
+    public fb: FormBuilder
   ) { }
 
   loadingFinished()
@@ -34,6 +37,12 @@ loading: any = false;
   }
 
   ngOnInit(): void {
+
+    this.form = this.fb.group({
+
+      status: [''],
+      filter: ['']
+    })
     this.loading = true;
     this.s.updateThings(this.loadingFinished.bind(this))
 
@@ -93,9 +102,7 @@ loading: any = false;
       return "None"
     
     var date = new Date(Date.parse(dateIn));
-   
-
-    // Generate yyyy-mm-dd date string
+     // Generate yyyy-mm-dd date string
     return date.toLocaleString('en-US', { timeZone: 'UTC' })
 
   }
@@ -121,14 +128,56 @@ loading: any = false;
     this.s.updateThings(this.loadingFinished.bind(this));
   }
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filterPredicate = ((data, filter) => {
-      let d = data.data.description.toLowerCase()
-      var res = (d) ? d.includes(filter) : false;
-      return res
-    })
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  triggerFilter(event: any) {
+    this.applyFilter()
   }
+
+  applyFilter() {
+    
+    let filterValue = this.form.get('filter').value
+    let statusValue = this.form.get('status').value
+
+    console.log(statusValue)
+
+    this.dataSource.filterPredicate = ((data, filter) => {
+
+      console.log(filter)
+
+      let parts = filter.split('$')
+
+      console.log(parts)
+
+      let description_filter = parts[0]
+      let desctiption_pass = false;
+    
+      if (description_filter)
+      {
+        desctiption_pass = data.data.description.toLowerCase().includes(description_filter)
+      }
+       
+      let a = !description_filter || desctiption_pass
+
+      let status_filter = parts[1]
+      let status_pass = false;
+    
+      if (status_filter)
+      {
+        status_pass = data.data.status === status_filter
+      }
+       
+      let b = !status_filter || status_pass
+
+      console.log(status_filter)
+      console.log(status_pass)
+      console.log(b)
+
+       
+      return a && b
+    })
+
+    this.dataSource.filter = filterValue.trim().toLowerCase() + '$' + statusValue;
+  }
+
+
 
 }

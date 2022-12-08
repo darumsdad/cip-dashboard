@@ -55,7 +55,7 @@
         <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Bride phone</mat-label>
-                <input matInput type="phone" formControlName="bride_phone" placeholder="Jane Doe" autocomplete="off">
+                <input  matInput type="phone" name="bride_phone" (focusout)="onFocusOutEvent($event)" formControlName="bride_phone" placeholder="Jane Doe" autocomplete="off">
             </mat-form-field>
 
 
@@ -95,7 +95,7 @@
         <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Bride mothers phone</mat-label>
-                <input matInput type="phone" formControlName="bride_mom_phone" placeholder="Jane Doe"
+                <input matInput type="phone"  name="bride_mom_phone" (focusout)="onFocusOutEvent($event)" formControlName="bride_mom_phone" placeholder="Jane Doe"
                     autocomplete="off">
             </mat-form-field>
         </div>
@@ -126,7 +126,7 @@
         <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Bride fathers phone</mat-label>
-                <input matInput type="phone" formControlName="bride_dad_phone" placeholder="Jane Doe"
+                <input matInput type="phone"  name="bride_dad_phone" (focusout)="onFocusOutEvent($event)" formControlName="bride_dad_phone" placeholder="Jane Doe"
                     autocomplete="off">
             </mat-form-field>
         </div>
@@ -155,7 +155,7 @@
         <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Groom phone</mat-label>
-                <input matInput type="phone" formControlName="groom_phone" placeholder="Jane Doe" autocomplete="off">
+                <input matInput type="phone"  name="groom_phone" (focusout)="onFocusOutEvent($event)" formControlName="groom_phone" placeholder="Jane Doe" autocomplete="off">
             </mat-form-field>
         </div>
 
@@ -193,7 +193,7 @@
         <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Groom mothers phone</mat-label>
-                <input matInput type="phone" formControlName="groom_mom_phone" placeholder="Jane Doe"
+                <input matInput type="phone"  name="groom_mom_phone" (focusout)="onFocusOutEvent($event)" formControlName="groom_mom_phone" placeholder="Jane Doe"
                     autocomplete="off">
             </mat-form-field>
         </div>
@@ -224,7 +224,7 @@
         <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Groom fathers phone</mat-label>
-                <input matInput type="phone" formControlName="groom_dad_phone" placeholder="Jane Doe"
+                <input matInput type="phone"  name="groom_dad_phone" (focusout)="onFocusOutEvent($event)" formControlName="groom_dad_phone" placeholder="Jane Doe"
                     autocomplete="off">
             </mat-form-field>
         </div>
@@ -254,7 +254,7 @@
         <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Planner phone</mat-label>
-                <input matInput type="phone" formControlName="planner_phone" placeholder="Jane Doe" autocomplete="off">
+                <input matInput type="phone"  name="planner_phone" (focusout)="onFocusOutEvent($event)" formControlName="planner_phone" placeholder="Jane Doe" autocomplete="off">
             </mat-form-field>
         </div>
 
