@@ -24,7 +24,7 @@
                         #input>
                 </mat-form-field>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-5">
                 <mat-form-field appearance="fill">
                     <mat-label>Status</mat-label>
                     <mat-select formControlName="status" (selectionChange)="triggerFilter($event)">
@@ -34,6 +34,12 @@
                     </mat-select>
                 </mat-form-field>
             </div>
+            <div class="col-md-1">
+                <button (click)="reset($event)" mat-icon-button color="primary">
+                    <mat-icon>refresh</mat-icon>
+                </button>
+            </div>
+
         </div>
     </form>
 
@@ -106,7 +112,7 @@
                                     <div class="col-md-1">
                                         <b>Bride:</b>
                                     </div>
-                                    <div class="col-md-6 space">
+                                    <div class="col-md-5 space">
                                         {{element.data.bride_name}} | {{element.data.bride_email}} |
                                         {{element.data.bride_phone}}
 
@@ -116,26 +122,22 @@
                                     </div>
                                     <div class="col-md-3 space">
                                         {{formatDateTime(element.data.status_update_date)}}
-
                                     </div>
-
                                 </div>
 
                                 <div class="row mb-3">
                                     <div class="col-md-1">
                                         <b>Groom:</b>
                                     </div>
-                                    <div class="col-md-6 space">
+                                    <div class="col-md-5 space">
                                         {{element.data.groom_name}} | {{element.data.groom_email}} |
                                         {{element.data.groom_phone}}
-
                                     </div>
                                     <div class="col-md-1">
                                         <b>Quote:</b>
                                     </div>
                                     <div class="col-md-3 space">
                                         {{element.data.quote}}
-
                                     </div>
                                 </div>
 
@@ -143,18 +145,23 @@
                                     <div class="col-md-1">
                                         <b>Venue:</b>
                                     </div>
-                                    <div class="col-md-6 space">
+                                    <div class="col-md-5 space">
                                         <a routerLink="/venues/{{element.venue.id}}" routerLinkActive="active"
                                             ariaCurrentWhenActive="page">{{element.venue.name}}</a> <br>
                                         {{element.venue.address}} {{element.venue.city}} {{element.venue.zip}}
 
                                     </div>
                                     <div class="col-md-1">
-
+                                        <div *ngIf="element.data.status_error">
+                                           
+                                            <b>Status Error</b>
+                                        </div>
                                     </div>
                                     <div class="col-md-3 space">
-
-
+                                        <div *ngIf="element.data.status_error" class="red">
+                                            <mat-icon color="warn" aria-hidden="false">error</mat-icon>
+                                            &nbsp;{{element.data.status_error}}
+                                        </div>
                                     </div>
 
                                 </div>

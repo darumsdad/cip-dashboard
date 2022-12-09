@@ -74,6 +74,10 @@ export class EventService {
     return this.http.get<any>(`${this.baseUrl}/${id}`);
   }
 
+  addVideo(id: any, data: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/${id}/video`, data);
+  }
+
   create(data: any): Observable<any> {
     return this.http.post(this.baseUrl, data);
   }

@@ -22,6 +22,7 @@ import { STATUS_MAP } from '../event-status/event-status.component';
   ],
 })
 export class EventListComponent implements OnInit, AfterViewInit {
+
 loading: any = false;
 statuses: any = STATUS_MAP;
   form: FormGroup;
@@ -36,10 +37,14 @@ statuses: any = STATUS_MAP;
     this,this.loading = false;
   }
 
+  reset($event: any) {
+    this.form.reset();
+    this.dataSource.filter = undefined
+  }
+
   ngOnInit(): void {
 
     this.form = this.fb.group({
-
       status: [''],
       filter: ['']
     })
@@ -54,6 +59,30 @@ statuses: any = STATUS_MAP;
         default: return item[property];
       }
     };
+
+    this.dataSource.filterPredicate = ((data, filter) => {
+
+      let parts = filter.split('$')
+      
+      let description_filter = parts[0]
+      let desctiption_pass = false;
+      if (description_filter)
+        desctiption_pass = data.data.description.toLowerCase().includes(description_filter)
+
+      let a = !description_filter || desctiption_pass
+
+      let status_filter = parts[1]
+      let status_pass = false;
+    
+      if (status_filter)
+        status_pass = data.data.status === status_filter
+       
+      let b = !status_filter || status_pass
+
+      return a && b
+    })
+
+
   }
 
   clickRow(row: any) {
@@ -136,44 +165,6 @@ statuses: any = STATUS_MAP;
     
     let filterValue = this.form.get('filter').value
     let statusValue = this.form.get('status').value
-
-    console.log(statusValue)
-
-    this.dataSource.filterPredicate = ((data, filter) => {
-
-      console.log(filter)
-
-      let parts = filter.split('$')
-
-      console.log(parts)
-
-      let description_filter = parts[0]
-      let desctiption_pass = false;
-    
-      if (description_filter)
-      {
-        desctiption_pass = data.data.description.toLowerCase().includes(description_filter)
-      }
-       
-      let a = !description_filter || desctiption_pass
-
-      let status_filter = parts[1]
-      let status_pass = false;
-    
-      if (status_filter)
-      {
-        status_pass = data.data.status === status_filter
-      }
-       
-      let b = !status_filter || status_pass
-
-      console.log(status_filter)
-      console.log(status_pass)
-      console.log(b)
-
-       
-      return a && b
-    })
 
     this.dataSource.filter = filterValue.trim().toLowerCase() + '$' + statusValue;
   }

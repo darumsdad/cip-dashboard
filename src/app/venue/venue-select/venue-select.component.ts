@@ -69,12 +69,7 @@ export class VenueSelectComponent implements OnInit {
     });
   }
 
-   
-
   displayVenue(venueId: any): string {
-
-    console.log('Venue: displayVenue' + venueId);
-
     let _venueId = Number.parseInt(venueId)
 
     if (!this.venues) {
@@ -85,16 +80,10 @@ export class VenueSelectComponent implements OnInit {
     console.log('number')
     console.log(this.venues)
     return this.venues.filter(v => v.id === _venueId).length === 1 ? this.venues.find(v => v.id === _venueId).name : '';
-    
-
-    
-
   }
 
   
   private _filterVenue(value: any): Venue[] {
-    console.log('_filterVenue ' + value)
-
     if ((typeof value === 'string' || value instanceof String) && value != "") {
       const filterValue = value.toLowerCase()
       

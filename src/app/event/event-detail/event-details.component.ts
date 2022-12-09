@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-
  
 
 import {Clipboard} from '@angular/cdk/clipboard';
@@ -33,7 +32,6 @@ export class EventDetailsComponent implements OnInit {
   form: FormGroup;
 
   ngOnInit(): void {
- 
     this.form = this.rootFormGroup.control.get('data') as FormGroup;
   }
  
@@ -51,8 +49,6 @@ export class EventDetailsComponent implements OnInit {
              "(" + input.substr(0,3) + ") " + input.substr(3,3) + "-" + input.substr(6) )
         }  
     }
-   
- 
  }
  
   onChangeStatus(event: any) {

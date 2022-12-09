@@ -22,7 +22,8 @@ import { JotFormComponent } from './documents/jot-form/jot-form.component';
 import { VenueListComponent } from './venue/venue-list/venue-list.component';
 import { VenueDetailComponent } from './venue/venue-detail/venue-detail.component';
 import { CertEmailComponent } from './documents/cert-email/cert-email.component';
-import { VideoDetailsComponent } from './documents/video-details/video-details.component';
+import { VideoAddComponent } from './documents/video-add/video-add.component';
+import { VideoListComponent } from './documents/video-list/video-list.component';
 
 
 
@@ -47,7 +48,8 @@ import { VideoDetailsComponent } from './documents/video-details/video-details.c
     VenueDetailComponent,
     
     CertEmailComponent,
-    VideoDetailsComponent
+    VideoAddComponent,
+    VideoListComponent
     
   ],
     imports: [

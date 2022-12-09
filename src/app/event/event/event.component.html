@@ -32,8 +32,6 @@
             </div>
         </div>
 
-       
-
         <mat-tab-group dynamicHeight animationDuration="0ms">
             <mat-tab label="Details">
                 <div class="row mt-5">
@@ -56,6 +54,13 @@
                 <div class="row mt-5">
                     <div class="col-md-12">
                         <app-jot-form [eventId]="eventId"></app-jot-form>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Videos">
+                <div class="row mt-5">
+                    <div class="col-md-12">
+                        <app-video-list [eventId]="eventId"></app-video-list>
                     </div>
                 </div>
             </mat-tab>
