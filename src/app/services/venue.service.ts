@@ -1,10 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
-import { Venue } from '../models/venue';
 import { environment } from 'src/environments/environment';
- 
-
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +14,7 @@ export class VenueService {
     return this._venues.asObservable()
   }
 
-  updateThings(callback: Function) {
+  load(callback: Function) {
     this.getAll().subscribe({
       next: (e) => {
         console.log(e)
@@ -32,17 +29,20 @@ export class VenueService {
      
   }
 
-
   baseUrl = environment.baseUrl + '/venues';
 
   constructor(private http: HttpClient) { }
 
-  getAll(): Observable<Venue[]> {
-    return this.http.get<Venue[]>(this.baseUrl);
+  getAll(): Observable<any[]> {
+    return this.http.get<any[]>(this.baseUrl);
   }
 
-  get(id: any): Observable<Venue> {
-    return this.http.get<Venue>(`${this.baseUrl}/${id}`);
+  addVideo(id: any, data: any): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/${id}/video`, data);
+  }
+
+  get(id: any): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/${id}`);
   }
 
   create(data: any): Observable<any> {

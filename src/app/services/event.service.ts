@@ -16,21 +16,25 @@ export class EventService {
     return this._events.asObservable()
   }
 
-  updateThings(callback: Function) {
+  load(callback: Function) {
     this.all().subscribe({
       next: (events) => {
         console.log(events)
         this.allVenues().subscribe(
           {
             next: (venues) => {
-              //console.log(venues)
+              
               let events_with_venue = events.map(event => {
-                //console.log(event.data.venueId)
-                if (event.data.venueId) {
+              
+                if (event.data && event.data.venueId) {
                   let found = venues.find(x => x.id === parseInt(event.data.venueId))
                   event.venue = found;
                   console.log(event)
                   return event;
+                }
+                else
+                {
+                  return event; 
                 }
                
               });
@@ -64,6 +68,12 @@ export class EventService {
 
   all(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}`);
+  }
+
+  allForVenue(venueId: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/search`, { 
+      venueId: venueId
+    });
   }
 
   allVenues(): Observable<any> {

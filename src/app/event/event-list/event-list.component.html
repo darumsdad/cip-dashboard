@@ -145,15 +145,16 @@
                                     <div class="col-md-1">
                                         <b>Venue:</b>
                                     </div>
-                                    <div class="col-md-5 space">
+                                    <div class="col-md-5 space" *ngIf="element.venue">
                                         <a routerLink="/venues/{{element.venue.id}}" routerLinkActive="active"
                                             ariaCurrentWhenActive="page">{{element.venue.name}}</a> <br>
                                         {{element.venue.address}} {{element.venue.city}} {{element.venue.zip}}
-
+                                    </div>
+                                    <div class="col-md-5 space" *ngIf="!element.venue">
+                                        No Venue
                                     </div>
                                     <div class="col-md-1">
-                                        <div *ngIf="element.data.status_error">
-                                           
+                                        <div *ngIf="element.data && element.data.status_error">
                                             <b>Status Error</b>
                                         </div>
                                     </div>
@@ -167,14 +168,6 @@
                                 </div>
 
                             </div>
-
-                            <!-- <div class="event-description">
-                                Description : {{element.data.description}}
-                            </div>
-                            <div class="event-description">
-                              
-                               
-                            </div> -->
                         </div>
                     </td>
                 </ng-container>

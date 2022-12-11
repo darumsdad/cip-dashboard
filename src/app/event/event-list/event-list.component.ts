@@ -49,7 +49,7 @@ statuses: any = STATUS_MAP;
       filter: ['']
     })
     this.loading = true;
-    this.s.updateThings(this.loadingFinished.bind(this))
+    this.s.load(this.loadingFinished.bind(this))
 
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
@@ -154,7 +154,7 @@ statuses: any = STATUS_MAP;
 
   update() {
     this.loading = true;
-    this.s.updateThings(this.loadingFinished.bind(this));
+    this.s.load(this.loadingFinished.bind(this));
   }
 
   triggerFilter(event: any) {

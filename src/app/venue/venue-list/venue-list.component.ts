@@ -21,7 +21,7 @@ loading: any;
 
   ngOnInit(): void {
     this.loading = true;
-    this.venueService.updateThings(this.doneLoading.bind(this))
+    this.venueService.load(this.doneLoading.bind(this))
   }
 
   clickRow(row: any) {
@@ -52,7 +52,7 @@ loading: any;
 
   update() {
     this.loading = true
-    this.venueService.updateThings(this.doneLoading.bind(this));
+    this.venueService.load(this.doneLoading.bind(this));
   }
   
   doneLoading()

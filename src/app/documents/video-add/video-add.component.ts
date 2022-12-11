@@ -3,8 +3,8 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Venue } from 'src/app/models/venue';
 import { EventService } from 'src/app/services/event.service';
+import { VenueService } from 'src/app/services/venue.service';
 import { VimeoService } from 'src/app/services/vimeo.service';
 
 @Component({
@@ -20,6 +20,7 @@ export class VideoAddComponent implements OnInit {
   eventId: any;
 
   types: any = ['Teaser','Highlight', 'Full Edit']
+  error: any;
 
   constructor(
     public vimeoService: VimeoService,
@@ -27,6 +28,7 @@ export class VideoAddComponent implements OnInit {
     public fb: FormBuilder,
     private router: Router,
     public eventService: EventService,
+    public venueService: VenueService,
     public dialog: MatDialogRef<VideoAddComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) { }
 
@@ -34,7 +36,7 @@ export class VideoAddComponent implements OnInit {
 
     this.eventId = this.route.snapshot.params['id'];
     this.form = this.fb.group({
-      videoTag: ['778842055'],
+      videoTag: [''],
       type: ['',Validators.required],
       video: ['',Validators.required]
     })
@@ -42,22 +44,48 @@ export class VideoAddComponent implements OnInit {
   }
 
   add($event: MouseEvent) {
-    this.eventService.addVideo(this.data.eventId, this.form.value).subscribe({
-      next: (result) => {
-        this.dialog.close(result);
-      },
-      error: (error) => {
-        alert(error.message)
-      }
-    })
+
+    if (this.data.eventId)
+    {
+      this.eventService.addVideo(this.data.eventId, this.form.value).subscribe({
+        next: (result) => {
+          this.dialog.close(result);
+        },
+        error: (error) => {
+          alert(error.message)
+        }
+      })
+    }
+    else
+    {
+      this.venueService.addVideo(this.data.venueId, this.form.value).subscribe({
+        next: (result) => {
+          this.dialog.close(result);
+        },
+        error: (error) => {
+          alert(error.message)
+        }
+      })
+    }
+    
   }
 
   load($event: MouseEvent) {
+    this.error = undefined
     this.vimeoService.get(this.form.get('videoTag').value).subscribe(
       {
         next: (video) => {
           console.log(video);
-          this.form.get('video').patchValue(video);
+
+          if (video.error)
+          {
+            this.error = video.error;
+          }
+          else
+          {
+            this.form.get('video').patchValue(video);
+          }
+          
         },
         error: (error) => {
           alert(error.message);

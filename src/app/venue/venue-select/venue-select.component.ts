@@ -1,11 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-
-
-
 import { map, Observable, startWith } from 'rxjs';
-import { Venue } from 'src/app/models/venue';
 import { VenueService } from 'src/app/services/venue.service';
 import { VenueAddComponent } from '../venue-add/venue-add.component';
 
@@ -24,8 +20,8 @@ export class VenueSelectComponent implements OnInit {
     public dialog: MatDialog,
     public rootFormGroup: FormGroupDirective) { }
 
-  venues: Venue[] = [];
-  filteredVenues: Observable<Venue[]>;
+  venues: any[] = [];
+  filteredVenues: Observable<any[]>;
  
 
   ngOnInit(): void {
@@ -83,7 +79,7 @@ export class VenueSelectComponent implements OnInit {
   }
 
   
-  private _filterVenue(value: any): Venue[] {
+  private _filterVenue(value: any): any[] {
     if ((typeof value === 'string' || value instanceof String) && value != "") {
       const filterValue = value.toLowerCase()
       

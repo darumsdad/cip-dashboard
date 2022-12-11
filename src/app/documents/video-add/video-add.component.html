@@ -38,6 +38,14 @@
         </div>
     </div>
 
+    <div *ngIf="error">
+        <div class="row mt-3" >
+            <div class="col-md-12">
+                <h2>{{error}}</h2>
+            </div>
+        </div>
+    </div>
+
     <div class="row mt-3" >
         <div class="col-md-12">
             <button mat-raised-button  color="primary" [disabled]="form.invalid" (click)="add($event)">Add</button>&nbsp;

@@ -2,8 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { FormGroup, FormGroupDirective } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { createUrlTreeFromSnapshot } from '@angular/router';
-import { Venue } from 'src/app/models/venue';
 import { EmailService } from 'src/app/services/email.service';
 import { EventService } from 'src/app/services/event.service';
 import { VenueService } from 'src/app/services/venue.service';
@@ -31,7 +29,7 @@ export class DocumentsComponent implements OnInit {
   sending: any = undefined;
   
   loading: any = false;
-  venue: Venue;
+  venue: any;
 
   constructor(public dialog: MatDialog,
     private rootFormGroup: FormGroupDirective,
@@ -131,8 +129,12 @@ export class DocumentsComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
 
-      this.dataSource.data.push(result)
-      this.dataSource.data = this.dataSource.data.slice();
+      if (result)
+      {
+        this.dataSource.data.push(result)
+        this.dataSource.data = this.dataSource.data.slice();
+      }
+      
     });
   }
 
@@ -148,8 +150,13 @@ export class DocumentsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      this.dataSource.data.push(result)
-      this.dataSource.data = this.dataSource.data.slice();
+
+      if (result)
+      {
+        this.dataSource.data.push(result)
+        this.dataSource.data = this.dataSource.data.slice();
+      }
+      
     });
   }
 
@@ -197,8 +204,13 @@ export class DocumentsComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(result);
-      this.dataSource.data.push(result)
-      this.dataSource.data = this.dataSource.data.slice();
+
+      if (result)
+      {
+        this.dataSource.data.push(result)
+        this.dataSource.data = this.dataSource.data.slice();
+      }
+      
     });
   }
 

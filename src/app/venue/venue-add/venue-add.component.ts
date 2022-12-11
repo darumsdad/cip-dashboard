@@ -1,7 +1,6 @@
 import { Component, Inject, NgZone, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Venue } from 'src/app/models/venue';
 import { VenueService } from 'src/app/services/venue.service';
 
 
@@ -25,7 +24,7 @@ export class VenueAddComponent implements OnInit {
   constructor(public zone: NgZone,
     private venueService: VenueService,
     public dialog: MatDialogRef<VenueAddComponent>,
-    @Inject(MAT_DIALOG_DATA) public newVenue: Venue) { }
+    @Inject(MAT_DIALOG_DATA) public newVenue: any) { }
 
   ngOnInit(): void {
 

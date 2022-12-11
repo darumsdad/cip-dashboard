@@ -22,18 +22,24 @@ export class VideoListComponent implements OnInit {
   loading: boolean = false;
 
   ngOnInit(): void {
+    
+    this.load();
+  }
+
+  private load() {
     this.loading = true;
+
     this.eventService.get(this.eventId).subscribe({
       next: (event) => {
         console.log(event);
-        this.dataSource.data = event.data.videos
+        this.dataSource.data = event.data.videos;
         this.loading = false;
       },
       error: (error) => {
-        alert(error.mesage)
+        alert(error.mesage);
         this.loading = false;
       }
-    })
+    });
   }
 
   upload($event: any): void {
@@ -48,6 +54,7 @@ export class VideoListComponent implements OnInit {
       if (!result)
         return;
       console.log(result);
+      this.load();
     });
   }
 
