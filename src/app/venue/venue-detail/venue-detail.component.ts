@@ -18,12 +18,14 @@ import { VimeoService } from 'src/app/services/vimeo.service';
 })
 export class VenueDetailComponent implements OnInit {
 
+
   form: any;
   venueId: any;
   videoTag: any;
 
-  displayedColumns: string[] = ['name','link'];
-  clientColumns: string[] = ['description','name','link'];
+  proposalColumns: string[] = ['name','link'];
+  venueColumns: string[] = ['name','link','actions'];
+  clientColumns: string[] = ['description','name','video','actions'];
   videosForVenueDataSource = new MatTableDataSource<any>();
   clientVideosForVenueDataSource = new MatTableDataSource<any>();
   videosForProposalDataSource = new MatTableDataSource<any>();
@@ -71,7 +73,7 @@ export class VenueDetailComponent implements OnInit {
         {
           let videos = venue.venueData.videosForVenue.map( x => x.video);
           this.videosForVenueDataSource.data = videos
-          this.videosForProposalDataSource.data = venue.venueData.videosForProposal.map( x => x.video)
+          this.videosForProposalDataSource.data = venue.venueData.videosForProposal
         }
 
         this.eventService.allForVenue(this.venueId).subscribe(
@@ -123,5 +125,24 @@ export class VenueDetailComponent implements OnInit {
       console.log(result);
       this.load();
     });
+  }
+
+  addToProposal(data: any) {
+    console.log(data)
+    
+    this.venueService.addVideo(this.venueId, {
+      type: 'proposal',
+      video: data
+    }).subscribe(
+      {
+        next: (result) => {
+          this.load();
+        },
+        error: (error) => {
+          alert(error.message)
+        }
+      }
+
+    )
   }
 }

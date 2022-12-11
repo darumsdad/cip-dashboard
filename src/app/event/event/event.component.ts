@@ -124,6 +124,7 @@ export class EventComponent implements OnInit {
       count: [''],
       effective_date: [''],
       insurance_contact: [''],
+      include_photographer: [false],
 
       last_submission_id: new FormControl()
 
