@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NgbDayTemplateData } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-view-model';
 import { EventService } from 'src/app/services/event.service';
 import { VenueService } from 'src/app/services/venue.service';
 import { VimeoService } from 'src/app/services/vimeo.service';
@@ -21,6 +22,7 @@ export class VideoAddComponent implements OnInit {
 
   types: any = ['Teaser','Highlight', 'Full Edit']
   error: any;
+  working: any;
 
   constructor(
     public vimeoService: VimeoService,
@@ -74,8 +76,9 @@ export class VideoAddComponent implements OnInit {
     
   }
 
-  load($event: MouseEvent) {
+  load($event: any) {
     this.error = undefined
+    this.working = true;
     this.vimeoService.get(this.form.get('videoTag').value).subscribe(
       {
         next: (video) => {
@@ -89,10 +92,12 @@ export class VideoAddComponent implements OnInit {
           {
             this.form.get('video').patchValue(video);
           }
+          this.working = false;
           
         },
         error: (error) => {
           alert(error.message);
+          this.working = false;
         }
       }
     )

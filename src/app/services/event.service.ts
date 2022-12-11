@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 
@@ -9,6 +9,8 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class EventService {
+  
+  
 
   private _events = new BehaviorSubject([])
 
@@ -86,6 +88,18 @@ export class EventService {
 
   addVideo(id: any, data: any): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/${id}/video`, data);
+  }
+
+  delete_video(id: any, data: any) {
+
+    const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: data,
+    };
+    
+    return this.http.delete<any>(`${this.baseUrl}/${id}/video`, options);
   }
 
   create(data: any): Observable<any> {

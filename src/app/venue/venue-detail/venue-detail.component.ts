@@ -19,11 +19,12 @@ import { VimeoService } from 'src/app/services/vimeo.service';
 export class VenueDetailComponent implements OnInit {
 
 
+
   form: any;
   venueId: any;
   videoTag: any;
 
-  proposalColumns: string[] = ['name','link'];
+  proposalColumns: string[] = ['name','link','actions'];
   venueColumns: string[] = ['name','link','actions'];
   clientColumns: string[] = ['description','name','video','actions'];
   videosForVenueDataSource = new MatTableDataSource<any>();
@@ -71,8 +72,8 @@ export class VenueDetailComponent implements OnInit {
 
         if (venue.venueData)
         {
-          let videos = venue.venueData.videosForVenue.map( x => x.video);
-          this.videosForVenueDataSource.data = videos
+          
+          this.videosForVenueDataSource.data = venue.venueData.videosForVenue
           this.videosForProposalDataSource.data = venue.venueData.videosForProposal
         }
 
@@ -125,6 +126,42 @@ export class VenueDetailComponent implements OnInit {
       console.log(result);
       this.load();
     });
+  }
+
+  delete_video_from_venue(tag: any) {
+    this.venueService.delete_video_from_venue(this.venueId, {
+      type: 'venue',
+      videoTag: tag
+    }).subscribe(
+      {
+        next: (result) => {
+          this.load();
+        },
+        error: (error) => {
+          alert(error.message)
+        }
+      }
+
+    )
+  
+  }
+
+  delete_video_from_proposal(tag: any) {
+    this.venueService.delete_video_from_venue(this.venueId, {
+      type: 'proposal',
+      videoTag: tag
+    }).subscribe(
+      {
+        next: (result) => {
+          this.load();
+        },
+        error: (error) => {
+          alert(error.message)
+        }
+      }
+
+    )
+  
   }
 
   addToProposal(data: any) {

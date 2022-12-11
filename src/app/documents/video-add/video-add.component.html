@@ -21,7 +21,10 @@
 
         <div class="col-md-1">
             <button (click)="load($event)" mat-icon-button color="primary">
-                <mat-icon>cloud_download</mat-icon>
+                <mat-icon *ngIf="!working">cloud_download</mat-icon>
+                <mat-icon *ngIf="working">
+                    <mat-spinner diameter="20"></mat-spinner>
+                </mat-icon>
             </button>
         </div>
     </div>

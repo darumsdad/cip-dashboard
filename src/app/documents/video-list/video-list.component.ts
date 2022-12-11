@@ -11,19 +11,37 @@ import { VideoAddComponent } from '../video-add/video-add.component';
 })
 export class VideoListComponent implements OnInit {
 
+
   constructor( public dialog: MatDialog,
     public eventService: EventService) { }
 
   @Input()
   eventId: any
 
-  displayedColumns: string[] = ['type','name','link'];
+  displayedColumns: string[] = ['type','name','video','actions'];
   dataSource = new MatTableDataSource<any>();
   loading: boolean = false;
 
   ngOnInit(): void {
     
     this.load();
+  }
+
+  on_delete_video(tag: any) {
+    this.loading = true;
+    this.eventService.delete_video(this.eventId, {
+      videoTag: tag
+    }).subscribe({
+      next: (event) => {
+        console.log(event);
+        this.load();
+        this.loading = false;
+      },
+      error: (error) => {
+        alert(error.mesage);
+        this.loading = false;
+      }
+    });
   }
 
   private load() {

@@ -5,14 +5,14 @@
                 (click)="openJotForm($event)" class="pull-left">Pre Contract Jot Form</button>
         </div>
         <div class="col-md-2">
-            <button mat-raised-button color="primary" (click)="openProposal($event)" class="pull-left">Proposal
+            <button mat-raised-button [disabled]="!can_send_proposal()" color="primary" (click)="openProposal($event)" class="pull-left">Proposal
                 Email</button>
         </div>
         <div class="col-md-2">
-            <button mat-raised-button color="primary" (click)="openContract($event)" class="pull-left">Contract</button>
+            <button mat-raised-button [disabled]="!can_send_proposal()" color="primary" (click)="openContract($event)" class="pull-left">Contract</button>
         </div>
         <div class="col-md-2">
-            <button mat-raised-button color="primary" (click)="openCert($event)" class="pull-left">Cert</button>
+            <button mat-raised-button [disabled]="!can_send_cert()" color="primary" (click)="openCert($event)" class="pull-left">Cert</button>
         </div>
     </div>
     <div *ngIf="loading" class="row mt-2">

@@ -16,6 +16,7 @@ import { EmailSendComponent } from '../email-send/email-send.component';
   styleUrls: ['./documents.component.scss']
 })
 export class DocumentsComponent implements OnInit {
+
   form: FormGroup;
   contact_types: any = ['bride', 'bride_mom', 'bride_dad', 'groom', 'groom_mom', 'groom_dad', 'planner'];
   contactList: any = [];
@@ -64,6 +65,33 @@ export class DocumentsComponent implements OnInit {
 
     this.load();
 
+  }
+
+  can_send_proposal() {
+    return this.form.get('venueId').value &&
+    this.form.get('bride_name').value &&
+    this.form.get('quote').value &&
+    this.form.get('hours').value &&
+    this.form.get('count').value &&
+    this.form.get('date').value &&
+    (this.form.get('teaser').value || this.form.get('highlights').value || this.form.get('full').value ) &&
+    this.form.get('groom_name').value 
+  }
+
+  can_send_contract() {
+    return this.form.get('venueId').value &&
+    this.form.get('bride_name').value &&
+    this.form.get('quote').value &&
+    this.form.get('hours').value &&
+    this.form.get('count').value &&
+    this.form.get('date').value &&
+    (this.form.get('teaser').value || this.form.get('highlights').value || this.form.get('full').value ) &&
+    this.form.get('groom_name').value 
+  }
+
+  can_send_cert() {
+    return this.form.get('venueId').value &&
+    this.form.get('date').value 
   }
 
   private load() {

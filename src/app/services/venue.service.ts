@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
@@ -54,7 +54,21 @@ export class VenueService {
   }
 
   delete(id: any): Observable<any> {
+
     return this.http.delete(`${this.baseUrl}/${id}`);
+  }
+
+
+  delete_video_from_venue(id: any, data: any) {
+     const options = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      body: data,
+    };
+
+    console.log(options)
+    return this.http.delete(`${this.baseUrl}/${id}/video`,options);
   }
 
 
