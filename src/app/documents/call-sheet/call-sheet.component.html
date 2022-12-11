@@ -1,16 +1,29 @@
 
-
+  <div *ngIf="loading" class="row mt-2 mb-2">
+    <div class="col-md-12">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+    </div>
+</div>
 
 <div class="row">
     <div class="col-md-12">
-        <button mat-raised-button color="primary" (click)="populate($event)" color="primary">Create</button>
+        <button mat-raised-button color="primary" (click)="populate($event)" color="primary">
+            Create  <mat-icon *ngIf="create_working"><mat-spinner  color="accent" diameter="20" class="loading"></mat-spinner></mat-icon>
+        </button>&nbsp;
+        <button mat-raised-button color="primary" (click)="save($event)" color="primary">
+            Save <mat-icon *ngIf="save_working"><mat-spinner  diameter="20"></mat-spinner></mat-icon>
+        </button>
+        &nbsp;
+        <a *ngIf="inputFile" mat-button href="{{ inputFile.fileUrl }}" target="_blank">
+            <mat-icon>attach_file</mat-icon>
+        </a>
     </div>
+
+    
 </div>
 <br>
 <div class="row">
     <div class="col-md-12">
-        <editor [(ngModel)]="dataModel" apiKey="p9ejaukcdifecl6fhwowyud2bjuqzwbyfiyhtktmxtvbx0nq" [init]="{plugins: 'link'} "> </editor>
+        <editor [formControl]="dataModel" apiKey="p9ejaukcdifecl6fhwowyud2bjuqzwbyfiyhtktmxtvbx0nq" [init]="{plugins: 'link'} "> </editor>
     </div>
 </div>
-
-{{dataModel}}
