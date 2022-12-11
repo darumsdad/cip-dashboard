@@ -4,9 +4,11 @@
 
       <form [formGroup]="form" (ngSubmit)="onSubmit()">
         <div class="row">
+          <mat-form-field appearance="fill">
           <div class="col-md-12">
-            <input ngx-google-places-autocomplete (onAddressChange)="getEstablishmentAddress($event)" />
+            <input matInput [options]="options2" ngx-google-places-autocomplete (onAddressChange)="getEstablishmentAddress($event)" />
           </div>
+        </mat-form-field>
         </div>
         <br>
 
@@ -60,8 +62,8 @@
           </div>
         </div>
 
-        <button mat-button cdkFocusInitial class="btn btn-info pull-right">Save</button>
-        <button mat-button [mat-dialog-close]="false" cdkFocusInitial class="btn btn-info pull-right">Cancel</button>
+        <button mat-raised-button color="primary" class="btn btn-info pull-right">Save</button>&nbsp;
+        <button mat-raised-button color="primary" [mat-dialog-close]="false" cdkFocusInitial class="btn btn-info pull-right">Cancel</button>
         <div class="clearfix"></div>
       </form>
     </div>

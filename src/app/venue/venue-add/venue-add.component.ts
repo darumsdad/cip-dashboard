@@ -1,6 +1,7 @@
 import { Component, Inject, NgZone, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Options } from 'ngx-google-places-autocomplete/objects/options/options';
 import { VenueService } from 'src/app/services/venue.service';
 
 
@@ -15,10 +16,15 @@ export class VenueAddComponent implements OnInit {
 
   form: FormGroup;
 
-  public options = {
+  public options2: Options = {
     componentRestrictions: {
-      country: ["US"]
-    }
+      country: 'US'
+    },
+    bounds: undefined,
+    types: [],
+    fields: [],
+    strictBounds: false,
+    origin: undefined
   }
 
   constructor(public zone: NgZone,

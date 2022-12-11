@@ -24,6 +24,10 @@ import { VenueDetailComponent } from './venue/venue-detail/venue-detail.componen
 import { CertEmailComponent } from './documents/cert-email/cert-email.component';
 import { VideoAddComponent } from './documents/video-add/video-add.component';
 import { VideoListComponent } from './documents/video-list/video-list.component';
+import { GooglePlaceModule } from "ngx-google-places-autocomplete";
+import { EditorModule } from '@tinymce/tinymce-angular';
+import { CallSheetComponent } from './documents/call-sheet/call-sheet.component';
+
 
 
 
@@ -49,7 +53,8 @@ import { VideoListComponent } from './documents/video-list/video-list.component'
     
     CertEmailComponent,
     VideoAddComponent,
-    VideoListComponent
+    VideoListComponent,
+    CallSheetComponent
     
   ],
     imports: [
@@ -62,7 +67,9 @@ import { VideoListComponent } from './documents/video-list/video-list.component'
     MaterialExampleModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    NgbModule
+    NgbModule,
+    GooglePlaceModule,
+    EditorModule
     
   ],
   providers: [],

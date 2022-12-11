@@ -18,6 +18,10 @@ export class FileGenerateService {
     return this.http.post<any>(`${this.baseUrl}`, data);
   }
 
+  call_sheet(data: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/mapping`, data);
+  }
+
   // post_proposal(data: any): Observable<any> {
   //   return this.http.post<any>(`${this.baseUrl}/proposal`, data);
   // }

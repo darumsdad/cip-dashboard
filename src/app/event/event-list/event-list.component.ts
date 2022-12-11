@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import { Address } from 'ngx-google-places-autocomplete/objects/address';
 
 import { map, Observable } from 'rxjs';
 import { EventService } from 'src/app/services/event.service';
@@ -22,6 +23,7 @@ import { STATUS_MAP } from '../event-status/event-status.component';
   ],
 })
 export class EventListComponent implements OnInit, AfterViewInit {
+
 
 loading: any = false;
 statuses: any = STATUS_MAP;
