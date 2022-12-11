@@ -1,8 +1,12 @@
 import { ResourceLoader } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as e from 'express';
+import { VideoAddComponent } from 'src/app/documents/video-add/video-add.component';
+import { EventService } from 'src/app/services/event.service';
 
 import { VenueService } from 'src/app/services/venue.service';
 import { VimeoService } from 'src/app/services/vimeo.service';
@@ -19,14 +23,20 @@ export class VenueDetailComponent implements OnInit {
   videoTag: any;
 
   displayedColumns: string[] = ['name','link'];
-  dataSource = new MatTableDataSource<any>();
+  clientColumns: string[] = ['description','name','link'];
+  videosForVenueDataSource = new MatTableDataSource<any>();
+  clientVideosForVenueDataSource = new MatTableDataSource<any>();
+  videosForProposalDataSource = new MatTableDataSource<any>();
+
   loading: boolean = false;
 
-
-  constructor(public venueService: VenueService,
+  constructor(
+    public venueService: VenueService,
+    public eventService: EventService,
     public vimeoService: VimeoService,
     private route: ActivatedRoute,
     private router: Router,
+    public dialog: MatDialog,
     ) { }
 
   ngOnInit(): void {
@@ -44,36 +54,74 @@ export class VenueDetailComponent implements OnInit {
 
     this.videoTag = new FormControl()
 
-    this.reload();
+    this.load();
   
   }
 
-  private reload() {
+  private load() {
+    
     this.loading = true;
+    
     this.venueService.get(this.venueId).subscribe({
       next: (venue) => {
         console.log(venue)
         this.form.patchValue(venue);
-        this.dataSource.data = venue.venueData;
+
+        if (venue.venueData)
+        {
+          let videos = venue.venueData.videosForVenue.map( x => x.video);
+          this.videosForVenueDataSource.data = videos
+          this.videosForProposalDataSource.data = venue.venueData.videosForProposal.map( x => x.video)
+        }
+
+        this.eventService.allForVenue(this.venueId).subscribe(
+            {
+              next: (events) =>
+              {
+                if (events)
+                {
+                    events.forEach( event => {
+                      event.data.videos.forEach ( video => {
+                          video.event = event;  
+                      })
+                    })
+                    
+                    
+                    let data = events.flatMap(x => x.data.videos)
+                    console.log(data)
+
+                    this.clientVideosForVenueDataSource.data = data
+
+                }
+              },
+              error: (error) => {
+                alert(error.mesage)
+                this.loading = false;
+              }
+            }
+        )
         this.loading = false;
       },
       error: (error) => {
+        alert(error.message)
+        this.loading = false;
       }
     });
   }
 
-  upload($event: MouseEvent) {
-    this.vimeoService.put(this.venueId, { tag: this.videoTag.value} ).subscribe(
-      {
-        next: (video) => {
-          console.log(video);
-          this.reload();
-        },
-        error: (error) => {
-          alert(error.message);
-        }
+  upload($event: any): void {
+    const dialogRef = this.dialog.open(VideoAddComponent, {
+      width: '650px',
+      data: {
+        venueId: this.venueId
       }
-    )
-  }
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result)
+        return;
+      console.log(result);
+      this.load();
+    });
+  }
 }
