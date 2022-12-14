@@ -176,20 +176,18 @@ export class EventComponent implements OnInit {
 
 
     console.log(this.form.invalid)
-    console.log(this.form.get('data').get('bride_phone'))
+    //console.log(this.form.get('data').get('bride_phone'))
 
-    let phone_invalid = false;
+    // let phone_invalid = false;
 
-    ['bride_phone', 'bride_mom_phone', 'bride_dad_phone', 'groom_phone', 'groom_mom_phone', 'groom_dad_phone', 'planner_phone'].forEach(x => {
-      console.log(x)
-      console.log(this.form.get('data').get(x).invalid)
-      phone_invalid ||= this.form.get('data').get(x).invalid
-      console.log(phone_invalid)
-    })
+    // ['bride_phone', 'bride_mom_phone', 'bride_dad_phone', 'groom_phone', 'groom_mom_phone', 'groom_dad_phone', 'planner_phone'].forEach(x => {
+    //   console.log(x)
+    //   console.log(this.form.get('data').get(x).invalid)
+    //   phone_invalid ||= this.form.get('data').get(x).invalid
+    //   console.log(phone_invalid)
+    // })
 
-    if (this.form.invalid || phone_invalid) {
-      console.log("no save")
-      console.log("no save")
+    if (this.form.invalid)  {
       return;
     }
 

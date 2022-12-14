@@ -33,7 +33,7 @@ export class CallSheetComponent implements OnInit {
       {
         next: (event) => {
           console.log(event)
-          if (event.data.call_sheet)
+          if (event.data.call_sheet[0])
           {
             this.dataModel.patchValue( atob(event.data.call_sheet[0].html) )
             this.inputFile = event.data.call_sheet[0].file
