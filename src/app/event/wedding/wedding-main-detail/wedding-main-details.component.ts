@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
  
 
@@ -9,10 +9,10 @@ import { EventService } from 'src/app/services/event.service';
 
 @Component({
   selector: 'app-event-details',
-  templateUrl: './event-details.component.html',
-  styleUrls: ['./event-details.component.scss']
+  templateUrl: './wedding-main-details.component.html',
+  styleUrls: ['./wedding-main-details.component.scss']
 })
-export class EventDetailsComponent implements OnInit {
+export class WeddingMainDetailsComponent implements OnInit {
   
   e: any;
 

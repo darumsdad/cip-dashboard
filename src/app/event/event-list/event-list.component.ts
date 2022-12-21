@@ -4,11 +4,12 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
+import * as e from 'express';
 import { Address } from 'ngx-google-places-autocomplete/objects/address';
 
 import { map, Observable } from 'rxjs';
 import { EventService } from 'src/app/services/event.service';
-import { STATUS_MAP } from '../event-status/event-status.component';
+import { STATUS_MAP } from '../wedding/wedding-status/wedding-status.component';
 
 @Component({
   selector: 'app-event-list',
@@ -30,13 +31,13 @@ statuses: any = STATUS_MAP;
   form: FormGroup;
 
   constructor(private router: Router,
-    private s: EventService,
-    public fb: FormBuilder
+    private eventService: EventService,
+    public formBuilder: FormBuilder
   ) { }
 
   loadingFinished()
   {
-    this,this.loading = false;
+    this.loading = false;
   }
 
   reset($event: any) {
@@ -46,12 +47,12 @@ statuses: any = STATUS_MAP;
 
   ngOnInit(): void {
 
-    this.form = this.fb.group({
+    this.form = this.formBuilder.group({
       status: [''],
       filter: ['']
     })
     this.loading = true;
-    this.s.load(this.loadingFinished.bind(this))
+    this.eventService.load(this.loadingFinished.bind(this))
 
     this.dataSource.sortingDataAccessor = (item, property) => {
       switch (property) {
@@ -83,18 +84,30 @@ statuses: any = STATUS_MAP;
 
       return a && b
     })
-
-
   }
 
   clickRow(row: any) {
     console.log(row)
-    this.router.navigate(['detail', row])
+    this.router.navigate(['wedding', row])
   }
 
-  onClick(event: any) {
-    console.log("nativating")
-    this.router.navigate(['detail'])
+  onNewEvent() {
+    this.eventService.create({
+      id: undefined,
+      data: {
+        event_type: 'Wedding',
+        status: '0',
+        status_update_date: new Date().toISOString()
+        
+      }
+    }).subscribe({
+      next: (event) => {
+        this.router.navigate(['wedding', event.id])  
+      },
+      error: (error) => {
+        alert("Could not create a new event " + error.message)
+      }
+    })
   }
 
   private dataSource = new MatTableDataSource<any>();
@@ -106,7 +119,7 @@ statuses: any = STATUS_MAP;
   expandedElement: any | null;
 
   eventsAsMatTableDataSource$: Observable<MatTableDataSource<any>> =
-    this.s.events.pipe(
+    this.eventService.events.pipe(
       map((events) => {
         const dataSource = this.dataSource;
         dataSource.data = events
@@ -156,7 +169,7 @@ statuses: any = STATUS_MAP;
 
   update() {
     this.loading = true;
-    this.s.load(this.loadingFinished.bind(this));
+    this.eventService.load(this.loadingFinished.bind(this));
   }
 
   triggerFilter(event: any) {

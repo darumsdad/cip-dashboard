@@ -13,39 +13,31 @@ import { VenueAddComponent } from '../venue-add/venue-add.component';
 })
 export class VenueSelectComponent implements OnInit {
 
-  
   form: FormGroup;
 
-  constructor(public venueService: VenueService, 
+  constructor(public venueService: VenueService,
     public dialog: MatDialog,
     public rootFormGroup: FormGroupDirective) { }
 
   venues: any[] = [];
   filteredVenues: Observable<any[]>;
- 
 
   ngOnInit(): void {
-    console.log('starting  detected')
+
     this.form = this.rootFormGroup.control;
-    console.log(this.rootFormGroup.control)
-    this.venueService.getAll().subscribe(x => { 
-      console.log(x)
-      this.venues = x;
+    this.venueService.getAll().subscribe(_venues => {
+      
+      this.venues = _venues ? _venues : []
+
       this.filteredVenues = this.form.get('venueId').valueChanges.pipe(
         startWith(''),
         map(venue => venue ? this._filterVenue(venue || '') : this.venues.slice()),
       );
-      console.log("applying hack")
 
       // hack to get it to repaint after we have the list of venues
       this.form.get('venueId').patchValue(this.form.get('venueId').value)
-      
-    })
-  }
 
-  onVenueSelected($event: any) {
-   console.log("foof");
-   console.log($event);
+    })
   }
 
   openDialog(): void {
@@ -61,7 +53,7 @@ export class VenueSelectComponent implements OnInit {
       console.log(result);
       this.venues.push(result)
       this.form.get('venueId').patchValue(result.id)
-     
+
     });
   }
 
@@ -69,33 +61,28 @@ export class VenueSelectComponent implements OnInit {
     let _venueId = Number.parseInt(venueId)
 
     if (!this.venues) {
-      console.log('no venues')
       return ''
     }
-    
-    console.log('number')
-    console.log(this.venues)
+
     return this.venues.filter(v => v.id === _venueId).length === 1 ? this.venues.find(v => v.id === _venueId).name : '';
   }
 
-  
+
   private _filterVenue(value: any): any[] {
+
+    if (!this.venues)
+      return []
+
     if ((typeof value === 'string' || value instanceof String) && value != "") {
       const filterValue = value.toLowerCase()
-      
       return this.venues.filter(venue => venue.name.toLowerCase().includes(filterValue) || venue.id.toString() === value);
     }
-    
+
     else if (typeof value === 'number') {
-      console.log("finding")
       return this.venues.filter(venue => venue.id === value);
     }
-    else
-   {
-    console.log(this.venues.slice())
-
+    else {
       return this.venues.slice();
-      
     }
 
   }

@@ -1,23 +1,10 @@
 <div class="container-fluid">
 <form [formGroup]="form">
-    
-   
-
     <div class="row">
-        <div class="col-md-4">
-            <mat-form-field appearance="fill">
-                <mat-label>Event type</mat-label>
-                <mat-select formControlName="event_type">
-                    <mat-option *ngFor="let eventType of eventTypes" [value]="eventType">
-                        {{eventType}}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
         <div class="col-md-8">
             <mat-form-field appearance="fill">
-                <mat-label>Event description</mat-label>
-                <input matInput type="text" formControlName="description" placeholder="Goldstein Wedding"
+                <mat-label>Description</mat-label>
+                <input matInput type="text" formControlName="description" placeholder=""
                     autocomplete="off" required>
             </mat-form-field>
         </div>
@@ -39,7 +26,7 @@
         </div>
         <div class="col-md-4">
             <mat-form-field appearance="fill">
-                <mat-label>status update date</mat-label>
+                <mat-label>Status update date</mat-label>
                 <input matInput [matDatepicker]="picker2" formControlName="status_update_date" readonly>
                 <mat-datepicker #picker2></mat-datepicker>
             </mat-form-field>

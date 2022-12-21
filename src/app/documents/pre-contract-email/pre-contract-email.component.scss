@@ -1,0 +1,17 @@
+table {
+    width: 100%;
+   
+  
+    & th {
+      font-weight: bold;
+      font-size: 120%;
+    }
+  }
+
+  mat-form-field {
+    width: 100%;
+  }
+
+.mat-progress-spinner circle, .mat-spinner circle {
+    stroke: #2A79FF!important;
+}

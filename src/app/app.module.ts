@@ -8,10 +8,10 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {MatNativeDateModule} from '@angular/material/core';
 import {HttpClientModule} from '@angular/common/http';
-import { EventComponent } from './event/event/event.component';
-import { EventStatusComponent } from './event/event-status/event-status.component';
+import { WeddingComponent } from './event/wedding/wedding.component';
+import { WeddingStatusComponent } from './event/wedding/wedding-status/wedding-status.component';
 import { EventListComponent } from './event/event-list/event-list.component';
-import { EventDetailsComponent } from './event/event-detail/event-details.component';
+import { WeddingMainDetailsComponent } from './event/wedding/wedding-main-detail/wedding-main-details.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { VenueSelectComponent } from './venue/venue-select/venue-select.component';
@@ -27,6 +27,9 @@ import { VideoListComponent } from './documents/video-list/video-list.component'
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { CallSheetComponent } from './documents/call-sheet/call-sheet.component';
+import { PreContractEmailComponent } from './documents/pre-contract-email/pre-contract-email.component';
+import { ProposalComponent } from './documents/proposal/proposal.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 
@@ -39,10 +42,10 @@ import { CallSheetComponent } from './documents/call-sheet/call-sheet.component'
 @NgModule({
   declarations: [
     AppComponent,
-    EventComponent,
-    EventStatusComponent,
+    WeddingComponent,
+    WeddingStatusComponent,
     EventListComponent,
-    EventDetailsComponent,
+    WeddingMainDetailsComponent,
     VenueSelectComponent,
     VenueAddComponent,
     DocumentsComponent,
@@ -54,7 +57,10 @@ import { CallSheetComponent } from './documents/call-sheet/call-sheet.component'
     CertEmailComponent,
     VideoAddComponent,
     VideoListComponent,
-    CallSheetComponent
+    CallSheetComponent,
+    PreContractEmailComponent,
+    ProposalComponent,
+    
     
   ],
     imports: [
@@ -68,6 +74,7 @@ import { CallSheetComponent } from './documents/call-sheet/call-sheet.component'
     ReactiveFormsModule,
     AppRoutingModule,
     NgbModule,
+    
     GooglePlaceModule,
     EditorModule
     

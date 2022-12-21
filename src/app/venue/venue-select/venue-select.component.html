@@ -7,7 +7,7 @@
                     <mat-label>Choose a venue</mat-label>
                     <input matInput placeholder="Search (name)" [matAutocomplete]="auto3" formControlName="venueId" />
 
-                    <mat-autocomplete #auto3="matAutocomplete" [displayWith]="displayVenue.bind(this)" (optionSelected)="onVenueSelected($event)">
+                    <mat-autocomplete #auto3="matAutocomplete" [displayWith]="displayVenue.bind(this)">
                         <mat-option *ngFor="let venue of filteredVenues | async" [value]="venue.id" > 
                             <span>{{venue.name}}</span><br>
                             <small>{{venue.address}}</small><br>

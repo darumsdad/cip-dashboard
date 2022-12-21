@@ -10,7 +10,6 @@ import { FileGenerateService } from 'src/app/services/file-generate.service';
 })
 export class CallSheetComponent implements OnInit {
 
-
   dataModel: FormControl = new FormControl();
   loading: any;
   create_working: boolean;
@@ -24,29 +23,29 @@ export class CallSheetComponent implements OnInit {
   eventId: any
 
   ngOnInit(): void {
-    this.load()
+    //this.load()
   }
 
   load() {
-    this.loading = true;
-    this.eventService.get(this.eventId).subscribe(
-      {
-        next: (event) => {
-          console.log(event)
-          if (event.data.call_sheet[0])
-          {
-            this.dataModel.patchValue( atob(event.data.call_sheet[0].html) )
-            this.inputFile = event.data.call_sheet[0].file
-          }
+    // this.loading = true;
+    // this.eventService.get(this.eventId).subscribe(
+    //   {
+    //     next: (event) => {
+    //       console.log(event)
+    //       if (event.data.call_sheet[0])
+    //       {
+    //         this.dataModel.patchValue( atob(event.data.call_sheet[0].html) )
+    //         this.inputFile = event.data.call_sheet[0].file
+    //       }
 
-          this.loading = false;
-        },
-        error: (error) => {
-          alert(error.mesage)
-          this.loading = false;
-        }
-      }
-    )
+    //       this.loading = false;
+    //     },
+    //     error: (error) => {
+    //       alert(error.mesage)
+    //       this.loading = false;
+    //     }
+    //   }
+    // )
   }
 
   save($event: any) {

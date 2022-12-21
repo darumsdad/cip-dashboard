@@ -23,11 +23,11 @@ export var STATUS_MAP: any[] = [
 
 @Component({
   selector: 'app-event-status',
-  templateUrl: './event-status.component.html',
-  styleUrls: ['./event-status.component.scss'],
+  templateUrl: './wedding-status.component.html',
+  styleUrls: ['./wedding-status.component.scss'],
   viewProviders: [{ provide: ControlContainer, useExisting: FormGroupDirective }]
 })
-export class EventStatusComponent implements OnInit {
+export class WeddingStatusComponent implements OnInit {
 
   constructor(
     private rootFormGroup: FormGroupDirective
@@ -35,19 +35,14 @@ export class EventStatusComponent implements OnInit {
 
   form: FormGroup
   statuses: any  = STATUS_MAP;
-
   eventTypes: any[] = ['Wedding', 'Mitzvah', 'Other']
 
-  
-
   ngOnInit(): void {
-    console.log("set form")
     this.form = this.rootFormGroup.control.get('data') as FormGroup;
     console.log(this.form.value)
   }
 
   onChangeStatus(event: any) {
-    console.log(event);
     this.form.get('status_update_date').patchValue(new Date().toISOString())
   }
 

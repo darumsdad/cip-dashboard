@@ -44,10 +44,18 @@
 
     <h2>Bride</h2>
     <div class="row">
-        <div class="col-md-3">
+        
+        <div class="col-md-2">
             <mat-form-field appearance="fill">
-                <mat-label>Bride name</mat-label>
-                <input matInput type="text" formControlName="bride_name" placeholder="Jane Doe" autocomplete="off">
+                <mat-label>Bride first name</mat-label>
+                <input matInput type="text" formControlName="bride_first_name" placeholder="Jane" autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Bride last name</mat-label>
+                <input matInput type="text" formControlName="bride_last_name" placeholder="Doe" autocomplete="off">
             </mat-form-field>
         </div>
 
@@ -57,8 +65,6 @@
                 <mat-label>Bride phone</mat-label>
                 <input  matInput type="phone" name="bride_phone" (focusout)="onFocusOutEvent($event)" formControlName="bride_phone" placeholder="Jane Doe" autocomplete="off">
             </mat-form-field>
-
-
         </div>
 
         <div class="col-md-1">
@@ -74,20 +80,27 @@
             </mat-form-field>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Bride social</mat-label>
                 <input matInput type="text" formControlName="bride_social" placeholder="#social" autocomplete="off">
             </mat-form-field>
         </div>
-
     </div>
 
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <mat-form-field appearance="fill">
-                <mat-label>Bride mothers name</mat-label>
-                <input matInput type="text" formControlName="bride_mom_name" placeholder="Jane Does Mom"
+                <mat-label>Bride mothers first name</mat-label>
+                <input matInput type="text" formControlName="bride_mom_first_name" placeholder="Jane Does Mom"
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Bride mothers last name</mat-label>
+                <input matInput type="text" formControlName="bride_mom_last_name" placeholder="Jane Does Mom"
                     autocomplete="off">
             </mat-form-field>
         </div>
@@ -115,10 +128,18 @@
     </div>
 
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <mat-form-field appearance="fill">
-                <mat-label>Bride fathers name</mat-label>
-                <input matInput type="text" formControlName="bride_dad_name" placeholder="Jane Does Dad"
+                <mat-label>Bride fathers first name</mat-label>
+                <input matInput type="text" formControlName="bride_dad_first_name" placeholder="Jane Does Dad"
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Bride fathers last name</mat-label>
+                <input matInput type="text" formControlName="bride_dad_last_name" placeholder="Jane Does Dad"
                     autocomplete="off">
             </mat-form-field>
         </div>
@@ -145,10 +166,17 @@
 
     <h2>Groom</h2>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <mat-form-field appearance="fill">
-                <mat-label>Groom name</mat-label>
-                <input matInput type="text" formControlName="groom_name" placeholder="John Doe" autocomplete="off">
+                <mat-label>Groom first name</mat-label>
+                <input matInput type="text" formControlName="groom_first_name" placeholder="John Doe" autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Groom last name</mat-label>
+                <input matInput type="text" formControlName="groom_last_name" placeholder="John Doe" autocomplete="off">
             </mat-form-field>
         </div>
 
@@ -172,7 +200,7 @@
             </mat-form-field>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Groom social</mat-label>
                 <input matInput type="text" formControlName="groom_social" placeholder="#social" autocomplete="off">
@@ -182,10 +210,18 @@
     </div>
 
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <mat-form-field appearance="fill">
-                <mat-label>Groom mothers name</mat-label>
-                <input matInput type="text" formControlName="groom_mom_name" placeholder="John Does Mom"
+                <mat-label>Groom mothers first name</mat-label>
+                <input matInput type="text" formControlName="groom_mom_first_name" placeholder="John Does Mom"
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Groom mothers last name</mat-label>
+                <input matInput type="text" formControlName="groom_mom_last_name" placeholder="John Does Mom"
                     autocomplete="off">
             </mat-form-field>
         </div>
@@ -213,10 +249,18 @@
     </div>
 
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-2">
             <mat-form-field appearance="fill">
-                <mat-label>Groom fathers name</mat-label>
-                <input matInput type="text" formControlName="groom_dad_name" placeholder="John Does Dad"
+                <mat-label>Groom fathers first name</mat-label>
+                <input matInput type="text" formControlName="groom_dad_first_name" placeholder="John Does Dad"
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Groom fathers last name</mat-label>
+                <input matInput type="text" formControlName="groom_dad_last_name" placeholder="John Does Dad"
                     autocomplete="off">
             </mat-form-field>
         </div>
@@ -244,10 +288,18 @@
     <h2>Planner</h2>
 
     <div class="row">
-        <div class="col-md-3">
+
+        <div class="col-md-2">
             <mat-form-field appearance="fill">
-                <mat-label>Planner name</mat-label>
-                <input matInput type="text" formControlName="planner_name" placeholder="planner" autocomplete="off">
+                <mat-label>Planner first name</mat-label>
+                <input matInput type="text" formControlName="planner_first_name" placeholder="planner" autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Planner last name</mat-label>
+                <input matInput type="text" formControlName="planner_last_name" placeholder="planner" autocomplete="off">
             </mat-form-field>
         </div>
 
@@ -275,7 +327,7 @@
         <div class="col-md-6">
             <mat-form-field appearance="fill">
                 <mat-label>Other contact information</mat-label>
-                <textarea matInput type="textarea" formControlName="other_contact" placeholder="bride dogs name"
+                <textarea matInput type="textarea" formControlName="other_contact" placeholder="other important people"
                     autocomplete="off"></textarea>
             </mat-form-field>
         </div>
@@ -289,14 +341,14 @@
         <div class="col-md-3">
             <mat-form-field appearance="fill">
                 <mat-label>Venue Name From JotForm</mat-label>
-                <input matInput type="textarea" rows="4" formControlName="jotform_venue_name" placeholder=""
+                <input matInput type="text" formControlName="jotform_venue_name" placeholder=""
                     autocomplete="off">
             </mat-form-field>
         </div>
         <div class="col-md-3">
             <mat-form-field appearance="fill">
                 <mat-label>Venue Phone From JotForm</mat-label>
-                <input matInput type="textarea" rows="4" formControlName="jotform_venue_phone" placeholder=""
+                <input matInput type="text" formControlName="jotform_venue_phone" placeholder=""
                     autocomplete="off">
             </mat-form-field>
         </div>
@@ -309,7 +361,7 @@
         <div class="col-md-6">
             <mat-form-field appearance="fill">
                 <mat-label>Venue Info From JotForm</mat-label>
-                <textarea matInput type="textarea" rows="4" formControlName="jotform_venue" placeholder=""
+                <textarea matInput type="textarea" rows="6" formControlName="jotform_venue" placeholder=""
                     autocomplete="off"></textarea>
             </mat-form-field>
         </div>

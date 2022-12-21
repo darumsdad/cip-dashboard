@@ -14,10 +14,12 @@ export class EmailService {
 
   constructor(private http: HttpClient) { }
 
-  post(id: any,data: any): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/${id}`, data);
-  }
+  // post(id: any,data: any): Observable<any> {
+  //   return this.http.post<any>(`${this.baseUrl}/${id}`, data);
+  // }
 
-  
+  post(data: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}`, data);
+  }
 
 }
