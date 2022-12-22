@@ -9,6 +9,11 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class EventService {
+  
+  
+  
+  
+  
 
 
 
@@ -93,6 +98,10 @@ export class EventService {
 
   get(id: any): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/${id}`);
+  }
+
+  save(id: any, data: any) {
+    return this.http.put<any>(`${this.baseUrl}/${id}/save`,data);
   }
 
   addVideo(id: any, data: any): Observable<any> {

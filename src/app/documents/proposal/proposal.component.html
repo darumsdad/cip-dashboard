@@ -1,15 +1,115 @@
 <mat-expansion-panel>
-<mat-expansion-panel-header>
-    <mat-panel-title>
-        Proposal
-    </mat-panel-title>
-    <mat-panel-description>
-        This is a summary of the content
-    </mat-panel-description>
-</mat-expansion-panel-header>
-<div class="row">
-    <div class="col-md-3">
-        <button mat-raised-button color="primary" class="pull-left">Create</button>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Proposal
+        </mat-panel-title>
+        <mat-panel-description>
+            This is a summary of the content
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="row">
+        <div class="col-md-8">
+            <mat-form-field appearance="fill">
+                <mat-label>Contacts</mat-label>
+                <mat-select [formControl]="contacts" multiple>
+                    <mat-select-trigger>
+                        {{contacts.value?.[0]?.name || ''}}
+                        <span *ngIf="(contacts.value?.length || 0) > 1" class="example-additional-selection">
+                            (+{{(contacts.value?.length || 0) - 1}} {{contacts.value?.length === 2 ? 'other' :
+                            'others'}})
+                        </span>
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let contact of contactList" [value]="contact">{{contact.name}}
+                        {{contact.email}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-1">
+            <button [disabled]="canCreate()" (click)="onCreate()" mat-raised-button color="primary"
+                class="pull-left">Create</button>
+        </div>
+        <div class="col-md-1">
+            <button [disabled]=" !this.contacts.value || this.contacts.value?.length == 0  || !preview" (click)="onSend()" mat-raised-button color="primary"
+                class="pull-left">Send</button>
+        </div>
+
     </div>
-</div>
+    <div class="row">
+        <div class="col-md-2">
+            <b>Bride:</b>&nbsp;{{bride_first?.value}}
+        </div>
+        <div class="col-md-2">
+            <b>Groom:</b>&nbsp; {{groom_first?.value}}
+        </div>
+        <div class="col-md-8">
+            <b>To:</b>&nbsp; {{to}}
+        </div>
+    </div>
+    &nbsp;
+    <div class="row">
+        <div class="col-md-4">
+            <b>Date:</b>&nbsp;{{date?.value.split('T')[0]}}
+        </div>
+        <div class="col-md-6">
+            <b>Venue:</b>&nbsp; {{venue?.name}}
+        </div>
+        
+    </div>
+    &nbsp;
+    <div class="row">
+        <div class="col-md-2">
+            <b>Quote:</b>&nbsp;{{quote?.value}}
+        </div>
+        <div class="col-md-2">
+            <b>Hours:</b>&nbsp; {{hours?.value}}
+        </div>
+        <div class="col-md-2">
+            <b>Staff:</b>&nbsp; {{count?.value}}
+        </div>
+        <div class="col-md-6">
+            <b>Include Photographers:</b>&nbsp; {{include_photographer?.value ? 'Y' : 'N'}}
+        </div>
+        
+    </div>
+    &nbsp;
+    <div class="row">
+        <div class="col-md-2">
+            <b>Teaser:</b>&nbsp;{{teaser?.value ? 'Y' : 'N'}}
+        </div>
+        <div class="col-md-2">
+            <b>Highlight:</b>&nbsp; {{highlights?.value ? 'Y' : 'N'}}
+        </div>
+        <div class="col-md-2">
+            <b>Full:</b>&nbsp; {{full?.value ? 'Y' : 'N'}}
+        </div>
+       
+        
+    </div>
+    &nbsp;
+    <div class="row">
+        <div *ngIf="link" class="col-md-2">
+            <b>Link:</b>&nbsp;<a href='{{link}}' target="_blank">link</a>
+        </div>
+    </div>
+    &nbsp;
+
+    <mat-accordion *ngIf="preview">
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Preview
+                </mat-panel-title>
+                
+            </mat-expansion-panel-header>
+
+     
+    <div class="row">
+        <div class="col-md-2">
+            <div [innerHtml]="preview"></div>
+        </div>
+    </div>
+
+
+  
 </mat-expansion-panel>
+    </mat-accordion>
