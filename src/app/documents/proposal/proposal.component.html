@@ -29,8 +29,8 @@
                 class="pull-left">Create</button>
         </div>
         <div class="col-md-1">
-            <button [disabled]=" !this.contacts.value || this.contacts.value?.length == 0  || !preview" (click)="onSend()" mat-raised-button color="primary"
-                class="pull-left">Send</button>
+            <button [disabled]=" !this.contacts.value || this.contacts.value?.length == 0  || !preview"
+                (click)="onSend()" mat-raised-button color="primary" class="pull-left">Send</button>
         </div>
 
     </div>
@@ -48,12 +48,12 @@
     &nbsp;
     <div class="row">
         <div class="col-md-4">
-            <b>Date:</b>&nbsp;{{date?.value.split('T')[0]}}
+            <b>Date:</b>&nbsp;{{date?.value}}
         </div>
         <div class="col-md-6">
             <b>Venue:</b>&nbsp; {{venue?.name}}
         </div>
-        
+
     </div>
     &nbsp;
     <div class="row">
@@ -69,7 +69,7 @@
         <div class="col-md-6">
             <b>Include Photographers:</b>&nbsp; {{include_photographer?.value ? 'Y' : 'N'}}
         </div>
-        
+
     </div>
     &nbsp;
     <div class="row">
@@ -82,8 +82,8 @@
         <div class="col-md-2">
             <b>Full:</b>&nbsp; {{full?.value ? 'Y' : 'N'}}
         </div>
-       
-        
+
+
     </div>
     &nbsp;
     <div class="row">
@@ -93,23 +93,45 @@
     </div>
     &nbsp;
 
-    <mat-accordion *ngIf="preview">
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-panel-title>
-                    Preview
-                </mat-panel-title>
-                
-            </mat-expansion-panel-header>
 
+    <mat-expansion-panel *ngIf="preview">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Advanced
+          </mat-panel-title>
+          
+        </mat-expansion-panel-header>
      
-    <div class="row">
-        <div class="col-md-2">
-            <div [innerHtml]="preview"></div>
-        </div>
-    </div>
 
+    <mat-tab-group dynamicHeight animationDuration="0ms">
+        <mat-tab  label="Template">
 
-  
+            <ng-template matTabContent>
+                <div class="row">
+                    <div class="col-md-12">
+                        <editor [formControl]="editor" apiKey="p9ejaukcdifecl6fhwowyud2bjuqzwbyfiyhtktmxtvbx0nq"
+                            [init]="{plugins: 'link', height: 2200} "> </editor>
+                    </div>
+                </div>
+              </ng-template>
+
+           
+           
+
+        </mat-tab>
+        <mat-tab *ngIf="preview" label="Preview">
+
+            <div class="row">
+                <div class="col-md-2">
+                    <div [innerHtml]="preview"></div>
+                </div>
+            </div>
+
+        </mat-tab>
+    </mat-tab-group>
+    
 </mat-expansion-panel>
-    </mat-accordion>
+
+    
+
+   

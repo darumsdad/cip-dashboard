@@ -18,6 +18,7 @@ throw new Error('Method not implemented.');
 
 
   contacts: FormControl<any>;
+  editor: FormControl;
   contactList : any = [];
   form: FormGroup;
   contact_types: any = ['bride', 'bride_mom', 'bride_dad', 'groom', 'groom_mom', 'groom_dad', 'planner'];
@@ -63,6 +64,7 @@ throw new Error('Method not implemented.');
       teaser: this.teaser.value,
       full: this.full.value,
       contacts: this.contacts.value,
+      include_photographer: this.include_photographer.value,
       eventId: this.eventId,
       type: 'proposal'
     }
@@ -122,16 +124,17 @@ throw new Error('Method not implemented.');
     console.log(this.proposal)
     if (this.proposal.value)
     {
-      console.log(this.proposal?.value?.html)
-      this.preview = this.sanitizer.bypassSecurityTrustHtml(atob(this.proposal?.value?.html))
+      let raw_html = atob(this.proposal?.value?.html)
+      let template_html = atob(this.proposal?.value?.template_html)
+      this.preview = this.sanitizer.bypassSecurityTrustHtml(raw_html)
       this.link = this.proposal?.value?.link
+      this.editor.patchValue(template_html);
     }
-    console.log(this.preview)
-    
   }
   ngOnInit(): void {
 
 
+    this.editor =  new FormControl();
     this.contacts = new FormControl();
 
     this.form = this.rootFormGroup.control.get('data') as FormGroup;
