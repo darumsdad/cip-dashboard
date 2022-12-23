@@ -1,6 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective } from '@angular/forms';
+import { MatStepper, MatStepperIntl } from '@angular/material/stepper';
 import { DomSanitizer } from '@angular/platform-browser';
+import { EmailService } from 'src/app/services/email.service';
 import { EventService } from 'src/app/services/event.service';
 import { FileGenerateService } from 'src/app/services/file-generate.service';
 import { VenueService } from 'src/app/services/venue.service';
@@ -9,16 +11,15 @@ import { VenueService } from 'src/app/services/venue.service';
   selector: 'app-proposal',
   templateUrl: './proposal.component.html',
   styleUrls: ['./proposal.component.scss']
+  
 })
 export class ProposalComponent implements OnInit {
-onSend() {
-throw new Error('Method not implemented.');
-}
+
 
 
 
   contacts: FormControl<any>;
-  editor: FormControl;
+  subject: FormControl;
   contactList : any = [];
   form: FormGroup;
   contact_types: any = ['bride', 'bride_mom', 'bride_dad', 'groom', 'groom_mom', 'groom_dad', 'planner'];
@@ -37,21 +38,110 @@ throw new Error('Method not implemented.');
   full: any;
   link: any;
   preview: any;
+  loading: any = false;
 
   @Input()
   eventId: any
   trustedHtml: any;
+  raw_html: string;
+  date_str: any;
 
   constructor(
     private rootFormGroup: FormGroupDirective,
     public venueService: VenueService,
     public generatorService: FileGenerateService,
     private sanitizer: DomSanitizer,
-    private eventService: EventService
+    private eventService: EventService,
+    private emailService: EmailService
   ) { }
 
-  onCreate() {
+  formatTo(to: any) {
+    
+    return to.map(x => x.email).join(',')  
+  }
+    
+  getStatus(email: any) {
+     let status = email.status
 
+     if (status)
+     {
+      let last = status[status.length - 1]
+      return last;
+     }
+
+     return "";
+  }
+
+  getHtml(email: any)
+  {
+
+    return this.sanitizer.bypassSecurityTrustHtml(atob(email.encoded_html))
+  }
+
+  onSend(stepper: MatStepper) {
+    this.loading = true;
+    let payload = {
+      contacts: this.contacts.value,
+      subject: this.subject.value,
+      encoded_html: btoa(this.raw_html),
+      
+    }
+
+    console.log("calling on Send")
+    this.emailService.post(payload).subscribe(
+     {
+
+      next: (email) => {
+       
+          
+          let proposal = this.proposal.value;
+
+          if (!proposal)
+          {
+            proposal = {
+              emails: []
+            }
+          }
+       
+          if (!proposal.emails) {
+            proposal.emails = [];
+          } 
+          proposal.emails.push(email);
+
+          this.eventService.save(this.eventId, {
+            type: 'proposal',
+            data: proposal
+          }).subscribe(
+            {
+
+              next: (proposal) => {
+                this.proposal.patchValue(proposal);
+                this.contacts.reset();
+                stepper.reset()
+                this.loading = false;
+              },
+
+              error: (error) => {
+                alert(error.mesage)
+                this.loading = false;
+              }
+
+            }
+          )
+      },
+
+      error: (error) => {
+        alert(error.message)
+        this.loading = false;
+      }
+
+     }
+    )
+  }
+    
+  onCreate() {
+    
+    this.loading = true;
     let payload = {
       bride: this.bride_first.value,
       groom: this.groom_first.value,
@@ -73,27 +163,13 @@ throw new Error('Method not implemented.');
       {
         next: (result) => {
           console.log(result)
-
-          this.eventService.save(this.eventId,{
-
-            type: 'proposal',
-            data: result
-          }).subscribe(
-            {
-              next: (result) => {
-                this.proposal.patchValue(result)
-                this.load_proposal()
-                console.log(this.proposal)
-              },
-              error: (error) => {
-                alert(error.message)
-              }
-            }
-          )
-         
+          this.raw_html = atob(result.html)
+          this.preview = this.sanitizer.bypassSecurityTrustHtml(this.raw_html)
+          this.loading = false;
         },
         error: (error) => {
           alert(error.message)
+          this.loading = false;
         }
       }
     )
@@ -102,6 +178,7 @@ throw new Error('Method not implemented.');
 
   canCreate() : boolean {
    
+
     let ret = 
   //   
     
@@ -111,7 +188,7 @@ throw new Error('Method not implemented.');
     || this.hours.value === ""
     || this.count.value === ""
     || this.date.value === ""
-    || this.venue === ""
+    || !this.venue
 
    && (this.highlights.value || this.teaser.value || this.full.value)
  
@@ -119,41 +196,48 @@ throw new Error('Method not implemented.');
 
   }
 
-  load_proposal(): void {
-    this.proposal = this.form.get('proposal')
-    console.log(this.proposal)
-    if (this.proposal.value)
-    {
-      let raw_html = atob(this.proposal?.value?.html)
-      let template_html = atob(this.proposal?.value?.template_html)
-      this.preview = this.sanitizer.bypassSecurityTrustHtml(raw_html)
-      this.link = this.proposal?.value?.link
-      this.editor.patchValue(template_html);
-    }
-  }
+  
   ngOnInit(): void {
 
 
-    this.editor =  new FormControl();
+    this.subject =  new FormControl("Proposal from Creative Image Productions");
     this.contacts = new FormControl();
 
     this.form = this.rootFormGroup.control.get('data') as FormGroup;
 
-    this.load_proposal();
+    this.proposal = this.form.get('proposal')
   
     this.bride_first = this.form.get('bride_first_name')
     this.groom_first = this.form.get('groom_first_name')
     this.quote = this.form.get('quote')
     this.hours = this.form.get('hours')
     this.count = this.form.get('count')
+    
     this.date = this.form.get('date')
     this.include_photographer = this.form.get('include_photographer')
 
     this.highlights = this.form.get('highlights')
     this.teaser = this.form.get('teaser')
     this.full = this.form.get('full')
+
+
+    
+
+    if (this.date.value instanceof Date)
+    {
+      this.date_str = this.date.value.toISOString().split('T')[0]
+    } else if (this.date.value) {
+      this.date_str = this.date.value.split('T')[0]
+    } else {
+      
+      this.date_str = "";
+      
+    }
+    
     
     let venueId = this.form.get('venueId').value
+
+    
 
     if (venueId)
     {
@@ -185,11 +269,15 @@ throw new Error('Method not implemented.');
     this.contacts.valueChanges.subscribe(
       {
         next: (values) => {
-            this.to = values.map(x => x.email).join(",")
+            this.to = values?.map(x => x.email).join(",")
         }
       }
       
     )
+
+    console.log("form loaded")
+    console.log(this.form)
+   
   }
 
 }
