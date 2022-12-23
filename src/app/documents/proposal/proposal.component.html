@@ -82,7 +82,24 @@
 
         </mat-step>
 
-        <mat-step label="Review Preview">
+     
+        
+        <mat-step label="Edit">
+            <div>
+                <button mat-raised-button color="primary" matStepperPrevious>Back</button>
+                &nbsp;
+                <button mat-raised-button color="primary" (click)="onCreatePreview()" matStepperNext>Create Preview</button>
+            </div>
+            &nbsp;
+            <div class="row">
+                <div class="col-md-12">
+                    <editor [formControl]="editor" apiKey="p9ejaukcdifecl6fhwowyud2bjuqzwbyfiyhtktmxtvbx0nq" [init]="{plugins: 'link', width:700, height:2200} "> </editor>
+                </div>
+            </div>
+
+        </mat-step>
+
+        <mat-step label="Preview">
             <div>
                 <button mat-raised-button color="primary" matStepperPrevious>Back</button>
                 &nbsp;
@@ -164,16 +181,41 @@
 
           
         </mat-expansion-panel-header>
-        <div class="row">
-            <div  class="col-md-12">
-                <b>Link:</b>&nbsp;<a href='{{email.link}}' target="_blank">Jot Form Link</a>
-            </div>
-        </div>
-        &nbsp;
-        <div class="row">
-            <div class="col-md-2">
-                <div [innerHtml]="getHtml(email)"></div>
-            </div>
-        </div>
+
+        <mat-tab-group dynamicHeight animationDuration="0ms">
+            <mat-tab label="Status">
+                <ng-template matTabContent>
+                    <table>
+                    <th>Status</th>
+                    <th>Time</th>
+                    <tr *ngFor="let status of email.status">
+                        <td>{{status.event}}</td>
+                        <td>{{status.ts_epoch | date  : 'MMM d, y, h:mm:ss a'}}</td>
+                            
+                        
+                    </tr>
+                    </table>
+                </ng-template>
+            </mat-tab>
+            <mat-tab label="Preview">
+                <div class="row mt-5">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div  class="col-md-12">
+                                <b>Link:</b>&nbsp;<a href='{{email.link}}' target="_blank">Jot Form Link</a>
+                            </div>
+                        </div>
+                        &nbsp;
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div [innerHtml]="getHtml(email)"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-tab>
+          
+        </mat-tab-group>
+      
     </mat-expansion-panel>
 </mat-accordion>

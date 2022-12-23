@@ -39,6 +39,7 @@ export class ProposalComponent implements OnInit {
   link: any;
   preview: any;
   loading: any = false;
+  editor: FormControl;
 
   @Input()
   eventId: any
@@ -61,12 +62,14 @@ export class ProposalComponent implements OnInit {
   }
     
   getStatus(email: any) {
+
+    
      let status = email.status
 
      if (status)
      {
-      let last = status[status.length - 1]
-      return last;
+       let last = status[status.length - 1]
+       return last.event;
      }
 
      return "";
@@ -83,8 +86,8 @@ export class ProposalComponent implements OnInit {
     let payload = {
       contacts: this.contacts.value,
       subject: this.subject.value,
-      encoded_html: btoa(this.raw_html),
-      
+      encoded_html: btoa(this.editor.value),
+      key: 'proposal:'+ this.eventId
     }
 
     console.log("calling on Send")
@@ -164,7 +167,8 @@ export class ProposalComponent implements OnInit {
         next: (result) => {
           console.log(result)
           this.raw_html = atob(result.html)
-          this.preview = this.sanitizer.bypassSecurityTrustHtml(this.raw_html)
+          
+          this.editor.patchValue(this.raw_html);
           this.loading = false;
         },
         error: (error) => {
@@ -196,16 +200,27 @@ export class ProposalComponent implements OnInit {
 
   }
 
+  onCreatePreview()
+  {
+    this.preview = this.sanitizer.bypassSecurityTrustHtml(this.editor.value)
+  }
   
   ngOnInit(): void {
 
 
     this.subject =  new FormControl("Proposal from Creative Image Productions");
     this.contacts = new FormControl();
+    this.editor = new FormControl;
 
     this.form = this.rootFormGroup.control.get('data') as FormGroup;
 
     this.proposal = this.form.get('proposal')
+
+    
+    this.proposal.value?.emails?.forEach(
+      email => email.status.sort((a, b) => (a.ts_epoch > b.ts_epoch) ? 1 : -1)
+    )
+  
   
     this.bride_first = this.form.get('bride_first_name')
     this.groom_first = this.form.get('groom_first_name')
