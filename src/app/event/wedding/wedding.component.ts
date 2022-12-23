@@ -100,10 +100,9 @@ export class WeddingComponent implements OnInit {
         effective_date: [''],
         insurance_contact: [''],
         include_photographer: [false],
-
-        pre_proposal: [],
+        precontract: [],
+        precontract_jotform: [''],
         proposal: [],
-
         last_submission_id: new FormControl()
 
       })

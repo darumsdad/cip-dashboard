@@ -27,9 +27,11 @@ import { VideoListComponent } from './documents/video-list/video-list.component'
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { CallSheetComponent } from './documents/call-sheet/call-sheet.component';
-import { PreContractEmailComponent } from './documents/pre-contract-email/pre-contract-email.component';
+ 
 import { ProposalComponent } from './documents/proposal/proposal.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { PrecontractComponent } from './documents/precontract/precontract.component';
+import { PrecontractJotformSubmissionComponent } from './documents/precontract-jotform-submission/precontract-jotform-submission.component';
 
 
 
@@ -58,8 +60,10 @@ import { MatExpansionModule } from '@angular/material/expansion';
     VideoAddComponent,
     VideoListComponent,
     CallSheetComponent,
-    PreContractEmailComponent,
+ 
     ProposalComponent,
+    PrecontractComponent,
+    PrecontractJotformSubmissionComponent,
     
     
   ],

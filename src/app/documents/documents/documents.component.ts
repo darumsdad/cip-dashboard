@@ -8,7 +8,6 @@ import { EventService } from 'src/app/services/event.service';
 import { VenueService } from 'src/app/services/venue.service';
 import { CertEmailComponent } from '../cert-email/cert-email.component';
 import { EmailSendComponent } from '../email-send/email-send.component';
-import { PreContractEmailComponent } from '../pre-contract-email/pre-contract-email.component';
 
 @Component({
   selector: 'app-documents',
@@ -53,79 +52,79 @@ export class DocumentsComponent implements OnInit {
     
     this.form = this.rootFormGroup.control.get('data') as FormGroup;
 
-    this.contact_types.forEach(e => {
-      let email_tag = e + '_email'
-      let first_name_tag = e + '_first_name'
-      let last_name_tag = e + '_last_name'
+    // this.contact_types.forEach(e => {
+    //   let email_tag = e + '_email'
+    //   let first_name_tag = e + '_first_name'
+    //   let last_name_tag = e + '_last_name'
 
-      if (this.form.get(email_tag).value && this.form.get(first_name_tag).value && this.form.get(last_name_tag).value) {
-        this.contactList.push({
-          type: e,
-          name: this.form.get(first_name_tag).value + ' ' + this.form.get(last_name_tag).value,
-          email: this.form.get(email_tag).value
-        })
-      }
-    })
-    console.log(this.emails)
+    //   if (this.form.get(email_tag).value && this.form.get(first_name_tag).value && this.form.get(last_name_tag).value) {
+    //     this.contactList.push({
+    //       type: e,
+    //       name: this.form.get(first_name_tag).value + ' ' + this.form.get(last_name_tag).value,
+    //       email: this.form.get(email_tag).value
+    //     })
+    //   }
+    // })
+    // console.log(this.emails)
 
-    this.load(this.form);
+    // this.load(this.form);
 
   }
 
-  can_send_proposal() {
-    return this.form.get('venueId').value &&
-      this.form.get('bride_first_name').value &&
-      this.form.get('bride_last_name').value &&
-      this.form.get('quote').value &&
-      this.form.get('hours').value &&
-      this.form.get('count').value &&
-      this.form.get('date').value &&
-      (this.form.get('teaser').value || this.form.get('highlights').value || this.form.get('full').value) &&
-      this.form.get('groom_first_name').value
-    this.form.get('groom_last_name').value
-  }
+  // can_send_proposal() {
+  //   return this.form.get('venueId').value &&
+  //     this.form.get('bride_first_name').value &&
+  //     this.form.get('bride_last_name').value &&
+  //     this.form.get('quote').value &&
+  //     this.form.get('hours').value &&
+  //     this.form.get('count').value &&
+  //     this.form.get('date').value &&
+  //     (this.form.get('teaser').value || this.form.get('highlights').value || this.form.get('full').value) &&
+  //     this.form.get('groom_first_name').value
+  //   this.form.get('groom_last_name').value
+  // }
 
-  can_send_contract() {
-    return this.form.get('venueId').value &&
-      this.form.get('bride_name').value &&
-      this.form.get('quote').value &&
-      this.form.get('hours').value &&
-      this.form.get('count').value &&
-      this.form.get('date').value &&
-      (this.form.get('teaser').value || this.form.get('highlights').value || this.form.get('full').value) &&
-      this.form.get('groom_name').value
-  }
+  // can_send_contract() {
+  //   return this.form.get('venueId').value &&
+  //     this.form.get('bride_name').value &&
+  //     this.form.get('quote').value &&
+  //     this.form.get('hours').value &&
+  //     this.form.get('count').value &&
+  //     this.form.get('date').value &&
+  //     (this.form.get('teaser').value || this.form.get('highlights').value || this.form.get('full').value) &&
+  //     this.form.get('groom_name').value
+  // }
 
-  can_send_cert() {
-    return this.form.get('venueId').value &&
-      this.form.get('date').value
-  }
+  // can_send_cert() {
+  //   return this.form.get('venueId').value &&
+  //     this.form.get('date').value
+  // }
 
   private load(form: any) {
 
 
-    console.log("Reloading ")
+    // console.log("Reloading ")
     
-    let documents = []
-    let pre_proposal = form.get('pre_proposal').value;
-    console.log(pre_proposal)
-    if (pre_proposal) {
-      documents.push({
-        encoded_html: pre_proposal.encoded_html,
-        subject: pre_proposal.subject,
-        type: 'Pre Proposal',
-        inputFile: {
-          fileUrl: ''
-        },
-        contact: pre_proposal.contact,
-        updates: pre_proposal.updates,
-        sending: false
-      })
-    }
+    // let documents = []
+    // let pre_proposal = form.get('pre_proposal').value;
+    // console.log(pre_proposal)
+    // if (pre_proposal) {
+    //   documents.push({
+    //     encoded_html: pre_proposal.encoded_html,
+    //     subject: pre_proposal.subject,
+    //     type: 'Pre Proposal',
+    //     inputFile: {
+    //       fileUrl: ''
+    //     },
+    //     contact: pre_proposal.contact,
+    //     updates: pre_proposal.updates,
+    //     sending: false
+    //   })
+    // }
 
-    console.log(documents)
+    // console.log(documents)
 
-    this.dataSource.data = documents
+    // this.dataSource.data = documents
 
     // this.loading = true
     // this.eventService.get(this.eventId).subscribe({
@@ -165,148 +164,135 @@ export class DocumentsComponent implements OnInit {
   
   send(event: any) {
 
-    event.sending = true;
+    // event.sending = true;
     
-    let payload = {
-        encoded_html: event.encoded_html,
-        contact: event.contact,
-        subject: event.subject,
-        key: this.eventId + ':' + event.type,
-        eventId: this.eventId
-    }
+    // let payload = {
+    //     encoded_html: event.encoded_html,
+    //     contact: event.contact,
+    //     subject: event.subject,
+    //     key: this.eventId + ':' + event.type,
+    //     eventId: this.eventId
+    // }
 
-    this.emailService.post(payload).subscribe(
-      {
-        next: (result) => {
-          event.sending = false;
-        },
-        error: (e) => {
-          alert(e.message)
-          event.sending = false;
-        }
-      }
-    )
+    // this.emailService.post(payload).subscribe(
+    //   {
+    //     next: (result) => {
+    //       event.sending = false;
+    //     },
+    //     error: (e) => {
+    //       alert(e.message)
+    //       event.sending = false;
+    //     }
+    //   }
+    // )
   }
 
   edit(document: any) {
-    if (document.type === 'Pre Proposal')
-      this.preProposal({
-        contactList: this.contactList,
-        eventId: this.eventId,
-        type: "pre_proposal",
-        form: this.form,
-        save_callback: this.save_callback
-      });
+    // if (document.type === 'Pre Proposal')
+    //   this.preProposal({
+    //     contactList: this.contactList,
+    //     eventId: this.eventId,
+    //     type: "pre_proposal",
+    //     form: this.form,
+    //     save_callback: this.save_callback
+    //   });
 
   }
 
   preProposal(data: any): void {
 
-    const dialogRef = this.dialog.open(PreContractEmailComponent, {
-      width: '650px',
-      data: data
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      // console.log(result);
-      // if (result) {
-      //   this.load(result)
-      // }
-      this.reload_callback();
-      this.load(this.form);
-
-    });
+   
   }
 
   openPreProposal(event: any): void {
 
-    this.preProposal({
-      contactList: this.contactList,
-      eventId: this.eventId,
-      type: "pre_proposal",
-      form: this.form,
-      save_callback: this.save_callback
-    });
+    // this.preProposal({
+    //   contactList: this.contactList,
+    //   eventId: this.eventId,
+    //   type: "pre_proposal",
+    //   form: this.form,
+    //   save_callback: this.save_callback
+    // });
 
 
   }
 
   onSave() {
-    this.save_callback()
+    // this.save_callback()
   }
 
   openContract(event: any): void {
-    const dialogRef = this.dialog.open(EmailSendComponent, {
-      width: '650px',
-      data: {
-        contactList: this.contactList,
-        eventId: this.eventId,
-        type: "contract"
-      }
-    });
+    // const dialogRef = this.dialog.open(EmailSendComponent, {
+    //   width: '650px',
+    //   data: {
+    //     contactList: this.contactList,
+    //     eventId: this.eventId,
+    //     type: "contract"
+    //   }
+    // });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log(result);
 
-      if (result) {
-        this.dataSource.data.push(result)
-        this.dataSource.data = this.dataSource.data.slice();
-      }
+    //   if (result) {
+    //     this.dataSource.data.push(result)
+    //     this.dataSource.data = this.dataSource.data.slice();
+    //   }
 
-    });
+    // });
   }
 
   openCert(event: any): void {
 
-    let venue_detials = this.venue.name
-      + ' ' + this.venue.address
-      + ' ' + this.venue.city
-      + ' ' + this.venue.state
-      + ' ' + this.venue.zip
+    // let venue_detials = this.venue.name
+    //   + ' ' + this.venue.address
+    //   + ' ' + this.venue.city
+    //   + ' ' + this.venue.state
+    //   + ' ' + this.venue.zip
 
-    const dialogRef = this.dialog.open(CertEmailComponent, {
-      width: '700px',
-      data: {
-        contactList: this.contactList,
-        eventId: this.eventId,
-        type: "cert",
-        defaults: {
-          insurance_contact: this.form.get('insurance_contact').value,
-          venue_details: venue_detials,
-          date: this.form.get('date').value
-        }
-      }
-    });
+    // const dialogRef = this.dialog.open(CertEmailComponent, {
+    //   width: '700px',
+    //   data: {
+    //     contactList: this.contactList,
+    //     eventId: this.eventId,
+    //     type: "cert",
+    //     defaults: {
+    //       insurance_contact: this.form.get('insurance_contact').value,
+    //       venue_details: venue_detials,
+    //       date: this.form.get('date').value
+    //     }
+    //   }
+    // });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        console.log(result);
-        this.dataSource.data.push(result)
-        this.dataSource.data = this.dataSource.data.slice();
-      }
+    // dialogRef.afterClosed().subscribe(result => {
+    //   if (result) {
+    //     console.log(result);
+    //     this.dataSource.data.push(result)
+    //     this.dataSource.data = this.dataSource.data.slice();
+    //   }
 
-    });
+    // });
   }
 
   openProposal(event: any): void {
-    const dialogRef = this.dialog.open(EmailSendComponent, {
-      width: '650px',
-      data: {
-        contactList: this.contactList,
-        eventId: this.eventId,
-        type: "proposal"
-      }
-    });
+    // const dialogRef = this.dialog.open(EmailSendComponent, {
+    //   width: '650px',
+    //   data: {
+    //     contactList: this.contactList,
+    //     eventId: this.eventId,
+    //     type: "proposal"
+    //   }
+    // });
 
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log(result);
 
-      if (result) {
-        this.dataSource.data.push(result)
-        this.dataSource.data = this.dataSource.data.slice();
-      }
+    //   if (result) {
+    //     this.dataSource.data.push(result)
+    //     this.dataSource.data = this.dataSource.data.slice();
+    //   }
 
-    });
+    // });
   }
 
 }

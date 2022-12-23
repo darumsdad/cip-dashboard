@@ -1,3 +1,8 @@
 mat-form-field {
     width: 100%;
   }
+
+  .mat-expansion-panel-header-description {
+    display: flex;
+    justify-content: flex-end;
+  }

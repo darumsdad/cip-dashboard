@@ -5,6 +5,8 @@
 
     <mat-accordion>
             <app-proposal [eventId]="eventId"></app-proposal>
+            <app-precontract [eventId]="eventId"></app-precontract>
+            <app-precontract-jotform-submission *ngIf="form.get('precontract_jotform').value"></app-precontract-jotform-submission>
     </mat-accordion>
 
 

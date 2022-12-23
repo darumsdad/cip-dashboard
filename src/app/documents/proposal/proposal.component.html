@@ -9,7 +9,7 @@
             Proposal
         </mat-panel-title>
         <mat-panel-description>
-            This is a summary of the content
+            {{overallStatus()}}
         </mat-panel-description>
     </mat-expansion-panel-header>
 
@@ -153,10 +153,18 @@
                     </mat-form-field>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <mat-form-field appearance="fill">
+                        <mat-label>To</mat-label>
+                        <input matInput type="email" [formControl]="to" placeholder="" autocomplete="off">
+                    </mat-form-field>
+                </div>
+            </div>
             <div>
                 <button mat-raised-button color="primary" matStepperPrevious>Back</button>
                 &nbsp;
-                <button [disabled]=" !this.contacts.value || this.contacts.value?.length == 0  || !preview"
+                <button [disabled]=" !this.contacts?.value || this.contacts?.value?.length == 0  || !preview"
                     (click)="onSend(stepper)" mat-raised-button color="primary" class="pull-left">Send</button>
                 &nbsp;
                 <button mat-raised-button color="primary" (click)="stepper.reset()">Reset</button>
@@ -167,7 +175,7 @@
 
     &nbsp;
 <mat-accordion>
-    <mat-expansion-panel *ngFor="let email of proposal.value?.emails" >
+    <mat-expansion-panel *ngFor="let email of proposal?.value?.emails" >
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Email 
