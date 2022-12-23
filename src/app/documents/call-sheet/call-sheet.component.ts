@@ -49,19 +49,19 @@ export class CallSheetComponent implements OnInit {
   }
 
   save($event: any) {
-    this.save_working = true;
-    this.eventService.save_call_sheet(this.eventId, this.dataModel.value).subscribe(
-      {
-        next: (event) => {
-         this.load();
-         this.save_working = false;
-        },
-        error: (error) => {
-          alert(error.mesage)
-          this.save_working = false;
-        }
-      }
-    )
+    // this.save_working = true;
+    // this.eventService.save_call_sheet(this.eventId, this.dataModel.value).subscribe(
+    //   {
+    //     next: (event) => {
+    //      this.load();
+    //      this.save_working = false;
+    //     },
+    //     error: (error) => {
+    //       alert(error.mesage)
+    //       this.save_working = false;
+    //     }
+    //   }
+    // )
   }
 
   populate($event: any) {

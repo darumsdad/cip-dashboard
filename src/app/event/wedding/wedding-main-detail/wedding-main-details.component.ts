@@ -1,10 +1,11 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, NgZone, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
  
 
 import {Clipboard} from '@angular/cdk/clipboard';
 import { EventService } from 'src/app/services/event.service';
+import { EventDetailService } from 'src/app/services/event-detail.service';
 
 
 @Component({
@@ -22,24 +23,58 @@ export class WeddingMainDetailsComponent implements OnInit {
   constructor(
     public fb: FormBuilder, 
     public s: EventService,
+    public eventDetailService: EventDetailService,
     private route: ActivatedRoute,
     private router: Router,
     private clipboard: Clipboard,
-    private rootFormGroup: FormGroupDirective
+    private rootFormGroup: FormGroupDirective,
+    private cdr: ChangeDetectorRef,
+    private zone: NgZone
     ) { }
 
   
   form: FormGroup;
 
   ngOnInit(): void {
-    this.form = this.rootFormGroup.control.get('data') as FormGroup;
+
+    this.eventDetailService.register(
+      this.start.bind(this),
+      this.stop.bind(this),
+      this.load.bind(this))  
+    
+    this.form = this.eventDetailService.form.get('data')
+
+
+
+    console.log(this.form)
+  }
+
+  loading: boolean = false;
+  start()
+  {
+    console.log("starting")
+    this.loading = true
+  }
+  stop()
+  {
+    console.log("stoping")
+    this.loading = false
+  }
+  load()
+  {
+    console.log(this.form)
+    console.log("refresh called")
+    this.zone.run(() => {
+            console.log('enabled time travel');
+    });
+    this.cdr.detectChanges();
   }
  
   onFocusOutEvent(event: any){
   
-    console.log(event);
+     
     let input  = event.target.value
-    console.log(input);
+  
 
     if (input.length === 10)
     {
@@ -50,6 +85,14 @@ export class WeddingMainDetailsComponent implements OnInit {
         }  
     }
  }
+
+ foo()
+ {
+  this.eventDetailService.refresh()
+
+ }
+
+ 
  
   onChangeStatus(event: any) {
     console.log(event);

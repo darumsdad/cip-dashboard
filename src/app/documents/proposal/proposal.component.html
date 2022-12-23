@@ -22,17 +22,27 @@
             <form [formGroup]="form">
                 <div class="row">
                     <div class="col-md-2">
-                        <b>Bride:</b>&nbsp; {{bride_first?.value}}
+                        <mat-form-field appearance="fill">
+                            <mat-label>Bride first name</mat-label>
+                            <input matInput type="text" formControlName="bride_first_name" placeholder="Jane" autocomplete="off">
+                        </mat-form-field>
                     </div>
                     <div class="col-md-2">
-                        <b>Groom:</b>&nbsp; {{groom_first?.value}}
+                    <mat-form-field appearance="fill">
+                        <mat-label>Groom first name</mat-label>
+                        <input matInput type="text" formControlName="groom_first_name" placeholder="John Doe" autocomplete="off">
+                    </mat-form-field>
                     </div>
 
-                </div>
-                &nbsp;
-                <div class="row">
-                    <div class="col-md-4">
-                        <b>Date:</b>&nbsp;{{date_str}}
+                
+                    <div class="col-md-2">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Event date</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="date">
+                            <mat-hint>MM/DD/YYYY</mat-hint>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
                     </div>
                     <div class="col-md-6">
                         <b>Venue:</b>&nbsp; {{venue?.name}}
@@ -42,29 +52,50 @@
                 &nbsp;
                 <div class="row">
                     <div class="col-md-2">
-                        <b>Quote:</b>&nbsp;{{quote?.value}}
+                        <mat-form-field appearance="fill">
+                            <mat-label>Quote</mat-label>
+                            <input matInput type="text" formControlName="quote" autocomplete="off">
+                        </mat-form-field>
+                    </div>
+                  
+                    <div class="col-md-2">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Hours</mat-label>
+                            <input matInput type="text" formControlName="hours" autocomplete="off">
+                        </mat-form-field>
                     </div>
                     <div class="col-md-2">
-                        <b>Hours:</b>&nbsp; {{hours?.value}}
+                        <mat-form-field appearance="fill">
+                            <mat-label># Staff</mat-label>
+                            <input matInput type="text" formControlName="count" autocomplete="off">
+                        </mat-form-field>
                     </div>
+
                     <div class="col-md-2">
-                        <b>Staff:</b>&nbsp; {{count?.value}}
-                    </div>
-                    <div class="col-md-6">
-                        <b>Include Photographers:</b>&nbsp; {{include_photographer?.value ? 'Y' : 'N'}}
-                    </div>
+                        <mat-checkbox matInput type="text" formControlName="include_photographer" autocomplete="off">Include Photographers in Proposal</mat-checkbox>
+                </div>
 
                 </div>
                 &nbsp;
                 <div class="row">
-                    <div class="col-md-2">
-                        <b>Teaser:</b>&nbsp;{{teaser?.value ? 'Y' : 'N'}}
+                    <div class="col-md-1">
+
+                        <mat-checkbox matInput type="text" formControlName="teaser" autocomplete="off">Teaser</mat-checkbox>
+            
                     </div>
-                    <div class="col-md-2">
-                        <b>Highlight:</b>&nbsp; {{highlights?.value ? 'Y' : 'N'}}
+                    <div class="col-md-1">
+            
+            
+                        <mat-checkbox matInput type="text" formControlName="highlights" autocomplete="off">Highlight
+                        </mat-checkbox>
+            
                     </div>
-                    <div class="col-md-2">
-                        <b>Full:</b>&nbsp; {{full?.value ? 'Y' : 'N'}}
+                    <div class="col-md-1">
+            
+            
+                        <mat-checkbox matInput type="text" formControlName="full" autocomplete="off">Full Edit
+                        </mat-checkbox>
+            
                     </div>
 
 

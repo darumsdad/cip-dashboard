@@ -9,14 +9,6 @@ import { environment } from 'src/environments/environment';
   providedIn: 'root'
 })
 export class EventService {
-  
-  
-  
-  
-  
-
-
-
 
   private _events = new BehaviorSubject([])
 
@@ -26,21 +18,18 @@ export class EventService {
 
   load(callback: Function) {
     this.all().subscribe({
+
       next: (events) => {
-        console.log(events)
 
         if (events) {
           this.allVenues().subscribe(
             {
               next: (venues) => {
-
-
                 let events_with_venue = events.map(event => {
 
                   if (event.data && event.data.venueId) {
                     let found = venues.find(x => x.id === parseInt(event.data.venueId))
                     event.venue = found;
-                    console.log(event)
                     return event;
                   }
                   else {
@@ -48,26 +37,19 @@ export class EventService {
                   }
 
                 });
-                console.log(events_with_venue)
-                console.log('setting')
                 this._events.next(events_with_venue)
-                console.log('callback')
                 callback();
               },
               error: (error) => {
                 alert(error.mesage)
                 callback();
               }
-
             })
         }
-        else
-        {
+        else {
           callback();
         }
-
       }
-
       , error: (e) => {
         alert(e.message)
         callback();
@@ -101,16 +83,11 @@ export class EventService {
   }
 
   save(id: any, data: any) {
-    return this.http.put<any>(`${this.baseUrl}/${id}/save`,data);
+    return this.http.put<any>(`${this.baseUrl}/${id}/save`, data);
   }
 
   addVideo(id: any, data: any): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/${id}/video`, data);
-  }
-
-  save_call_sheet(id: any, data: any) {
-    let encode = btoa(data);
-    return this.http.put<any>(`${this.baseUrl}/${id}/call_sheet`, encode);
   }
 
   delete_video(id: any, data: any) {
