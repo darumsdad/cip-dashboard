@@ -3,6 +3,7 @@ import { FormControl, FormGroup, FormGroupDirective } from '@angular/forms';
 import { MatStepper } from '@angular/material/stepper';
 import { DomSanitizer } from '@angular/platform-browser';
 import { EmailService } from 'src/app/services/email.service';
+import { EventDetailService } from 'src/app/services/event-detail.service';
 import { EventService } from 'src/app/services/event.service';
 import { FileGenerateService } from 'src/app/services/file-generate.service';
 import { VenueService } from 'src/app/services/venue.service';
@@ -18,29 +19,24 @@ export class PrecontractComponent implements OnInit {
   subject: FormControl;
   contactList: any = [];
   form: FormGroup;
-  contact_types: any = ['bride', 'bride_mom', 'bride_dad', 'groom', 'groom_mom', 'groom_dad', 'planner'];
   precontract: any;
-  venue: any;
+
   to: FormControl;
-  link: any;
+
   preview: any;
   loading: any = false;
   editor: FormControl;
-  bride_first: any;
-  groom_first: any;
-
+  
   @Input()
   eventId: any
-
   raw_html: string;
-  date_str: any;
+
 
   constructor(
-    private rootFormGroup: FormGroupDirective,
-    public venueService: VenueService,
     public generatorService: FileGenerateService,
     private sanitizer: DomSanitizer,
     private eventService: EventService,
+    private eventDetailService: EventDetailService,
     private emailService: EmailService
   ) { }
 
@@ -53,30 +49,13 @@ export class PrecontractComponent implements OnInit {
     this.to = new FormControl;
     
      
-    this.form = this.rootFormGroup.control.get('data') as FormGroup;
+    this.form = this.eventDetailService.form.get('data') as FormGroup;
 
-    this.precontract = this.form.get('precontract')
-     
-    this.bride_first = this.form.get('bride_first_name')
-    this.groom_first = this.form.get('groom_first_name')
-
-    this.precontract?.value?.emails?.forEach(
+    this.precontract = this.form.value.precontract ? this.form.value.precontract : { emails: [] }
+    
+    this.precontract.emails?.forEach(
       email => email.status.sort((a, b) => (a.ts_epoch > b.ts_epoch) ? 1 : -1)
     )
-
-    let venueId = this.form.get('venueId').value
-
-    if (venueId) {
-      this.venueService.get(venueId).subscribe({
-        next: (venue) => {
-          this.venue = venue
-        },
-        error: (error) => {
-          alert(error.message)
-        }
-
-      })
-    }
 
     this.contacts.valueChanges.subscribe(
       {
@@ -84,22 +63,9 @@ export class PrecontractComponent implements OnInit {
           this.to.patchValue(values?.map(x => x.email).join(","))
         }
       }
-
     )
 
-    this.contact_types.forEach(e => {
-      let email_tag = e + '_email'
-      let first_name_tag = e + '_first_name'
-      let last_name_tag = e + '_last_name'
-
-      if (this.form.get(email_tag).value && this.form.get(first_name_tag).value && this.form.get(last_name_tag).value) {
-        this.contactList.push({
-          type: e,
-          name: this.form.get(first_name_tag).value + ' ' + this.form.get(last_name_tag).value,
-          email: this.form.get(email_tag).value
-        })
-      }
-    })
+     this.contactList = this.eventDetailService.contactList
 
    
   }
@@ -111,9 +77,9 @@ export class PrecontractComponent implements OnInit {
     let payload = {
       contacts: this.contacts.value,
       eventId: this.eventId,
-      venue: this.venue,
-      bride: this.bride_first.value,
-      groom: this.groom_first.value,
+      venue: this.eventDetailService.venue,
+      bride: this.form.value.bride_first_name,
+      groom: this.form.value.groom_first_name,
       type: 'precontract'
     }
 
@@ -122,7 +88,6 @@ export class PrecontractComponent implements OnInit {
         next: (result) => {
           
           this.raw_html = atob(result.html)
-
           this.editor.patchValue(this.raw_html);
           this.loading = false;
         },
@@ -153,28 +118,18 @@ export class PrecontractComponent implements OnInit {
     this.emailService.post(payload).subscribe(
       {
         next: (email) => {
-          let precontract = this.precontract?.value;
-          if (!precontract) {
-            precontract = {
-              emails: []
-            }
-          }
-
-          if (!precontract.emails) {
-            precontract.emails = [];
-          }
-          precontract.emails.push(email);
+          
+          this.precontract.emails.push(email);
 
           this.eventService.save(this.eventId, {
             type: 'precontract',
-            data: precontract
+            data: this.precontract
           }).subscribe(
             {
 
               next: (precontract) => {
-                console.log(precontract)
-                console.log(this.precontract)
-                this.precontract.patchValue(precontract);
+                
+                this.precontract = precontract;
                 this.contacts.reset();
                 stepper.reset()
                 this.loading = false;
@@ -216,7 +171,7 @@ export class PrecontractComponent implements OnInit {
 
   overallStatus()
   {
-      let emails = this.precontract?.value?.emails 
+      let emails = this.precontract.emails 
       if (!emails)
       {
         return 'email not yet sent'

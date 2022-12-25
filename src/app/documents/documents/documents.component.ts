@@ -32,12 +32,6 @@ export class DocumentsComponent implements OnInit {
   loading: any = false;
   venue: any;
 
-  @Input()
-  save_callback: Function;
-
-  @Input()
-  reload_callback: Function;
-
   constructor(public dialog: MatDialog,
     private rootFormGroup: FormGroupDirective,
     private emailService: EmailService,

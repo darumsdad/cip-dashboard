@@ -7,7 +7,7 @@
                 <h1 [ngStyle]="{'color' : !form.untouched ? 'red' : 'black' }">{{form.get('data').get('description').value}}</h1>
             </div>
             <div class="col-md-1" [ngStyle]="{'border-style' : !form.untouched ? 'solid' : 'none', 'border-color' : 'coral'}">
-                <button mat-icon-button [disabled]="form.invalid" (click)="onWeddingSave()" color="primary" class="pull-right"
+                <button mat-icon-button [disabled]="form.invalid" (click)="save()" color="primary" class="pull-right"
                     aria-label="Example icon button with a home icon">
                     <mat-icon>save</mat-icon>
                 </button>
@@ -39,7 +39,7 @@
                 <ng-template matTabContent>
                     <div class="row mt-5">
                         <div class="col-md-12">
-                            <app-documents [save_callback]="onWeddingSave.bind(this)" [reload_callback]="load.bind(this)" [eventId]="eventId" ></app-documents>
+                            <app-documents [eventId]="eventId" ></app-documents>
                         </div>
                     </div>
                 </ng-template>

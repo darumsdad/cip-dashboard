@@ -20,26 +20,11 @@ export class WeddingComponent implements OnInit {
   insurance_contact: any = "cert@dicksteininsurance.com"
 
   constructor(public route: ActivatedRoute,
-    private router: Router,
     private eds: EventDetailService,
     private cdr: ChangeDetectorRef
   ) { }
 
   loading: boolean = false;
-  start()
-  {
-    console.log("starting")
-    this.loading = true
-  }
-  stop()
-  {
-    console.log("stoping")
-    this.loading = false
-  }
-  load()
-  {
-    this.cdr.detectChanges();
-  }
 
   ngOnInit(): void {
 
@@ -48,19 +33,14 @@ export class WeddingComponent implements OnInit {
       alert("No eventId passed in - error")
 
     this.eds.register(
-      this.start.bind(this),
-      this.stop.bind(this),
-      this.load.bind(this))  
+      (() => { this.loading = true }).bind(this),
+      (() => { this.loading = false }).bind(this))
     
     this.form = this.eds.form;
-
     this.eds.load(this.eventId);
-
   }
 
-  
-
-  onWeddingSave() {
+  save() {
     this.eds.save( (e) => {})
   }
 }

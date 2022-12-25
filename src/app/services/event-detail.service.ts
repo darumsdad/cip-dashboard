@@ -16,7 +16,10 @@ export class EventDetailService {
   private _form: any;
   private insurance_contact: any = "cert@dicksteininsurance.com"
   eventId: any;
-  
+  venue: any;
+  contact_types: any = ['bride', 'bride_mom', 'bride_dad', 'groom', 'groom_mom', 'groom_dad', 'planner'];
+  contactList: any = [];
+
   get form() {
     return this._form
   }
@@ -38,41 +41,44 @@ export class EventDetailService {
         bride_first_name: [''],
         bride_last_name: [''],
         bride_phone: ['', [phoneValidation()]],
-        bride_phone_text: new FormControl(''),
-        bride_email: new FormControl('', Validators.email),
-        bride_social: new FormControl(''),
+        bride_phone_text: [''],
+        bride_email: ['', [Validators.email]],
+        bride_social: [''],
 
         bride_mom_first_name: [''],
         bride_mom_last_name: [''],
         bride_mom_phone: ['', [phoneValidation()]],
-        bride_mom_email: new FormControl('', Validators.email),
+        bride_mom_email: ['', [Validators.email]],
+        
 
         bride_dad_first_name: [''],
         bride_dad_last_name: [''],
         bride_dad_phone: ['', [phoneValidation()]],
-        bride_dad_email: new FormControl('', Validators.email),
+        bride_dad_email: ['', [Validators.email]],
+        
 
         groom_first_name: [''],
         groom_last_name: [''],
         groom_phone: ['', [phoneValidation()]],
-        groom_email: new FormControl('', Validators.email),
-        groom_phone_text: new FormControl(''),
-        groom_social: new FormControl(''),
+        groom_email: ['', [Validators.email]],
+        
+        groom_phone_text: [''],
+        groom_social: [''],
 
         groom_mom_first_name: [''],
         groom_mom_last_name: [''],
         groom_mom_phone: ['', [phoneValidation()]],
-        groom_mom_email: new FormControl('', Validators.email),
+        groom_mom_email: ['', [Validators.email]],
 
         groom_dad_first_name: [''],
         groom_dad_last_name: [''],
         groom_dad_phone: ['', [phoneValidation()]],
-        groom_dad_email: new FormControl('', Validators.email),
+        groom_dad_email: ['', [Validators.email]],
 
         planner_first_name: [''],
         planner_last_name: [''],
         planner_phone: ['', [phoneValidation()]],
-        planner_email: new FormControl('', Validators.email),
+        planner_email: ['', [Validators.email]],
         other_contact: [''],
 
         jotform_venue: [''],
@@ -96,8 +102,6 @@ export class EventDetailService {
         precontract: [],
         precontract_jotform: [''],
         proposal: [],
-        last_submission_id: new FormControl()
-
       })
     })
 
@@ -114,30 +118,63 @@ export class EventDetailService {
 
   private start: Array<Function> = []
   private stop: Array<Function> = []
-  private _refresh: Array<Function> = []
-
-  register(start: Function, stop: Function, refresh: Function)
+  
+  register(start: Function, stop: Function)
   {
     this.start.push(start)
     this.stop.push(stop)
-    this._refresh.push(refresh)
   }
 
   load(id: any)
   {
     this._form.reset();
-    
+
     this.eventId = id;
     this.start.forEach(x => x.apply)
     this.get(id).subscribe({
 
       next: (event: any) => {
-        console.log(event)
-        console.log(this._form)
-        
         this._form.get('data').patchValue(event.data);
-        this.stop.forEach(x => x())
-        this._refresh.forEach(x => x())
+
+        this.contact_types.forEach(e => {
+
+          let data = this._form.get('data')
+      
+          let email_tag = e + '_email'
+          let first_name_tag = e + '_first_name'
+          let last_name_tag = e + '_last_name'
+    
+          if (data.get(email_tag).value && 
+              data.get(first_name_tag).value && 
+              data.get(last_name_tag).value) {
+            this.contactList.push({
+              type: e,
+              name: data.get(first_name_tag).value + ' ' + data.get(last_name_tag).value,
+              email: data.get(email_tag).value
+            })
+          }
+        })
+
+        let venueId = event.data.venueId;
+        if (venueId)
+        {
+          this.getVenue(venueId).subscribe(
+            {
+              next: (venue) => {
+                this.venue = venue;
+                this.stop.forEach(x => x())
+              },
+              error: (error) => {
+                alert(error.message)
+                this.stop.forEach(x => x())
+              }
+            }
+          )
+        }
+        else
+        {
+          this.stop.forEach(x => x())
+        }
 
       }, error: (error) => {
         alert(error.message)
@@ -145,11 +182,6 @@ export class EventDetailService {
       }
     })
     
-  }
-
-  refresh()
-  {
-    this._refresh.forEach(x => x())
   }
 
   save(callback: Function)
@@ -173,6 +205,10 @@ export class EventDetailService {
 
   private get(id: any): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/${id}`);
+  }
+
+  private getVenue(id: any): Observable<any> {
+    return this.http.get<any>(`${this.venueUrl}/${id}`);
   }
 
   private update(id: any, data: any): Observable<any> {

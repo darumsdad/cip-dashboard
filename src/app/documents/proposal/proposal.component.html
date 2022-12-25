@@ -13,6 +13,17 @@
         </mat-panel-description>
     </mat-expansion-panel-header>
 
+    <mat-accordion>
+        <mat-expansion-panel [expanded]="this.proposal.emails.length == 0">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Create 
+                </mat-panel-title>
+                <mat-panel-description>
+                  Create Proposal Email
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
 
     <mat-stepper [linear]="true" #stepper>
         <mat-step>
@@ -105,7 +116,7 @@
                     <div class="col-md-12">
 
 
-                        <button mat-raised-button pull-right (click)="onCreate()" [disabled]="canCreate()" color="primary"
+                        <button mat-raised-button pull-right (click)="onCreate()" [disabled]="disableCreate()" color="primary"
                             matStepperNext>Create</button>
                     </div>
                 </div>
@@ -138,12 +149,7 @@
             </div>
 
             &nbsp;
-            <div class="row">
-                <div *ngIf="link" class="col-md-12">
-                    <b>Link:</b>&nbsp;<a href='{{link}}' target="_blank">Jot Form Link</a>
-                </div>
-            </div>
-            &nbsp;
+        
             <div class="row">
                 <div class="col-md-2">
                     <div [innerHtml]="preview"></div>
@@ -203,10 +209,11 @@
 
         </mat-step>
     </mat-stepper>
+        </mat-expansion-panel>
 
     &nbsp;
 <mat-accordion>
-    <mat-expansion-panel *ngFor="let email of proposal?.value?.emails" >
+    <mat-expansion-panel *ngFor="let email of proposal?.emails" >
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Email 
@@ -222,6 +229,7 @@
         </mat-expansion-panel-header>
 
         <mat-tab-group dynamicHeight animationDuration="0ms">
+
             <mat-tab label="Status">
                 <ng-template matTabContent>
                     <table>
@@ -236,6 +244,7 @@
                     </table>
                 </ng-template>
             </mat-tab>
+
             <mat-tab label="Preview">
                 <div class="row mt-5">
                     <div class="col-md-12">

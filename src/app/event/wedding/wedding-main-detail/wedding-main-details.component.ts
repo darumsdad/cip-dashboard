@@ -23,59 +23,24 @@ export class WeddingMainDetailsComponent implements OnInit {
   constructor(
     public fb: FormBuilder, 
     public s: EventService,
-    public eventDetailService: EventDetailService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private clipboard: Clipboard,
-    private rootFormGroup: FormGroupDirective,
-    private cdr: ChangeDetectorRef,
-    private zone: NgZone
+    public eventDetailService: EventDetailService
     ) { }
 
   
   form: FormGroup;
 
   ngOnInit(): void {
-
     this.eventDetailService.register(
-      this.start.bind(this),
-      this.stop.bind(this),
-      this.load.bind(this))  
-    
-    this.form = this.eventDetailService.form.get('data')
-
-
-
-    console.log(this.form)
+      (() => { this.loading = true }).bind(this),
+      (() => { this.loading = false }).bind(this))
+      this.form = this.eventDetailService.form.get('data')
   }
 
   loading: boolean = false;
-  start()
-  {
-    console.log("starting")
-    this.loading = true
-  }
-  stop()
-  {
-    console.log("stoping")
-    this.loading = false
-  }
-  load()
-  {
-    console.log(this.form)
-    console.log("refresh called")
-    this.zone.run(() => {
-            console.log('enabled time travel');
-    });
-    this.cdr.detectChanges();
-  }
+  
  
-  onFocusOutEvent(event: any){
-  
-     
+  formatPhone(event: any){
     let input  = event.target.value
-  
-
     if (input.length === 10)
     {
         if (!isNaN(input) )
@@ -85,14 +50,6 @@ export class WeddingMainDetailsComponent implements OnInit {
         }  
     }
  }
-
- foo()
- {
-  this.eventDetailService.refresh()
-
- }
-
- 
  
   onChangeStatus(event: any) {
     console.log(event);

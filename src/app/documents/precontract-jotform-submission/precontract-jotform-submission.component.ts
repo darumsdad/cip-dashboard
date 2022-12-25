@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormGroupDirective } from '@angular/forms';
 import { DomSanitizer } from '@angular/platform-browser';
 import { EmailService } from 'src/app/services/email.service';
+import { EventDetailService } from 'src/app/services/event-detail.service';
 import { EventService } from 'src/app/services/event.service';
 import { FileGenerateService } from 'src/app/services/file-generate.service';
 import { VenueService } from 'src/app/services/venue.service';
@@ -17,28 +18,16 @@ export class PrecontractJotformSubmissionComponent implements OnInit {
   precontract_jotform: any;
   submissions: any;
 
-  constructor(private rootFormGroup: FormGroupDirective,
-    public venueService: VenueService,
-    public generatorService: FileGenerateService,
-    private sanitizer: DomSanitizer,
-    private eventService: EventService,
-    private emailService: EmailService) { }
+  constructor(private eds: EventDetailService) { }
 
   ngOnInit(): void {
-
-    this.form = this.rootFormGroup.control.get('data') as FormGroup;
-
-    this.precontract_jotform = this.form.get('precontract_jotform')
-
-    console.log(this.submissions)
-    this.submissions = this.precontract_jotform.value.submissions
-    console.log(this.submissions)
-    console.log(this.submissions)
+    this.form = this.eds.form.get('data') as FormGroup;
+    this.precontract_jotform = this.form.value.precontract_jotform
+    this.submissions = this.precontract_jotform.submissions
   }
 
   getChangesSummery(changes: any) {
-     
-    
+
     let changed  = changes.map(x => x.original != x.new && x.original != "").filter(x => x === true).length
     let newFields = changes.map(x => x.original != x.new && (x.original === "" || x.original === undefined)).filter(x => x === true).length
 

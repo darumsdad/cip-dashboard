@@ -14,6 +14,18 @@
     </mat-expansion-panel-header>
 
 
+    <mat-accordion>
+        <mat-expansion-panel [expanded]="this.precontract.emails.length == 0">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Create 
+                </mat-panel-title>
+                <mat-panel-description>
+                  Create Pre Contract Jot Form Email
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+
+
     <mat-stepper [linear]="true" #stepper>
         <mat-step>
 
@@ -22,10 +34,16 @@
             <form [formGroup]="form">
                 <div class="row">
                     <div class="col-md-2">
-                        <b>Bride:</b>&nbsp; {{bride_first?.value}}
+                        <mat-form-field appearance="fill">
+                            <mat-label>Bride first name</mat-label>
+                            <input matInput type="text" formControlName="bride_first_name" placeholder="Jane" autocomplete="off">
+                        </mat-form-field>
                     </div>
                     <div class="col-md-2">
-                        <b>Groom:</b>&nbsp; {{groom_first?.value}}
+                    <mat-form-field appearance="fill">
+                        <mat-label>Groom first name</mat-label>
+                        <input matInput type="text" formControlName="groom_first_name" placeholder="John Doe" autocomplete="off">
+                    </mat-form-field>
                     </div>
                 </div>
             </form>
@@ -129,9 +147,11 @@
         </mat-step>
     </mat-stepper>
 
+        </mat-expansion-panel>
+
     &nbsp;
     <mat-accordion>
-        <mat-expansion-panel *ngFor="let email of precontract?.value?.emails">
+        <mat-expansion-panel *ngFor="let email of precontract.emails">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     Email
