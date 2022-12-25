@@ -1,0 +1,37 @@
+<mat-expansion-panel>
+    <mat-expansion-panel-header>
+        <mat-panel-title>
+            Pre Wedding Jot Form Submission
+        </mat-panel-title>
+        <mat-panel-description>
+            {{this.submissions.length}} submission{{ (this.submissions.length > 1) ? 's' : ''}}
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let submission of submissions">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Submission
+                </mat-panel-title>
+                <mat-panel-description>
+                   {{getChangesSummery(submission.changes)}}  &nbsp; {{submission.ts_epoch | date  : 'MMM d, y, h:mm:ss a'}} &nbsp; {{submission.json.submissionID}}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <table>
+                <th>Field</th>
+                <th>Original</th>
+                <th>New</th>
+                <tr *ngFor="let change of submission.changes">
+                    <td>{{change.field}}</td>
+                    <td>{{change.original}}</td>
+                    <td>{{change.new}}</td>
+                </tr>
+            </table>
+
+        </mat-expansion-panel>
+    </mat-accordion>
+
+
+
+</mat-expansion-panel>

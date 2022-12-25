@@ -28,18 +28,25 @@
         </div>
 
         <mat-tab-group dynamicHeight animationDuration="0ms">
-            <mat-tab label="Details">
+            <mat-tab label="Contacts / Contract">
                 <div class="row mt-5">
                     <div class="col-md-12">
                         <app-event-details></app-event-details>
                     </div>
                 </div>
             </mat-tab>
-            <mat-tab label="Documents">
+            <mat-tab label="Wedding Details">
+                <div class="row mt-5">
+                    <div class="col-md-12">
+                        <app-wedding-all-details></app-wedding-all-details>
+                    </div>
+                </div>
+            </mat-tab>
+            <mat-tab label="Automation">
                 <ng-template matTabContent>
                     <div class="row mt-5">
                         <div class="col-md-12">
-                            <app-documents [eventId]="eventId" ></app-documents>
+                            <app-documents></app-documents>
                         </div>
                     </div>
                 </ng-template>

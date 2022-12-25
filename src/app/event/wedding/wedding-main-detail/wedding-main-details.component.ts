@@ -14,17 +14,9 @@ import { EventDetailService } from 'src/app/services/event-detail.service';
   styleUrls: ['./wedding-main-details.component.scss']
 })
 export class WeddingMainDetailsComponent implements OnInit {
-  
-  e: any;
-
-  @Input()
-  eventId: any
  
-  constructor(
-    public fb: FormBuilder, 
-    public s: EventService,
-    public eventDetailService: EventDetailService
-    ) { }
+ 
+  constructor(public eventDetailService: EventDetailService) { }
 
   
   form: FormGroup;

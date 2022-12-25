@@ -32,6 +32,9 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { PrecontractComponent } from './documents/precontract/precontract.component';
 import { PrecontractJotformSubmissionComponent } from './documents/precontract-jotform-submission/precontract-jotform-submission.component';
 import { ContractComponent } from './documents/contract/contract.component';
+import { PreweddingComponent } from './documents/prewedding/prewedding.component';
+import { WeddingAllDetailsComponent } from './event/wedding/wedding-all-details/wedding-all-details.component';
+import { PreweddingJotformSubmissionComponent } from './documents/prewedding-jotform-submission/prewedding-jotform-submission.component';
 
 
 
@@ -61,6 +64,9 @@ import { ContractComponent } from './documents/contract/contract.component';
     PrecontractComponent,
     PrecontractJotformSubmissionComponent,
     ContractComponent,
+    PreweddingComponent,
+    WeddingAllDetailsComponent,
+    PreweddingJotformSubmissionComponent,
     
     
   ],

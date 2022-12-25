@@ -21,7 +21,7 @@ export class WeddingComponent implements OnInit {
 
   constructor(public route: ActivatedRoute,
     private eds: EventDetailService,
-    private cdr: ChangeDetectorRef
+     
   ) { }
 
   loading: boolean = false;

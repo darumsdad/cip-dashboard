@@ -34,8 +34,7 @@ export class ProposalComponent implements OnInit {
   loading: any = false;
   editor: FormControl;
 
-  @Input()
-  eventId: any
+  
   trustedHtml: any;
   raw_html: string;
   date_str: any;
@@ -65,6 +64,7 @@ export class ProposalComponent implements OnInit {
     this.to = new FormControl;
 
     this.form = this.eventDetailService.form.get('data') as FormGroup;
+     
     this.venue = this.eventDetailService.venue
 
     this.proposal = (this.form.value.proposal) ? this.form.get('proposal') as FormControl : new FormControl({ emails: [] })
@@ -106,7 +106,7 @@ export class ProposalComponent implements OnInit {
       full: this.form.value.full,
       contacts: this.contacts.value,
       include_photographer: this.form.value.include_photographer,
-      eventId: this.eventId,
+      eventId: this.eventDetailService.eventId,
       type: 'proposal'
     }
 
@@ -158,7 +158,7 @@ export class ProposalComponent implements OnInit {
       to: this.to.value,
       subject: this.subject.value,
       encoded_html: btoa(this.editor.value),
-      key: 'proposal:' + this.eventId
+      key: 'proposal:' + this.eventDetailService.eventId
     }
 
     this.emailService.post(payload).subscribe(
@@ -169,7 +169,7 @@ export class ProposalComponent implements OnInit {
           e.emails.push(email);
           this.proposal.patchValue(e);
 
-          this.eventService.save(this.eventId, {
+          this.eventService.save(this.eventDetailService.eventId, {
             type: 'proposal',
             data: this.proposal.value
           }).subscribe(

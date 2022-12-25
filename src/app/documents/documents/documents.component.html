@@ -1,8 +1,10 @@
 <div class="container-fluid">
     <mat-accordion>
-            <app-proposal [eventId]="eventId"></app-proposal>
-            <app-precontract [eventId]="eventId"></app-precontract>
+            <app-proposal></app-proposal>
+            <app-precontract></app-precontract>
             <app-precontract-jotform-submission *ngIf="precontract_jotform"></app-precontract-jotform-submission>
-            <app-contract [eventId]="eventId"></app-contract>
+            <app-contract></app-contract>
+            <app-prewedding></app-prewedding>
+            <app-prewedding-jotform-submission *ngIf="prewedding_jotform"></app-prewedding-jotform-submission>
     </mat-accordion>
 </div>

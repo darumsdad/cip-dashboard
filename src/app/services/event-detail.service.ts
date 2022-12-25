@@ -102,8 +102,11 @@ export class EventDetailService {
         include_photographer: [false],
         precontract: [],
         precontract_jotform: [''],
+        prewedding_jotform: [''],
         proposal: [],
-        contract: []
+        contract: [],
+
+        mailing_address: []
       })
     })
 

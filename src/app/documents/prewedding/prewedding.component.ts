@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, FormGroupDirective } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { MatStepper } from '@angular/material/stepper';
 import { DomSanitizer } from '@angular/platform-browser';
@@ -7,20 +7,19 @@ import { EmailService } from 'src/app/services/email.service';
 import { EventDetailService } from 'src/app/services/event-detail.service';
 import { EventService } from 'src/app/services/event.service';
 import { FileGenerateService } from 'src/app/services/file-generate.service';
-import { VenueService } from 'src/app/services/venue.service';
 
 @Component({
-  selector: 'app-precontract',
-  templateUrl: './precontract.component.html',
-  styleUrls: ['./precontract.component.scss']
+  selector: 'app-prewedding',
+  templateUrl: './prewedding.component.html',
+  styleUrls: ['./prewedding.component.scss']
 })
-export class PrecontractComponent implements OnInit {
+export class PreweddingComponent implements OnInit {
 
   contacts: FormControl<any>;
   subject: FormControl;
   contactList: any = [];
   form: FormGroup;
-  precontract: any;
+  prewedding: any;
 
   to: FormControl;
 
@@ -28,7 +27,7 @@ export class PrecontractComponent implements OnInit {
   loading: any = false;
   editor: FormControl;
   
-  
+
   raw_html: string;
 
 
@@ -52,9 +51,9 @@ export class PrecontractComponent implements OnInit {
 
     this.form = this.eventDetailService.form.get('data') as FormGroup;
 
-    this.precontract = this.form.value.precontract ? this.form.value.precontract : { emails: [] }
+    this.prewedding = this.form.value.prewedding ? this.form.value.prewedding : { emails: [] }
     
-    this.precontract.emails?.forEach(
+    this.prewedding.emails?.forEach(
       email => email.status.sort((a, b) => (a.ts_epoch > b.ts_epoch) ? 1 : -1)
     )
 
@@ -79,7 +78,7 @@ export class PrecontractComponent implements OnInit {
       venue: this.eventDetailService.venue,
       bride: this.form.value.bride_first_name,
       groom: this.form.value.groom_first_name,
-      type: 'precontract'
+      type: 'prewedding'
     }
 
     
@@ -119,24 +118,24 @@ export class PrecontractComponent implements OnInit {
       to: this.to.value,
       subject: this.subject.value,
       encoded_html: btoa(this.editor.value),
-      key: 'precontract:' + this.eventDetailService.eventId
+      key: 'prewedding:' + this.eventDetailService.eventId
     }
 
     this.emailService.post(payload).subscribe(
       {
         next: (email) => {
           
-          this.precontract.emails.push(email);
+          this.prewedding.emails.push(email);
 
           this.eventService.save(this.eventDetailService.eventId, {
-            type: 'precontract',
-            data: this.precontract
+            type: 'prewedding',
+            data: this.prewedding
           }).subscribe(
             {
 
-              next: (precontract) => {
+              next: (prewedding) => {
                 
-                this.precontract = precontract;
+                this.prewedding = prewedding;
                 this.contacts.reset();
                 stepper.reset()
                 this.first.close()
@@ -187,7 +186,7 @@ export class PrecontractComponent implements OnInit {
 
   overallStatus()
   {
-      let emails = this.precontract.emails 
+      let emails = this.prewedding.emails 
       if (emails.length == 0)
       {
         return {
@@ -206,8 +205,5 @@ export class PrecontractComponent implements OnInit {
       }
   }
 
-  
- 
- 
 
 }
