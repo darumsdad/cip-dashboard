@@ -9,12 +9,12 @@
             Proposal
         </mat-panel-title>
         <mat-panel-description>
-            {{overallStatus()}}
+            <div class="{{overallStatus().class}}">{{overallStatus().text}}</div>
         </mat-panel-description>
     </mat-expansion-panel-header>
 
     <mat-accordion>
-        <mat-expansion-panel [expanded]="this.proposal.emails.length == 0">
+        <mat-expansion-panel #first [expanded]="shouldExpand(proposal)">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     Create 
@@ -213,7 +213,7 @@
 
     &nbsp;
 <mat-accordion>
-    <mat-expansion-panel *ngFor="let email of proposal?.emails" >
+    <mat-expansion-panel *ngFor="let email of proposal.value.emails" >
         <mat-expansion-panel-header>
             <mat-panel-title>
                 Email 

@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective } from '@angular/forms';
+import { MatExpansionPanel } from '@angular/material/expansion';
 import { MatStepper, MatStepperIntl } from '@angular/material/stepper';
 import { DomSanitizer } from '@angular/platform-browser';
 import { EmailService } from 'src/app/services/email.service';
@@ -16,11 +17,12 @@ import { VenueService } from 'src/app/services/venue.service';
 })
 export class ProposalComponent implements OnInit {
 
+
   contacts: FormControl<any>;
   subject: FormControl;
   
   form: FormGroup;
-  proposal: any;
+  proposal: FormControl;
    
   to: FormControl;
    
@@ -49,6 +51,11 @@ export class ProposalComponent implements OnInit {
     private emailService: EmailService
   ) { }
 
+  @ViewChild('first') first: MatExpansionPanel;
+  
+  shouldExpand(value: any) {
+    return this.proposal.value.emails.length == 0
+  }
 
   ngOnInit(): void {
 
@@ -60,11 +67,14 @@ export class ProposalComponent implements OnInit {
     this.form = this.eventDetailService.form.get('data') as FormGroup;
     this.venue = this.eventDetailService.venue
 
-    this.proposal = (this.form.value.proposal) ? this.form.value.proposal : { emails: [] }
+    this.proposal = (this.form.value.proposal) ? this.form.get('proposal') as FormControl : new FormControl({ emails: [] })
 
-    this.proposal?.emails?.forEach(
+    let e = this.proposal.value;
+    e.emails?.forEach(
       email => email.status.sort((a, b) => (a.ts_epoch > b.ts_epoch) ? 1 : -1)
     )
+    this.proposal.patchValue(e)
+
 
     this.contactList = this.eventDetailService.contactList
     console.log(this.contactList)
@@ -95,7 +105,7 @@ export class ProposalComponent implements OnInit {
       teaser: this.form.value.teaser,
       full: this.form.value.full,
       contacts: this.contacts.value,
-      include_photographer: this.form.value.nclude_photographer,
+      include_photographer: this.form.value.include_photographer,
       eventId: this.eventId,
       type: 'proposal'
     }
@@ -155,18 +165,21 @@ export class ProposalComponent implements OnInit {
       {
         next: (email) => {
           
-          this.proposal.emails.push(email);
+          let e = this.proposal.value;
+          e.emails.push(email);
+          this.proposal.patchValue(e);
 
           this.eventService.save(this.eventId, {
             type: 'proposal',
-            data: this.proposal
+            data: this.proposal.value
           }).subscribe(
             {
 
               next: (proposal) => {
-                this.proposal = proposal;
+                this.proposal.patchValue(proposal);
                 this.contacts.reset();
                 stepper.reset()
+                this.first.close();
                 this.loading = false;
               },
 
@@ -207,16 +220,22 @@ export class ProposalComponent implements OnInit {
 
   overallStatus()
   {
-      let emails = this.proposal?.value?.emails 
-      if (!emails)
+      let emails = this.proposal.value.emails 
+      if (emails.length == 0)
       {
-        return 'email not yet sent'
+        return {
+          text: 'email not yet sent',
+          class: 'red'
+        }
       }
       else{
         let last = emails[emails.length - 1]
         let status = last.status;
         let last_status = status[status.length - 1].event
-        return 'email sent: status ' + last_status 
+        return  {
+          text: 'email sent: status ' + last_status ,
+          class: 'blue'
+        }
       }
   }
 

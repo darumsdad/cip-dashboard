@@ -9,13 +9,13 @@
             Pre Contract Jot Form Email
         </mat-panel-title>
         <mat-panel-description class="right-aligned-header">
-            {{overallStatus()}}
+            <div class="{{overallStatus().class}}">{{overallStatus().text}}</div>
         </mat-panel-description>
     </mat-expansion-panel-header>
 
 
     <mat-accordion>
-        <mat-expansion-panel [expanded]="this.precontract.emails.length == 0">
+        <mat-expansion-panel #first [expanded]="this.precontract.emails.length == 0">
             <mat-expansion-panel-header>
                 <mat-panel-title>
                     Create 
@@ -51,7 +51,7 @@
             &nbsp;
             <div class="row">
                 <div class="col-md-12">
-                    <button mat-raised-button pull-right (click)="onCreate()" color="primary"
+                    <button mat-raised-button pull-right (click)="onCreate()" [disabled]="disableCreate()" color="primary"
                         matStepperNext>Create</button>
                 </div>
             </div>
@@ -184,12 +184,7 @@
                 <mat-tab label="Preview">
                     <div class="row mt-5">
                         <div class="col-md-12">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <b>Link:</b>&nbsp;<a href='{{email.link}}' target="_blank">Jot Form Link</a>
-                                </div>
-                            </div>
-                            &nbsp;
+                            
                             <div class="row">
                                 <div class="col-md-6">
                                     <div [innerHtml]="getHtml(email)"></div>

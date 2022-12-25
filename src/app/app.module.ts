@@ -17,8 +17,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { VenueSelectComponent } from './venue/venue-select/venue-select.component';
 import { VenueAddComponent } from './venue/venue-add/venue-add.component';
 import { DocumentsComponent } from './documents/documents/documents.component';
-import { EmailSendComponent } from './documents/email-send/email-send.component';
-import { JotFormComponent } from './documents/jot-form/jot-form.component';
+
 import { VenueListComponent } from './venue/venue-list/venue-list.component';
 import { VenueDetailComponent } from './venue/venue-detail/venue-detail.component';
 import { CertEmailComponent } from './documents/cert-email/cert-email.component';
@@ -32,6 +31,7 @@ import { ProposalComponent } from './documents/proposal/proposal.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { PrecontractComponent } from './documents/precontract/precontract.component';
 import { PrecontractJotformSubmissionComponent } from './documents/precontract-jotform-submission/precontract-jotform-submission.component';
+import { ContractComponent } from './documents/contract/contract.component';
 
 
 
@@ -51,19 +51,16 @@ import { PrecontractJotformSubmissionComponent } from './documents/precontract-j
     VenueSelectComponent,
     VenueAddComponent,
     DocumentsComponent,
-    EmailSendComponent,
-    JotFormComponent,
-    VenueListComponent,
     VenueDetailComponent,
-    
     CertEmailComponent,
     VideoAddComponent,
     VideoListComponent,
     CallSheetComponent,
- 
+    VenueListComponent,
     ProposalComponent,
     PrecontractComponent,
     PrecontractJotformSubmissionComponent,
+    ContractComponent,
     
     
   ],

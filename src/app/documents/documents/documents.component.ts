@@ -4,10 +4,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { MatTableDataSource } from '@angular/material/table';
 import { EmailService } from 'src/app/services/email.service';
+import { EventDetailService } from 'src/app/services/event-detail.service';
 import { EventService } from 'src/app/services/event.service';
 import { VenueService } from 'src/app/services/venue.service';
 import { CertEmailComponent } from '../cert-email/cert-email.component';
-import { EmailSendComponent } from '../email-send/email-send.component';
+ 
 
 @Component({
   selector: 'app-documents',
@@ -17,32 +18,15 @@ import { EmailSendComponent } from '../email-send/email-send.component';
 })
 export class DocumentsComponent implements OnInit {
 
-  form: FormGroup;
-  contact_types: any = ['bride', 'bride_mom', 'bride_dad', 'groom', 'groom_mom', 'groom_dad', 'planner'];
-  contactList: any = [];
-
   @Input()
   eventId: any
+  precontract_jotform: any;
 
-  @Input()
-  emails: any
-
-  sending: any = undefined;
-
-  loading: any = false;
-  venue: any;
-
-  constructor(public dialog: MatDialog,
-    private rootFormGroup: FormGroupDirective,
-    private emailService: EmailService,
-    private eventService: EventService,
-    private venueservice: VenueService) { }
-
-  displayedColumns: string[] = ['type', 'to', 'status', 'actions'];
-  dataSource = new MatTableDataSource<any>();
+  constructor(private eds: EventDetailService) { }
 
   ngOnInit(): void {
-    this.form = this.rootFormGroup.control.get('data') as FormGroup;
+    this.precontract_jotform = this.eds.form.value.data.precontract_jotform
+    console.log(this.precontract_jotform)
   }
 
     

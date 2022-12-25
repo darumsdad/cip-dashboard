@@ -12,6 +12,7 @@ import { phoneValidation } from 'src/app/event/utils';
 })
 
 export class EventDetailService {
+ 
   
   private _form: any;
   private insurance_contact: any = "cert@dicksteininsurance.com"
@@ -102,14 +103,22 @@ export class EventDetailService {
         precontract: [],
         precontract_jotform: [''],
         proposal: [],
+        contract: []
       })
     })
 
-    Object.keys(this.form.controls).forEach(key => {
-      this._form.controls[key].valueChanges.subscribe(value => {
-        this._form.controls[key].setValue(value, { onlySelf: true, emitEvent: false, emitModelToViewChange: true });
+    Object.keys(this.form.get('data').controls).forEach(key => {
+      this._form.get('data').controls[key].valueChanges.subscribe(value => {
+        
+        if (key.endsWith('_email') || key.endsWith('_name'))
+          this.prepareContacts()
+        this._form.get('data').controls[key].setValue(value, 
+          { onlySelf: true, emitEvent: false, emitModelToViewChange: true }
+        );
       }, error => {}, () => { });
     });
+
+    
    
   }
 
@@ -125,6 +134,30 @@ export class EventDetailService {
     this.stop.push(stop)
   }
 
+  prepareContacts()
+  {
+  
+    this.contactList = []
+    this.contact_types.forEach(e => {
+
+      let data = this._form.get('data')
+  
+      let email_tag = e + '_email'
+      let first_name_tag = e + '_first_name'
+      let last_name_tag = e + '_last_name'
+
+      if (data.get(email_tag).value && 
+          data.get(first_name_tag).value && 
+          data.get(last_name_tag).value) {
+        this.contactList.push({
+          type: e,
+          name: data.get(first_name_tag).value + ' ' + data.get(last_name_tag).value,
+          email: data.get(email_tag).value
+        })
+      }
+    })
+  }
+
   load(id: any)
   {
     this._form.reset();
@@ -134,26 +167,10 @@ export class EventDetailService {
     this.get(id).subscribe({
 
       next: (event: any) => {
+        console.log(event)
         this._form.get('data').patchValue(event.data);
 
-        this.contact_types.forEach(e => {
-
-          let data = this._form.get('data')
-      
-          let email_tag = e + '_email'
-          let first_name_tag = e + '_first_name'
-          let last_name_tag = e + '_last_name'
-    
-          if (data.get(email_tag).value && 
-              data.get(first_name_tag).value && 
-              data.get(last_name_tag).value) {
-            this.contactList.push({
-              type: e,
-              name: data.get(first_name_tag).value + ' ' + data.get(last_name_tag).value,
-              email: data.get(email_tag).value
-            })
-          }
-        })
+        this.prepareContacts()
 
         let venueId = event.data.venueId;
         if (venueId)
@@ -162,6 +179,7 @@ export class EventDetailService {
             {
               next: (venue) => {
                 this.venue = venue;
+                console.log(venue)
                 this.stop.forEach(x => x())
               },
               error: (error) => {
@@ -182,6 +200,11 @@ export class EventDetailService {
       }
     })
     
+  }
+
+  applyVenue(venue: any) {
+    this.venue = venue;
+    this._form.get('data').get('venueId').patchValue(venue.id)
   }
 
   save(callback: Function)

@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective } from '@angular/forms';
+import { MatExpansionPanel } from '@angular/material/expansion';
 import { MatStepper } from '@angular/material/stepper';
 import { DomSanitizer } from '@angular/platform-browser';
 import { EmailService } from 'src/app/services/email.service';
@@ -40,6 +41,8 @@ export class PrecontractComponent implements OnInit {
     private emailService: EmailService
   ) { }
 
+  @ViewChild('first') first: MatExpansionPanel;
+
   ngOnInit(): void {
 
     this.subject = new FormControl("Pre Contract survey from Creative Image Productions");
@@ -47,8 +50,7 @@ export class PrecontractComponent implements OnInit {
     this.contacts = new FormControl();
     this.editor = new FormControl;
     this.to = new FormControl;
-    
-     
+
     this.form = this.eventDetailService.form.get('data') as FormGroup;
 
     this.precontract = this.form.value.precontract ? this.form.value.precontract : { emails: [] }
@@ -66,8 +68,6 @@ export class PrecontractComponent implements OnInit {
     )
 
      this.contactList = this.eventDetailService.contactList
-
-   
   }
 
   onCreate() {
@@ -83,19 +83,27 @@ export class PrecontractComponent implements OnInit {
       type: 'precontract'
     }
 
-    this.generatorService.post(payload).subscribe(
-      {
-        next: (result) => {
-          
-          this.raw_html = atob(result.html)
-          this.editor.patchValue(this.raw_html);
-          this.loading = false;
-        },
-        error: (error) => {
-          alert(error.message)
-          this.loading = false;
+    
+
+    let logic : Function = (e) =>  {
+      this.generatorService.post(payload).subscribe(
+        {
+          next: (result) => {
+            
+            this.raw_html = atob(result.html)
+            this.editor.patchValue(this.raw_html);
+            this.loading = false;
+          },
+          error: (error) => {
+            alert(error.message)
+            this.loading = false;
+          }
         }
-      }
+      )
+    }
+
+    this.eventDetailService.save(
+       logic.bind(this)
     )
 
   }
@@ -132,6 +140,7 @@ export class PrecontractComponent implements OnInit {
                 this.precontract = precontract;
                 this.contacts.reset();
                 stepper.reset()
+                this.first.close()
                 this.loading = false;
               },
 
@@ -165,6 +174,14 @@ export class PrecontractComponent implements OnInit {
     return "";
   }
 
+  disableCreate(): boolean {
+    
+    let ret =
+         this.form.value.bride_first_name  &&
+         this.form.value.groom_first_name 
+    return !ret;
+  }
+
   getHtml(email: any) {
     return this.sanitizer.bypassSecurityTrustHtml(atob(email.encoded_html))
   }
@@ -172,18 +189,24 @@ export class PrecontractComponent implements OnInit {
   overallStatus()
   {
       let emails = this.precontract.emails 
-      if (!emails)
+      if (emails.length == 0)
       {
-        return 'email not yet sent'
+        return {
+          text: 'email not yet sent',
+          class: 'red'
+        }
       }
       else{
         let last = emails[emails.length - 1]
         let status = last.status;
         let last_status = status[status.length - 1].event
-        return 'email sent: status ' + last_status 
+        return  {
+          text: 'email sent: status ' + last_status ,
+          class: 'blue'
+        }
       }
   }
-  
+
   
  
  

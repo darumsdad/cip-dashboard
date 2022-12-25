@@ -1,8 +1,4 @@
-mat-form-field {
-    width: 100%;
-  }
-
-  .mat-expansion-panel-header-description {
+.mat-expansion-panel-header-description {
     display: flex;
     justify-content: flex-end;
   }
@@ -14,4 +10,8 @@ mat-form-field {
   .blue {
     color: blue;
     font-size: 14px;
+  }
+
+  mat-form-field {
+    width: 100%;
   }

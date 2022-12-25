@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { map, Observable, startWith } from 'rxjs';
+import { EventDetailService } from 'src/app/services/event-detail.service';
 import { VenueService } from 'src/app/services/venue.service';
 import { VenueAddComponent } from '../venue-add/venue-add.component';
 
@@ -15,29 +16,44 @@ export class VenueSelectComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(public venueService: VenueService,
-    public dialog: MatDialog,
-    public rootFormGroup: FormGroupDirective) { }
+  constructor(
+    public eds: EventDetailService,
+    public venueService: VenueService,
+    public dialog: MatDialog) { }
 
   venues: any[] = [];
   filteredVenues: Observable<any[]>;
 
   ngOnInit(): void {
 
-    this.form = this.rootFormGroup.control;
-    this.venueService.getAll().subscribe(_venues => {
+    this.form = this.eds.form.get('data');
+
+    this.venueService.getAll().subscribe({
+      next: (venues) => {
       
-      this.venues = _venues ? _venues : []
-
-      this.filteredVenues = this.form.get('venueId').valueChanges.pipe(
-        startWith(''),
-        map(venue => venue ? this._filterVenue(venue || '') : this.venues.slice()),
-      );
-
+      this.venues = venues ? venues : []
       // hack to get it to repaint after we have the list of venues
       this.form.get('venueId').patchValue(this.form.get('venueId').value)
 
+      },
+      error: (error) => {
+        alert(error.message)
+      }
     })
+
+    this.filteredVenues = this.form.get('venueId').valueChanges.pipe(
+      startWith(''),
+      map(venue => venue ? this._filterVenue(venue || '') : this.venues.slice()),
+    );
+  }
+
+  venueChanged(event: any)
+  {
+    console.log(event)
+    let venue = this.venues.find(x => x.id === event)
+    console.log(venue)
+    console.log(this.venues)
+    this.eds.applyVenue(venue);
   }
 
   openDialog(): void {
@@ -47,12 +63,15 @@ export class VenueSelectComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
 
+      console.log(result)
       if (!result)
         return;
 
-      console.log(result);
       this.venues.push(result)
-      this.form.get('venueId').patchValue(result.id)
+      this.eds.applyVenue(result);
+
+
+      //this.form.get('venueId').patchValue(result.id)
 
     });
   }
