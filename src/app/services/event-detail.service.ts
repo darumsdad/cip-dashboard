@@ -112,7 +112,10 @@ export class EventDetailService {
         mailing_state: [],
         mailing_zip: [],
 
-        video_start: []
+        video_start: [],
+        bride_prep: [],
+        groom_prep: [],
+        schedule: []
 
       })
     })

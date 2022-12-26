@@ -23,7 +23,12 @@ export class PreweddingJotformSubmissionComponent implements OnInit {
 
   getChangesSummery(changes: any) {
 
-    let changed  = changes.map(x => x.original != x.new && x.original != "").filter(x => x === true).length
+  
+    let changed  = changes.map(x => {
+      let c  = !(x.original === x.new) && x.original != ""
+      return c;
+    }
+      ).filter(x => x === true).length
     let newFields = changes.map(x => x.original != x.new && (x.original === "" || x.original === undefined)).filter(x => x === true).length
 
     return newFields + ' new fields and ' + changed + ' changed fields '
