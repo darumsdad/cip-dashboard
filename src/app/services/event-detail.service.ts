@@ -106,7 +106,14 @@ export class EventDetailService {
         proposal: [],
         contract: [],
 
-        mailing_address: []
+        
+        mailing_address: [],
+        mailing_city: [],
+        mailing_state: [],
+        mailing_zip: [],
+
+        video_start: []
+
       })
     })
 
