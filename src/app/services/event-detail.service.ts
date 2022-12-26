@@ -115,7 +115,24 @@ export class EventDetailService {
         video_start: [],
         bride_prep: [],
         groom_prep: [],
-        schedule: []
+        schedule: [],
+        payment: [],
+        guests: [],
+        song: [],
+        photo_name: [],
+        photo_phone: [phoneValidation()],
+        hair: [],
+        makeup: [],
+        caterer: [],
+        band: [],
+        referred_by: [],
+        other_vendor: [],
+        special_option: [],
+        special_ceremony: [],
+        reception_option: [],
+       
+        dislike: [],
+        aware: []
 
       })
     })

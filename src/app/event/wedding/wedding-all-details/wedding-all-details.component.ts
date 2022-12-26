@@ -12,7 +12,25 @@ export class WeddingAllDetailsComponent implements OnInit {
  
   constructor(public eventDetailService: EventDetailService) { }
 
+  special_options: any = [
+    "Bride's gown and shoes",
+    "Groom's Details (Shoes, Tie, etc.)",
+    "Candid shots of the bride getting ready",
+    "Wedding Invitation",
+    "Candid shots of the groom getting ready",
+    "Bride and groom letters to each other",
+    "Father-Daughter Reveal",
+    "Bridemaids",
+    "Groomsmen"
+  ]
   
+  reception_options: any = [
+    'Bride and Groom First Dance',
+    'Parents Dance with bride and/or Groom',
+    'Speeches/Toasts',
+    'Mezinkah Dance'
+  ]
+
   form: FormGroup;
 
   ngOnInit(): void {
@@ -24,6 +42,18 @@ export class WeddingAllDetailsComponent implements OnInit {
 
   loading: boolean = false;
   
+  formatPhone(event: any){
+    let input  = event.target.value
+    
+    if (input.length === 10)
+    {
+        if (!isNaN(input) )
+        {
+          this.form.get(event.target.name).patchValue(
+             "(" + input.substr(0,3) + ") " + input.substr(3,3) + "-" + input.substr(6) )
+        }  
+    }
+ }
   
 
 }

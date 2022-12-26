@@ -1,6 +1,9 @@
 <form [formGroup]="form">
 
-    <h2><div style="vertical-align: middle;"><img src="assets/home.png" style="width:50px;height:50px;">&nbsp;Bride and Groom Mailing Address</div></h2>
+    <h2>
+        <div style="vertical-align: middle;"><img src="assets/home.png" style="width:50px;height:50px;">&nbsp;Bride and
+            Groom Mailing Address</div>
+    </h2>
     <div class="row">
         <div class="col-md-9">
             <mat-form-field appearance="fill">
@@ -29,7 +32,10 @@
             </mat-form-field>
         </div>
     </div>
-    <h2><div style="vertical-align: middle;"><img src="assets/video.png" style="width:50px;height:50px;">&nbsp;Video Start</div></h2>
+    <h2>
+        <div style="vertical-align: middle;"><img src="assets/video.png" style="width:50px;height:50px;">&nbsp;Video
+            Start</div>
+    </h2>
     <div class="row">
         <div class="col-md-3">
             <mat-form-field appearance="fill">
@@ -43,38 +49,176 @@
             </mat-form-field>
         </div>
     </div>
-&nbsp;
+    &nbsp;
+    <h2>
+        <div style="vertical-align: middle;"><img src="assets/prepare.png" style="width:50px;height:50px;">&nbsp;Prep
+            and Schedule</div>
+    </h2>
     <div class="row">
-    <div class="col-md-6">
-        <mat-form-field appearance="fill">
-            <mat-label>Bride Prep When / Where</mat-label>
-            <textarea matInput type="textarea" rows="8" formControlName="bride_prep" placeholder=""
-                autocomplete="off"></textarea>
-        </mat-form-field>
+        <div class="col-md-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Bride Prep When / Where</mat-label>
+                <textarea matInput type="textarea" rows="8" formControlName="bride_prep" placeholder=""
+                    autocomplete="off"></textarea>
+            </mat-form-field>
+        </div>
+
+
+        <div class="col-md-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Groom Prep When / Where</mat-label>
+                <textarea matInput type="textarea" rows="8" formControlName="groom_prep" placeholder=""
+                    autocomplete="off"></textarea>
+            </mat-form-field>
+        </div>
     </div>
     &nbsp;
-    </div>
     <div class="row">
-    <div class="col-md-6">
-        <mat-form-field appearance="fill">
-            <mat-label>Groom Prep When / Where</mat-label>
-            <textarea matInput type="textarea" rows="8" formControlName="groom_prep" placeholder=""
-                autocomplete="off"></textarea>
-        </mat-form-field>
-    </div>
+        <div class="col-md-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Schedule of the day</mat-label>
+                <textarea matInput type="textarea" rows="8" formControlName="schedule" placeholder=""
+                    autocomplete="off"></textarea>
+            </mat-form-field>
+        </div>
     </div>
     &nbsp;
-<div class="row">
-<div class="col-md-6">
-    <mat-form-field appearance="fill">
-        <mat-label>Schedule of the day</mat-label>
-        <textarea matInput type="textarea" rows="8" formControlName="schedule" placeholder=""
-            autocomplete="off"></textarea>
-    </mat-form-field>
-</div>
-</div>
-     
+    <div class="row">
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Who should we speak to for payment?</mat-label>
+                <input matInput type="text" formControlName="payment" placeholder="" autocomplete="off">
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>How many guests are you expecting to have?</mat-label>
+                <input matInput type="text" formControlName="guests" placeholder="" autocomplete="off">
+            </mat-form-field>
+        </div>
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Let us know if you have a song in mind for the highlight</mat-label>
+                <input matInput type="text" formControlName="song" placeholder="" autocomplete="off">
+            </mat-form-field>
+        </div>
+    </div>
+    &nbsp;
+    <h2><div style="vertical-align: middle;"><img src="assets/vendors.png" style="width:50px;height:50px;">&nbsp;Vendors</div>  </h2>
+    
+    <div class="row">
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Photogorapher name</mat-label>
+                <input matInput type="text" formControlName="photo_name" placeholder="" autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Photogorapher phone</mat-label>
+                <input matInput type="phone" name="photo_phone" (focusout)="formatPhone($event)"
+                    formControlName="photo_phone" placeholder="" autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Hair</mat-label>
+                <input matInput type="text" formControlName="hair" placeholder="" autocomplete="off">
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Makeup</mat-label>
+                <input matInput type="text" formControlName="makeup" placeholder="" autocomplete="off">
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Caterer</mat-label>
+                <input matInput type="text" formControlName="caterer" placeholder="" autocomplete="off">
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Band</mat-label>
+                <input matInput type="text" formControlName="band" placeholder="" autocomplete="off">
+            </mat-form-field>
+        </div>
+    </div>
+    &nbsp;
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Other vendor informationy</mat-label>
+                <textarea matInput type="textarea" rows="8" formControlName="other_vendor" placeholder=""
+                    autocomplete="off"></textarea>
+            </mat-form-field>
+        </div>
+    </div>
+
+    &nbsp;
+    <h2><div style="vertical-align: middle;"><img src="assets/filming.png" style="width:50px;height:50px;">&nbsp;Filming</div>  </h2>
+
+    <div class="row">
+        <div class="col-md-6"> 
+    
+            <mat-label> Check off all that applies for your special day to be filmed.</mat-label>
+    <mat-selection-list  formControlName="special_option" >
+        <mat-list-option *ngFor="let option of special_options" [value]="option" >
+          {{option}}
+        </mat-list-option>
+      </mat-selection-list>
+
+
+
+
+    </div>
+    
+        <div class="col-md-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Anything happening during the ceremony that is not typical that we should be aware of?</mat-label>
+                <textarea matInput type="textarea" rows="8" formControlName="special_ceremony" placeholder=""
+                    autocomplete="off"></textarea>
+            </mat-form-field>
+        </div>
+    </div>
+
+    &nbsp;
+    <h2><div style="vertical-align: middle;"><img src="assets/reception.png" style="width:50px;height:50px;">&nbsp;Reception</div></h2>
+    <div class="row">
+        <div class="col-md-6"> 
+    
+            &nbsp;
+            <mat-label> Reception will have:</mat-label>
+           
+    <mat-selection-list  formControlName="reception_option" >
+        <mat-list-option *ngFor="let option of reception_options" [value]="option" >
+          {{option}}
+        </mat-list-option>
+      </mat-selection-list>
+
+
+
+
+    </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Is there anything you like or dislike for your wedding videography that we should be aware of?</mat-label>
+                <textarea matInput type="textarea" rows="8" formControlName="dislike" placeholder=""
+                    autocomplete="off"></textarea>
+            </mat-form-field>
+        </div>
+        
+        <div class="col-md-6">
+            <mat-form-field appearance="fill">
+                <mat-label>Anything else we can do or be aware of to make your wedding the best it could be?</mat-label>
+                <textarea matInput type="textarea" rows="8" formControlName="aware" placeholder=""
+                    autocomplete="off"></textarea>
+            </mat-form-field>
+        </div>
+    </div>
 </form>
-
-
- 
