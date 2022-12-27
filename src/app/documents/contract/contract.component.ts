@@ -244,6 +244,7 @@ export class ContractComponent implements OnInit {
                         }
                       }
                       else{
+                        files.files = files.files.filter(x => x.fileName !== file_details.fileName)
                         files.files.push(file_details)
                       }
           

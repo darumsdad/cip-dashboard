@@ -20,7 +20,7 @@ import { DocumentsComponent } from './documents/documents/documents.component';
 
 import { VenueListComponent } from './venue/venue-list/venue-list.component';
 import { VenueDetailComponent } from './venue/venue-detail/venue-detail.component';
-import { CertEmailComponent } from './documents/cert-email/cert-email.component';
+ 
 import { VideoAddComponent } from './documents/video-add/video-add.component';
 import { VideoListComponent } from './documents/video-list/video-list.component';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
@@ -38,7 +38,8 @@ import { PreweddingJotformSubmissionComponent } from './documents/prewedding-jot
 import { FilesComponent } from './documents/files/files.component';
 //import { ContenteditableValueAccessor } from './contenteditable.directive';
 import { ngfModule, ngf } from "angular-file";
-import { CallsheetComponent } from './documents/callsheet/callsheet.component'
+import { CallsheetComponent } from './documents/callsheet/callsheet.component';
+import { CertificateComponent } from './documents/certificate/certificate.component'
 
 
 
@@ -61,7 +62,7 @@ import { CallsheetComponent } from './documents/callsheet/callsheet.component'
     VenueAddComponent,
     DocumentsComponent,
     VenueDetailComponent,
-    CertEmailComponent,
+    
     VideoAddComponent,
     VideoListComponent,
     VenueListComponent,
@@ -76,6 +77,7 @@ import { CallsheetComponent } from './documents/callsheet/callsheet.component'
     
     FilesComponent,
          CallsheetComponent,
+         CertificateComponent,
     
     
   ],

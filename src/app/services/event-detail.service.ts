@@ -15,7 +15,7 @@ export class EventDetailService {
  
   
   private _form: any;
-  private insurance_contact: any = "cert@dicksteininsurance.com"
+  coi_agent: any = "cert@dicksteininsurance.com"
   eventId: any;
   venue: any;
   contact_types: any = ['bride', 'bride_mom', 'bride_dad', 'groom', 'groom_mom', 'groom_dad', 'planner'];
@@ -98,13 +98,15 @@ export class EventDetailService {
         hours: [''],
         count: [''],
         effective_date: [''],
-        insurance_contact: [this.insurance_contact],
+        
         include_photographer: [false],
         precontract: [],
         precontract_jotform: [''],
         prewedding_jotform: [''],
         proposal: [],
         contract: [],
+        callsheet: [],
+        certificate: [],
 
         
         mailing_address: [],

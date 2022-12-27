@@ -7,6 +7,7 @@ import { EmailService } from 'src/app/services/email.service';
 import { EventDetailService } from 'src/app/services/event-detail.service';
 import { EventService } from 'src/app/services/event.service';
 import { FileGenerateService } from 'src/app/services/file-generate.service';
+import { FileService } from 'src/app/services/file.service';
 
 @Component({
   selector: 'app-callsheet',
@@ -15,78 +16,82 @@ import { FileGenerateService } from 'src/app/services/file-generate.service';
 })
 export class CallsheetComponent implements OnInit {
 
-  contacts: FormControl<any>;
-  subject: FormControl;
-  contactList: any = [];
+
   form: FormGroup;
   precontract: any;
-
-  to: FormControl;
 
   preview: any;
   loading: any = false;
   editor: FormControl;
   
-  
+  callsheet: any
+
+
   raw_html: string;
 
 
   constructor(
     public generatorService: FileGenerateService,
     private sanitizer: DomSanitizer,
-    private eventService: EventService,
-    private eventDetailService: EventDetailService,
-    private emailService: EmailService
+    private fileService: FileService,
+    private eds: EventDetailService,
+    private es: EventService,
+
   ) { }
 
   @ViewChild('first') first: MatExpansionPanel;
 
   ngOnInit(): void {
 
-    this.subject = new FormControl("Pre Contract survey from Creative Image Productions");
-    
-    this.contacts = new FormControl();
     this.editor = new FormControl;
-    this.to = new FormControl;
-
-    this.form = this.eventDetailService.form.get('data') as FormGroup;
-
-    this.precontract = this.form.value.precontract ? this.form.value.precontract : { emails: [] }
     
-    this.precontract.emails?.forEach(
-      email => email.status.sort((a, b) => (a.ts_epoch > b.ts_epoch) ? 1 : -1)
-    )
+    this.form = this.eds.form.get('data') as FormGroup;
 
-    this.contacts.valueChanges.subscribe(
-      {
-        next: (values) => {
-          this.to.patchValue(values?.map(x => x.email).join(","))
-        }
-      }
-    )
+    this.callsheet = this.form.value.callsheet;
+    console.log("init")
+    console.log(this.callsheet)
 
-     this.contactList = this.eventDetailService.contactList
   }
+
+  canEdit(): any {
+    return this.callsheet
+  }
+
+  onEdit() {
+
+    this.loading = true;
+
+    
+    this.raw_html = atob(this.callsheet.callsheet_html)
+    this.editor.patchValue(this.raw_html);
+    this.loading = false;
+
+    
+
+  }
+    
 
   onCreate() {
 
     this.loading = true;
-    
+
     let payload = {
       data: this.form.value,
-      venue: this.eventDetailService.venue,
-      eventId: this.eventDetailService.eventId,
-      type: 'callsheet'
+      venue: this.eds.venue,
+      eventId: this.eds.eventId,
+      type: 'callsheet',
+      template_html: this.callsheet?.template_html
     }
 
-    let logic : Function = (e) =>  {
+    let logic: Function = (e) => {
       this.generatorService.post(payload).subscribe(
         {
           next: (result) => {
-            
+
             this.raw_html = atob(result.html)
             this.editor.patchValue(this.raw_html);
             this.loading = false;
+
           },
           error: (error) => {
             alert(error.message)
@@ -96,8 +101,8 @@ export class CallsheetComponent implements OnInit {
       )
     }
 
-    this.eventDetailService.save(
-       logic.bind(this)
+    this.eds.save(
+      logic.bind(this)
     )
 
   }
@@ -110,48 +115,85 @@ export class CallsheetComponent implements OnInit {
 
     this.loading = true;
 
-    let payload = {
-      to: this.to.value,
-      subject: this.subject.value,
-      encoded_html: btoa(this.editor.value),
-      key: 'precontract:' + this.eventDetailService.eventId
+    let filePayload = {
+      encoded_data: btoa(this.editor.value),
+      fileName: "callsheet.pdf",
+      convert_to_pdf: true
     }
 
-    this.emailService.post(payload).subscribe(
+    this.fileService.post(this.eds.eventId, filePayload).subscribe(
       {
-        next: (email) => {
-          
-          this.precontract.emails.push(email);
+        next: (event) => {
 
-          this.eventService.save(this.eventDetailService.eventId, {
-            type: 'precontract',
-            data: this.precontract
-          }).subscribe(
+          let file_detail = event;
+
+          let file_details = {
+            fileName: file_detail.fileName,
+            fileUrl: file_detail.fileUrl,
+            type: 'Callsheet',
+            description: 'callsheet create on : ' + new Date().toISOString(),
+          }
+
+          let files = this.form.value.files;
+          if (!files) {
+            files = {
+              files: [file_details]
+            }
+          }
+          else {
+
+            files.files = files.files.filter(x => x.fileName !== file_details.fileName)
+            files.files.push(file_details)
+          }
+
+          let save_payload = {
+            type: 'files',
+            data: files
+          }
+
+          this.es.save(this.eds.eventId, save_payload).subscribe(
             {
+              next: (files) => {
+                this.form.get('files').patchValue(files)
 
-              next: (precontract) => {
+                let save_payload = {
+                  type: 'callsheet',
+                  data: {
+                    callsheet_html: btoa(this.editor.value)
+                  }
+                }
+
+                this.es.save(this.eds.eventId, save_payload).subscribe(
+                  {
+                    next: (callsheet) => {
+                      stepper.reset()
+                      this.callsheet = callsheet;
+                      this.loading = false;
+                    },
+                    
+                    error: (error) => {
+                      alert(error.message)
+                      this.loading = false;
+                    }
+                  }
+                )
                 
-                this.precontract = precontract;
-                this.contacts.reset();
-                stepper.reset()
-                this.first.close()
-                this.loading = false;
               },
 
               error: (error) => {
-                alert(error.mesage)
+                alert(error.message)
                 this.loading = false;
               }
             }
           )
-        },
 
+        },
         error: (error) => {
           alert(error.message)
           this.loading = false;
         }
-      }
-    )
+      });
+
   }
 
 
@@ -169,10 +211,10 @@ export class CallsheetComponent implements OnInit {
   }
 
   disableCreate(): boolean {
-    
+
     let ret =
-         this.form.value.bride_first_name  &&
-         this.form.value.groom_first_name 
+      this.form.value.bride_first_name &&
+      this.form.value.groom_first_name
     return !ret;
   }
 
@@ -180,30 +222,25 @@ export class CallsheetComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustHtml(atob(email.encoded_html))
   }
 
-  overallStatus()
-  {
-      let emails = this.precontract.emails 
-      if (emails.length == 0)
-      {
-        return {
-          text: 'email not yet sent',
-          class: 'red'
-        }
-      }
-      else{
-        let last = emails[emails.length - 1]
-        let status = last.status;
-        let last_status = status[status.length - 1].event
-        return  {
-          text: 'email sent: status ' + last_status ,
-          class: 'blue'
-        }
-      }
+  overallStatus() {
+   if (this.callsheet)
+   {
+    return {
+      class: "blue",
+      text: "callsheet created"
+    }
+
+   }
+
+   return {
+    class: "red",
+    text: "callsheet not created"
+  }
   }
 
-  
- 
- 
+
+
+
 
 }
 

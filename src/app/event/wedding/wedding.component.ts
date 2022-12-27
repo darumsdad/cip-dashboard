@@ -17,7 +17,7 @@ export class WeddingComponent implements OnInit {
   
   form: FormGroup;
   
-  insurance_contact: any = "cert@dicksteininsurance.com"
+ 
 
   constructor(public route: ActivatedRoute,
     private eds: EventDetailService,
