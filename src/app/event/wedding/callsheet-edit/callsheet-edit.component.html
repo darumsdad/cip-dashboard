@@ -1,0 +1,28 @@
+<form [formGroup]="form">
+    <div *ngIf="loading" class="row mt-2 mb-2">
+        <div class="col-md-12">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            <div style="vertical-align: middle;"><img src="/assets/callsheet.png" style="width:50px;height:40px;">
+                &nbsp; Call Sheet</div>
+        </div>
+        <div class="col-md-10">
+            <button mat-raised-button pull-right (click)="onCreate()" color="primary">Create</button>
+            &nbsp;
+            <button (click)="onSend()" mat-raised-button  [disabled]="!this.editor.value" color="primary" class="pull-left">Publish</button>
+        </div>
+
+    </div>
+    &nbsp;
+    &nbsp;
+    <div class="row">
+        <div class="col-md-12">
+            <editor id="edit4" [formControl]="editor" apiKey="p9ejaukcdifecl6fhwowyud2bjuqzwbyfiyhtktmxtvbx0nq"
+                [init]="{plugins: 'link', width:1000, height:2200} "> </editor>
+        </div>
+    </div>
+</form>

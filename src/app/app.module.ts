@@ -39,7 +39,8 @@ import { FilesComponent } from './documents/files/files.component';
 //import { ContenteditableValueAccessor } from './contenteditable.directive';
 import { ngfModule, ngf } from "angular-file";
 import { CallsheetComponent } from './documents/callsheet/callsheet.component';
-import { CertificateComponent } from './documents/certificate/certificate.component'
+import { CertificateComponent } from './documents/certificate/certificate.component';
+import { CallsheetEditComponent } from './event/wedding/callsheet-edit/callsheet-edit.component'
 
 
 
@@ -78,6 +79,7 @@ import { CertificateComponent } from './documents/certificate/certificate.compon
     FilesComponent,
          CallsheetComponent,
          CertificateComponent,
+         CallsheetEditComponent,
     
     
   ],
