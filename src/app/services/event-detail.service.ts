@@ -103,6 +103,7 @@ export class EventDetailService {
         precontract: [],
         precontract_jotform: [''],
         prewedding_jotform: [''],
+        prewedding: [],
         proposal: [],
         contract: [],
         callsheet: [],

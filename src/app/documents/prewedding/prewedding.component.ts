@@ -124,6 +124,8 @@ export class PreweddingComponent implements OnInit {
     this.emailService.post(payload).subscribe(
       {
         next: (email) => {
+
+          console.log("sending")
           
           this.prewedding.emails.push(email);
 
