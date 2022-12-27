@@ -7,6 +7,7 @@ import { EmailService } from 'src/app/services/email.service';
 import { EventDetailService } from 'src/app/services/event-detail.service';
 import { EventService } from 'src/app/services/event.service';
 import { FileGenerateService } from 'src/app/services/file-generate.service';
+import { FileService } from 'src/app/services/file.service';
 
 @Component({
   selector: 'app-contract',
@@ -32,7 +33,6 @@ export class ContractComponent implements OnInit {
   preview: any;
   email_preview: any;
 
-  @Input()
   eventId: any;
   venue: any;
 
@@ -42,12 +42,15 @@ export class ContractComponent implements OnInit {
     public generatorService: FileGenerateService,
     private sanitizer: DomSanitizer,
     private eventService: EventService,
+    private fileService: FileService,
     private eventDetailService: EventDetailService,
     private emailService: EmailService
   ) { }
 
   ngOnInit(): void {
 
+    this.form = this.eventDetailService.form.get('data') as FormGroup;
+    this.eventId = this.eventDetailService.eventId
     this.subject = new FormControl("Wedding Contract from Creative Image Productions");
     
     this.contacts = new FormControl();
@@ -56,7 +59,7 @@ export class ContractComponent implements OnInit {
     this.to = new FormControl;
     this.client = new FormControl;
 
-    this.form = this.eventDetailService.form.get('data') as FormGroup;
+    
     this.venue = this.eventDetailService.venue
     let state;
     if (this.venue?.state == 'NY') 
@@ -207,6 +210,7 @@ export class ContractComponent implements OnInit {
         next: (email) => {
           
           this.contract.emails.push(email);
+          let encoded_pdf = email.encoded_pdf
 
           this.eventService.save(this.eventId, {
             type: 'contract',
@@ -215,11 +219,72 @@ export class ContractComponent implements OnInit {
             {
 
               next: (contract) => {
-                this.first.close()
-                this.contract = contract;
-                this.contacts.reset();
-                stepper.reset()
-                this.loading = false;
+
+                let filePayload = {
+                  encoded_data: encoded_pdf,
+                  fileName: "original_contract.pdf"
+                }
+
+                this.fileService.post(this.eventId,filePayload).subscribe(
+                  {
+                    next: (file_detail) => {
+
+                      let file_details = {
+                        fileName: file_detail.fileName,
+                        fileUrl: file_detail.fileUrl,
+                        type: 'Unexecuted Contract',
+                        description: 'Unexecuted Contract created: ' + new Date().toISOString(),
+                      }
+
+                      let files = this.form.value.files;
+                      if (!files)
+                      {
+                        files = {
+                          files: [file_details]
+                        }
+                      }
+                      else{
+                        files.files.push(file_details)
+                      }
+          
+
+                      let save_payload = {
+                        type: 'files',
+                        data:  files
+                      }
+
+                      this.eventService.save(this.eventId,save_payload).subscribe(
+                        {
+                          next: (files) => {
+                            this.form.get('files').patchValue(files)
+                            
+                            this.first.close()
+                            this.contract = contract;
+                            this.contacts.reset();
+                            stepper.reset()
+                            this.loading = false;
+
+                          },
+          
+                          error: (error) => {
+                            alert(error.message)
+                            this.loading = false;
+                          }
+                        }
+                      )
+
+
+                    
+                    
+                    },
+                    error: (error) => {
+                      alert(error.mesage)
+                      this.loading = false;
+                    }
+
+                  }
+                )
+                
               },
 
               error: (error) => {

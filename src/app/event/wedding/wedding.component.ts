@@ -36,8 +36,10 @@ export class WeddingComponent implements OnInit {
       (() => { this.loading = true }).bind(this),
       (() => { this.loading = false }).bind(this))
     
-    this.form = this.eds.form;
     this.eds.load(this.eventId);
+    this.form = this.eds.form.get('data');
+    console.log(this.form)
+    
   }
 
   save() {

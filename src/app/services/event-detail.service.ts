@@ -33,7 +33,7 @@ export class EventDetailService {
 
         status: [''],
         event_type: [''],
-        description: [''],
+        description: new FormControl(),
         date: [''],
         start: [''],
         end: [''],
@@ -132,7 +132,9 @@ export class EventDetailService {
         reception_option: [],
        
         dislike: [],
-        aware: []
+        aware: [],
+
+        files: []
 
       })
     })

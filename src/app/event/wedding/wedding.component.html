@@ -1,6 +1,8 @@
 <div class="container-fluid">
 
-    <ng-container [formGroup]="form">
+    
+    <form [formGroup]="form">
+
 
         &nbsp;
         <div *ngIf="loading" class="row mt-6 mb-6">
@@ -11,7 +13,10 @@
         &nbsp;
         <div class="row mb-3 mt-1">
             <div class="col-10" >
-                <h1 [ngStyle]="{'color' : !form.untouched ? 'red' : 'black' }">{{form.get('data').get('description').value}}</h1>
+                <h1 maxlength="40" [ngStyle]="{'color' : !form.untouched ? 'red' : 'black' }">
+                      {{form.get('description').value}}  
+                    </h1>
+                  
             </div>
             <div class="col-md-1" style="width:120px;height:100px;" [ngStyle]="{'border-style' : !form.untouched ? 'solid' : 'none', 'border-color' : 'coral'}">
                 <button mat-icon-button [disabled]="form.invalid" (click)="save()" color="primary" class="pull-right"
@@ -55,13 +60,7 @@
                 </ng-template>
             </mat-tab>
 
-            <!-- <mat-tab label="Jot Form">
-                <div class="row mt-5">
-                    <div class="col-md-12">
-                        <app-jot-form [eventId]="eventId"></app-jot-form>
-                    </div>
-                </div>
-            </mat-tab> -->
+        
             <!-- <mat-tab label="Videos">
                 <div class="row mt-5">
                     <div class="col-md-12">
@@ -78,17 +77,17 @@
                 </div>
             </mat-tab> -->
 
-            <!-- <mat-tab label="Files">
+            <mat-tab label="Files">
                 <div class="row mt-5">
                     <div class="col-md-12">
-                        <app-file-upload [projectId]=projectId></app-file-upload>
+                        <app-files></app-files>
                     </div>s
                 </div>
-            </mat-tab> -->
+            </mat-tab>
 
         </mat-tab-group>
 
-    </ng-container>
+    </form>
 
 
 

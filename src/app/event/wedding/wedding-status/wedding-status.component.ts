@@ -1,5 +1,6 @@
 import { Component,  OnInit, Optional } from '@angular/core';
 import { ControlContainer, FormControl, FormControlDirective, FormGroup, FormGroupDirective } from '@angular/forms';
+import { EventDetailService } from 'src/app/services/event-detail.service';
 
 export var STATUS_MAP: any[] = [
   { id: '0', name: '(Default) Hold' },
@@ -29,17 +30,14 @@ export var STATUS_MAP: any[] = [
 })
 export class WeddingStatusComponent implements OnInit {
 
-  constructor(
-    private rootFormGroup: FormGroupDirective
-    ) { }
+  constructor(private eds: EventDetailService) { }
 
   form: FormGroup
   statuses: any  = STATUS_MAP;
   eventTypes: any[] = ['Wedding', 'Mitzvah', 'Other']
 
   ngOnInit(): void {
-    this.form = this.rootFormGroup.control.get('data') as FormGroup;
-    console.log(this.form.value)
+    this.form = this.eds.form.get('data') as FormGroup;
   }
 
   onChangeStatus(event: any) {

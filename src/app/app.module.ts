@@ -35,6 +35,10 @@ import { ContractComponent } from './documents/contract/contract.component';
 import { PreweddingComponent } from './documents/prewedding/prewedding.component';
 import { WeddingAllDetailsComponent } from './event/wedding/wedding-all-details/wedding-all-details.component';
 import { PreweddingJotformSubmissionComponent } from './documents/prewedding-jotform-submission/prewedding-jotform-submission.component';
+import { FilesComponent } from './documents/files/files.component';
+//import { ContenteditableValueAccessor } from './contenteditable.directive';
+import { ngfModule, ngf } from "angular-file"
+
 
 
 
@@ -47,6 +51,7 @@ import { PreweddingJotformSubmissionComponent } from './documents/prewedding-jot
 @NgModule({
   declarations: [
     AppComponent,
+    //ContenteditableValueAccessor,
     WeddingComponent,
     WeddingStatusComponent,
     EventListComponent,
@@ -66,7 +71,10 @@ import { PreweddingJotformSubmissionComponent } from './documents/prewedding-jot
     ContractComponent,
     PreweddingComponent,
     WeddingAllDetailsComponent,
+   
     PreweddingJotformSubmissionComponent,
+    
+    FilesComponent,
     
     
   ],
@@ -81,7 +89,7 @@ import { PreweddingJotformSubmissionComponent } from './documents/prewedding-jot
     ReactiveFormsModule,
     AppRoutingModule,
     NgbModule,
-    
+    ngfModule,
     GooglePlaceModule,
     EditorModule
     
