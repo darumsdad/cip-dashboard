@@ -25,7 +25,7 @@ import { VideoAddComponent } from './documents/video-add/video-add.component';
 import { VideoListComponent } from './documents/video-list/video-list.component';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { EditorModule } from '@tinymce/tinymce-angular';
-import { CallSheetComponent } from './documents/call-sheet/call-sheet.component';
+
  
 import { ProposalComponent } from './documents/proposal/proposal.component';
 import { MatExpansionModule } from '@angular/material/expansion';
@@ -37,7 +37,8 @@ import { WeddingAllDetailsComponent } from './event/wedding/wedding-all-details/
 import { PreweddingJotformSubmissionComponent } from './documents/prewedding-jotform-submission/prewedding-jotform-submission.component';
 import { FilesComponent } from './documents/files/files.component';
 //import { ContenteditableValueAccessor } from './contenteditable.directive';
-import { ngfModule, ngf } from "angular-file"
+import { ngfModule, ngf } from "angular-file";
+import { CallsheetComponent } from './documents/callsheet/callsheet.component'
 
 
 
@@ -63,7 +64,6 @@ import { ngfModule, ngf } from "angular-file"
     CertEmailComponent,
     VideoAddComponent,
     VideoListComponent,
-    CallSheetComponent,
     VenueListComponent,
     ProposalComponent,
     PrecontractComponent,
@@ -75,6 +75,7 @@ import { ngfModule, ngf } from "angular-file"
     PreweddingJotformSubmissionComponent,
     
     FilesComponent,
+         CallsheetComponent,
     
     
   ],
