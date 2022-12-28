@@ -108,6 +108,7 @@ export class EventDetailService {
         contract: [],
         callsheet: [],
         certificate: [],
+        videos: [],
 
         
         mailing_address: [],

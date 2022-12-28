@@ -18,8 +18,6 @@ import { VimeoService } from 'src/app/services/vimeo.service';
 })
 export class VenueDetailComponent implements OnInit {
 
-
-
   form: any;
   venueId: any;
   videoTag: any;

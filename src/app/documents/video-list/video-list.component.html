@@ -1,41 +1,66 @@
-
-<div *ngIf="loading" class="row mt-2 mb-2">
-    <div class="col-md-12">
-        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+<form>
+    <div *ngIf="loading" class="row mt-2 mb-2">
+        <div class="col-md-12">
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </div>
     </div>
-</div>
 
-<button mat-raised-button color="primary" (click)="upload($event)" class="pull-left">
-    Upload
-</button>
+    <div class="row">
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>Video Key</mat-label>
+                <input matInput placeholder="key" [formControl]="videoTag" type="text">
+            </mat-form-field>
 
-<div class="row mt-3">
-    <div class="col-md-12">
-        <table mat-table [dataSource]="dataSource" appearance="fill">
-            <ng-container matColumnDef="name">
-                <th mat-header-cell *matHeaderCellDef>Type</th>
-                <td mat-cell *matCellDef="let element">{{ element.video.name }}</td>
-            </ng-container>
+        </div>
+        <div class="col-md-4">
+            <mat-form-field appearance="fill">
+                <mat-label>Type</mat-label>
+                <mat-select [formControl]="type">
+                    <mat-option *ngFor="let type of types" [value]="type">
+                        {{type}}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <button mat-raised-button color="primary" (click)="onSave()" class="pull-left">
+                Upload
+            </button>
+        </div>
+    </div>
 
-            <ng-container matColumnDef="actions">
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <table mat-table [dataSource]="videosAsMatTableDataSource$ | async" appearance="fill">
+                <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef>Type</th>
+                    <td mat-cell *matCellDef="let element">{{ element.type }}</td>
+                </ng-container>
+
+                 <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef>Actions</th>
                 <td mat-cell *matCellDef="let element">
-                    <button color="primary" mat-icon-button (click)="on_delete_video(element.videoTag)"><mat-icon>delete</mat-icon></button>
+                    <button color="primary" mat-icon-button (click)="onDelete(element)"><mat-icon>delete</mat-icon></button>
                 </td>
             </ng-container>
 
-            <ng-container matColumnDef="type">
+            <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>Name</th>
-                <td mat-cell *matCellDef="let element">{{ element.type }}</td>
-            </ng-container>
+                <td mat-cell *matCellDef="let element">{{ element.videoTag }} {{ element?.details?.name }}</td>
+            </ng-container> 
 
-            <ng-container matColumnDef="video">
-                <th mat-header-cell *matHeaderCellDef>Video</th>
-                <td mat-cell *matCellDef="let element">
-                    <a href="{{element.video.link}}" target="_blank"><img src="{{ element.video.pictures.sizes[2].link}}" alt=""></a>
-            </ng-container>
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
+                <ng-container matColumnDef="video">
+                    <th mat-header-cell *matHeaderCellDef>Video</th>
+                    <td mat-cell *matCellDef="let element">
+                        <a *ngIf="!element.loading" href="{{element.details.link}}" target="_blank"><img
+                                src="{{ element.details.pictures.sizes[2].link}}" alt=""></a>
+                        <mat-spinner *ngIf="element.loading" diameter="20"></mat-spinner>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
+        </div>
     </div>
-</div>
+</form>
