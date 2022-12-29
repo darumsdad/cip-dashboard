@@ -213,8 +213,8 @@ loading: any;
       {
         next: (value) => {
           if (value !== 'Other')
-            if (this.form.get('description').untouched) {
-              this.form.get('description').patchValue(value + ":")
+            if (this.file_form.get('description').untouched) {
+              this.file_form.get('description').patchValue(value + ":")
             }
 
         }
