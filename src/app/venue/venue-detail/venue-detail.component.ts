@@ -26,7 +26,7 @@ export class VenueDetailComponent implements OnInit {
   venueColumns: string[] = ['name','link','actions'];
   clientColumns: string[] = ['description','name','video','actions'];
   videosForVenueDataSource = new MatTableDataSource<any>();
-  clientVideosForVenueDataSource = new MatTableDataSource<any>();
+  //clientVideosForVenueDataSource = new MatTableDataSource<any>();
   videosForProposalDataSource = new MatTableDataSource<any>();
 
   loading: boolean = false;
@@ -75,32 +75,32 @@ export class VenueDetailComponent implements OnInit {
           this.videosForProposalDataSource.data = venue.venueData.videosForProposal
         }
 
-        this.eventService.allForVenue(this.venueId).subscribe(
-            {
-              next: (events) =>
-              {
-                if (events)
-                {
-                    events.forEach( event => {
-                      event.data.videos.forEach ( video => {
-                          video.event = event;  
-                      })
-                    })
+        // this.eventService.allForVenue(this.venueId).subscribe(
+        //     {
+        //       next: (events) =>
+        //       {
+        //         if (events)
+        //         {
+        //             events.forEach( event => {
+        //               event.data.videos.forEach ( video => {
+        //                   video.event = event;  
+        //               })
+        //             })
                     
                     
-                    let data = events.flatMap(x => x.data.videos)
-                    console.log(data)
+        //             let data = events.flatMap(x => x.data.videos)
+        //             console.log(data)
 
-                    this.clientVideosForVenueDataSource.data = data
+        //             this.clientVideosForVenueDataSource.data = data
 
-                }
-              },
-              error: (error) => {
-                alert(error.mesage)
-                this.loading = false;
-              }
-            }
-        )
+        //         }
+        //       },
+        //       error: (error) => {
+        //         alert(error.mesage)
+        //         this.loading = false;
+        //       }
+        //     }
+        // )
         this.loading = false;
       },
       error: (error) => {

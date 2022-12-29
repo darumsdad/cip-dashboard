@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { MatStepper } from '@angular/material/stepper';
 import { DomSanitizer } from '@angular/platform-browser';
+
 import { EmailService } from 'src/app/services/email.service';
 import { EventDetailService } from 'src/app/services/event-detail.service';
 import { EventService } from 'src/app/services/event.service';
@@ -186,29 +187,5 @@ export class CertificateComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustHtml(atob(email.encoded_html))
   }
 
-  overallStatus()
-  {
-      let emails = this.certificate.emails 
-      if (emails.length == 0)
-      {
-        return {
-          text: 'email not yet sent',
-          class: 'red'
-        }
-      }
-      else{
-        let last = emails[emails.length - 1]
-        let status = last.status;
-        let last_status = status[status.length - 1].event
-        return  {
-          text: 'email sent: status ' + last_status ,
-          class: 'blue'
-        }
-      }
-  }
-
-  
- 
- 
 
 }

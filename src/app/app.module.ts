@@ -40,7 +40,8 @@ import { FilesComponent } from './documents/files/files.component';
 import { ngfModule, ngf } from "angular-file";
 import { CallsheetComponent } from './documents/callsheet/callsheet.component';
 import { CertificateComponent } from './documents/certificate/certificate.component';
-import { CallsheetEditComponent } from './event/wedding/callsheet-edit/callsheet-edit.component'
+import { CallsheetEditComponent } from './wedding/callsheet-edit/callsheet-edit.component'
+import { EmailStatusPipe , EmailOverallStatusPipe} from './event/utils';
 
 
 
@@ -54,6 +55,7 @@ import { CallsheetEditComponent } from './event/wedding/callsheet-edit/callsheet
 @NgModule({
   declarations: [
     AppComponent,
+    EmailStatusPipe,EmailOverallStatusPipe,
     //ContenteditableValueAccessor,
     WeddingComponent,
     WeddingStatusComponent,

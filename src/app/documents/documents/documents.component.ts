@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { EventDetailService } from 'src/app/services/event-detail.service';
  
@@ -7,7 +7,8 @@ import { EventDetailService } from 'src/app/services/event-detail.service';
   selector: 'app-documents',
   templateUrl: './documents.component.html',
   styleUrls: ['./documents.component.scss'],
-  viewProviders: [MatExpansionPanel]
+  viewProviders: [MatExpansionPanel],
+  encapsulation: ViewEncapsulation.None
 })
 export class DocumentsComponent implements OnInit {
 

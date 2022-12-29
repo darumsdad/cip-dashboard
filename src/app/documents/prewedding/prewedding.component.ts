@@ -186,26 +186,7 @@ export class PreweddingComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustHtml(atob(email.encoded_html))
   }
 
-  overallStatus()
-  {
-      let emails = this.prewedding.emails 
-      if (emails.length == 0)
-      {
-        return {
-          text: 'email not yet sent',
-          class: 'red'
-        }
-      }
-      else{
-        let last = emails[emails.length - 1]
-        let status = last.status;
-        let last_status = status[status.length - 1].event
-        return  {
-          text: 'email sent: status ' + last_status ,
-          class: 'blue'
-        }
-      }
-  }
 
+  
 
 }

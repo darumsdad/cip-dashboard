@@ -1,10 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { BehaviorSubject, map, Observable } from 'rxjs';
 import { EventDetailService } from 'src/app/services/event-detail.service';
 import { EventService } from 'src/app/services/event.service';
+import { VenueService } from 'src/app/services/venue.service';
 import { VimeoService } from 'src/app/services/vimeo.service';
 import { VideoAddComponent } from '../video-add/video-add.component';
 
@@ -24,6 +26,8 @@ export class VideoListComponent implements OnInit {
   constructor(public dialog: MatDialog,
     public es: EventService,
     public eds: EventDetailService,
+    public vns: VenueService,
+    private snackBar: MatSnackBar,
     public vs: VimeoService) {
 
   }
@@ -103,6 +107,31 @@ export class VideoListComponent implements OnInit {
         }
       }
     )
+
+  }
+
+  onAddToVenue(video: any)
+  {
+    console.log(video)
+
+    this.vns.addVideo(this.eds.venue.id, 
+      {
+        type: 'venue',
+        video: {
+          type: video.type,
+          video: video.details,
+          videoTag: video.videoTag
+        }
+      }).subscribe({
+      next: (result) => {
+        this.snackBar.open('video added to venue: ' + this.eds.venue.name  + ' successfully!', 'Close', {
+          duration: 3000
+        });
+      },
+      error: (error) => {
+        alert(error.message)
+      }
+    })
 
   }
 

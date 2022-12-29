@@ -17,3 +17,30 @@ td {
     stroke: #2A79FF!important;
   }
 }
+
+.header {
+  display: flex;
+  justify-content: flex-end;
+  align-self: center;
+}
+
+.error {
+  background-color: red;
+}
+
+.mat-expansion-panel-header-description {
+  display: flex;
+  justify-content: flex-end;
+  align-self: center;
+}
+.red {
+  color: pink;
+  font-size: 14px;
+}
+.blue {
+  color: blue;
+  font-size: 14px;
+}
+mat-form-field {
+  width: 100%;
+}

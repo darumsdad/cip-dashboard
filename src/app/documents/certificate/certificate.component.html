@@ -10,8 +10,8 @@
             <div style="vertical-align: middle;"><img src="/assets/cio.jpeg" style="width:50px;height:50px;">
                 Certificate Of Insurance</div>
         </mat-panel-title>
-        <mat-panel-description class="right-aligned-header">
-            <div class="{{overallStatus().class}}">{{overallStatus().text}}</div>
+        <mat-panel-description class="{{certificate.emails | emailToClass}}">
+            <div class="{{(certificate.emails | emailToStatus).class }}">{{(certificate.emails | emailToStatus).text}}</div>
         </mat-panel-description>
     </mat-expansion-panel-header>
 

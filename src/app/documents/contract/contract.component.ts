@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChild, ɵpublishDefaultGlobalUtils } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatExpansionPanel } from '@angular/material/expansion';
 import { MatStepper } from '@angular/material/stepper';
@@ -15,6 +15,7 @@ import { FileService } from 'src/app/services/file.service';
   styleUrls: ['./contract.component.scss']
 })
 export class ContractComponent implements OnInit {
+ 
 
   subject: FormControl<string>;
   contacts: FormControl<any>;
@@ -322,26 +323,10 @@ export class ContractComponent implements OnInit {
     return this.sanitizer.bypassSecurityTrustHtml(atob(email.encoded_html))
   }
 
-  overallStatus()
-  {
-      let emails = this.contract.emails 
-      if (emails.length == 0)
-      {
-        return {
-          text: 'email not yet sent',
-          class: 'red'
-        }
-      }
-      else{
-        let last = emails[emails.length - 1]
-        let status = last.status;
-        let last_status = status[status.length - 1].event
-        return  {
-          text: 'email sent: status ' + last_status ,
-          class: 'blue'
-        }
-      }
-  }
-  
+
+
+
+
+
  
 }

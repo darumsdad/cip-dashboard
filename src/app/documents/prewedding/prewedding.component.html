@@ -8,8 +8,8 @@
         <mat-panel-title>
             <div style="vertical-align: middle;"><img src="/assets/jotform.png" style="width:50px;height:50px;"> Pre Wedding Jot Form</div>
         </mat-panel-title>
-        <mat-panel-description class="right-aligned-header">
-            <div class="{{overallStatus().class}}">{{overallStatus().text}}</div>
+        <mat-panel-description class="{{prewedding.emails | emailToClass}}">
+            <div class="{{(prewedding.emails | emailToStatus).class }}">{{(prewedding.emails | emailToStatus).text}}</div>
         </mat-panel-description>
     </mat-expansion-panel-header>
 
