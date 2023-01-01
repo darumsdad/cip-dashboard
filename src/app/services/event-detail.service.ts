@@ -41,26 +41,26 @@ export class EventDetailService {
 
         bride_first_name: [''],
         bride_last_name: [''],
-        bride_phone: ['', [phoneValidation()]],
+        bride_phone: [''],
         bride_phone_text: [''],
         bride_email: ['', [Validators.email]],
         bride_social: [''],
 
         bride_mom_first_name: [''],
         bride_mom_last_name: [''],
-        bride_mom_phone: ['', [phoneValidation()]],
+        bride_mom_phone: [''],
         bride_mom_email: ['', [Validators.email]],
         
 
         bride_dad_first_name: [''],
         bride_dad_last_name: [''],
-        bride_dad_phone: ['', [phoneValidation()]],
+        bride_dad_phone: [''],
         bride_dad_email: ['', [Validators.email]],
         
 
         groom_first_name: [''],
         groom_last_name: [''],
-        groom_phone: ['', [phoneValidation()]],
+        groom_phone: [''],
         groom_email: ['', [Validators.email]],
         
         groom_phone_text: [''],
@@ -68,17 +68,17 @@ export class EventDetailService {
 
         groom_mom_first_name: [''],
         groom_mom_last_name: [''],
-        groom_mom_phone: ['', [phoneValidation()]],
+        groom_mom_phone: [''],
         groom_mom_email: ['', [Validators.email]],
 
         groom_dad_first_name: [''],
         groom_dad_last_name: [''],
-        groom_dad_phone: ['', [phoneValidation()]],
+        groom_dad_phone: [''],
         groom_dad_email: ['', [Validators.email]],
 
         planner_first_name: [''],
         planner_last_name: [''],
-        planner_phone: ['', [phoneValidation()]],
+        planner_phone: [''],
         planner_email: ['', [Validators.email]],
         other_contact: [''],
 
@@ -109,6 +109,8 @@ export class EventDetailService {
         callsheet: [],
         certificate: [],
         videos: [],
+        videographers: [],
+        assistants: [],
 
         
         mailing_address: [],
@@ -124,11 +126,13 @@ export class EventDetailService {
         guests: [],
         song: [],
         photo_name: [],
-        photo_phone: [phoneValidation()],
+        photo_phone: [],
         hair: [],
         makeup: [],
         caterer: [],
         band: [],
+        florist: [],
+        lighting: [],
         referred_by: [],
         other_vendor: [],
         special_option: [],
@@ -227,6 +231,7 @@ export class EventDetailService {
         }
         else
         {
+          this.venue = undefined
           this.stop.forEach(x => x())
         }
 
@@ -235,6 +240,8 @@ export class EventDetailService {
         this.stop.forEach(x => x())
       }
     })
+
+    console.log(this._form.value)
     
   }
 
@@ -274,9 +281,7 @@ export class EventDetailService {
     return this.http.put(`${this.baseUrl}/${id}`, data);
   }
 
-  private delete(id: any): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`);
-  }
+  
 
 }
  

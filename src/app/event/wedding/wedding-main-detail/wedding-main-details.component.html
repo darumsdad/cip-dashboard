@@ -1,8 +1,10 @@
 <form [formGroup]="form">
 
 
-    <h2><div style="vertical-align: middle;"><img src="assets/date.png" style="width:50px;height:50px;">&nbsp;Date</div></h2>
-   
+    <h2>
+        <div style="vertical-align: middle;"><img src="assets/date.png" style="width:50px;height:50px;">&nbsp;Date</div>
+    </h2>
+
     <div class="row">
         <div class="col-md-4">
             <mat-form-field appearance="fill">
@@ -49,10 +51,12 @@
     </div>
     <p></p>
 
-    <h2><div style="vertical-align: middle;"><img src="assets/bride.png" style="width:50px;height:50px;">Bride</div></h2>
+    <h2>
+        <div style="vertical-align: middle;"><img src="assets/bride.png" style="width:50px;height:50px;">Bride</div>
+    </h2>
     <div class="row">
-        
-       
+
+
 
         <div class="col-md-2">
             <mat-form-field appearance="fill">
@@ -72,7 +76,8 @@
         <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Bride phone</mat-label>
-                <input  matInput type="phone" name="bride_phone" (focusout)="formatPhone($event)" formControlName="bride_phone" placeholder="Jane Doe" autocomplete="off">
+                <input matInput type="phone" name="bride_phone" formControlName="bride_phone" placeholder="Jane Doe"
+                    autocomplete="off">
             </mat-form-field>
         </div>
 
@@ -117,8 +122,8 @@
         <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Bride mothers phone</mat-label>
-                <input matInput type="phone"  name="bride_mom_phone" (focusout)="formatPhone($event)" formControlName="bride_mom_phone" placeholder="Jane Doe"
-                    autocomplete="off">
+                <input matInput type="phone" name="bride_mom_phone" formControlName="bride_mom_phone"
+                    placeholder="Jane Doe" autocomplete="off">
             </mat-form-field>
         </div>
 
@@ -156,8 +161,8 @@
         <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Bride fathers phone</mat-label>
-                <input matInput type="phone"  name="bride_dad_phone" (focusout)="formatPhone($event)" formControlName="bride_dad_phone" placeholder="Jane Doe"
-                    autocomplete="off">
+                <input matInput type="phone" name="bride_dad_phone" formControlName="bride_dad_phone"
+                    placeholder="Jane Doe" autocomplete="off">
             </mat-form-field>
         </div>
 
@@ -173,12 +178,15 @@
 
     </div>
 
-    <h2><div style="vertical-align: middle;"><img src="assets/groom.png" style="width:50px;height:50px;">Groom</div></h2>
+    <h2>
+        <div style="vertical-align: middle;"><img src="assets/groom.png" style="width:50px;height:50px;">Groom</div>
+    </h2>
     <div class="row">
         <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Groom first name</mat-label>
-                <input matInput type="text" formControlName="groom_first_name" placeholder="John Doe" autocomplete="off">
+                <input matInput type="text" formControlName="groom_first_name" placeholder="John Doe"
+                    autocomplete="off">
             </mat-form-field>
         </div>
 
@@ -192,7 +200,8 @@
         <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Groom phone</mat-label>
-                <input matInput type="phone"  name="groom_phone" (focusout)="formatPhone($event)" formControlName="groom_phone" placeholder="Jane Doe" autocomplete="off">
+                <input matInput type="phone" name="groom_phone" formControlName="groom_phone" placeholder="Jane Doe"
+                    autocomplete="off">
             </mat-form-field>
         </div>
 
@@ -238,8 +247,8 @@
         <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Groom mothers phone</mat-label>
-                <input matInput type="phone"  name="groom_mom_phone" (focusout)="formatPhone($event)" formControlName="groom_mom_phone" placeholder="Jane Doe"
-                    autocomplete="off">
+                <input matInput type="phone" name="groom_mom_phone" formControlName="groom_mom_phone"
+                    placeholder="Jane Doe" autocomplete="off">
             </mat-form-field>
         </div>
 
@@ -277,8 +286,8 @@
         <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Groom fathers phone</mat-label>
-                <input matInput type="phone"  name="groom_dad_phone" (focusout)="formatPhone($event)" formControlName="groom_dad_phone" placeholder="Jane Doe"
-                    autocomplete="off">
+                <input matInput type="phone" name="groom_dad_phone" formControlName="groom_dad_phone"
+                    placeholder="Jane Doe" autocomplete="off">
             </mat-form-field>
         </div>
 
@@ -301,21 +310,24 @@
         <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Planner first name</mat-label>
-                <input matInput type="text" formControlName="planner_first_name" placeholder="planner" autocomplete="off">
+                <input matInput type="text" formControlName="planner_first_name" placeholder="planner"
+                    autocomplete="off">
             </mat-form-field>
         </div>
 
         <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Planner last name</mat-label>
-                <input matInput type="text" formControlName="planner_last_name" placeholder="planner" autocomplete="off">
+                <input matInput type="text" formControlName="planner_last_name" placeholder="planner"
+                    autocomplete="off">
             </mat-form-field>
         </div>
 
         <div class="col-md-2">
             <mat-form-field appearance="fill">
                 <mat-label>Planner phone</mat-label>
-                <input matInput type="phone"  name="planner_phone" (focusout)="formatPhone($event)" formControlName="planner_phone" placeholder="Jane Doe" autocomplete="off">
+                <input matInput type="phone" name="planner_phone" formControlName="planner_phone" placeholder="Jane Doe"
+                    autocomplete="off">
             </mat-form-field>
         </div>
 
@@ -350,15 +362,13 @@
         <div class="col-md-3">
             <mat-form-field appearance="fill">
                 <mat-label>Venue Name From JotForm</mat-label>
-                <input matInput type="text" formControlName="jotform_venue_name" placeholder=""
-                    autocomplete="off">
+                <input matInput type="text" formControlName="jotform_venue_name" placeholder="" autocomplete="off">
             </mat-form-field>
         </div>
         <div class="col-md-3">
             <mat-form-field appearance="fill">
                 <mat-label>Venue Phone From JotForm</mat-label>
-                <input matInput type="text" formControlName="jotform_venue_phone" placeholder=""
-                    autocomplete="off">
+                <input matInput type="text" formControlName="jotform_venue_phone" placeholder="" autocomplete="off">
             </mat-form-field>
         </div>
 
@@ -389,71 +399,98 @@
 
     </div>
 
-    <h2>Contract Details</h2>
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-6">
             <mat-form-field appearance="fill">
-                <mat-label>Effective date</mat-label>
-                <input matInput [matDatepicker]="pickered" formControlName="effective_date">
-                <mat-hint>MM/DD/YYYY</mat-hint>
-                <mat-datepicker-toggle matSuffix [for]="pickered"></mat-datepicker-toggle>
-                <mat-datepicker #pickered></mat-datepicker>
+                <mat-label>Videographers</mat-label>
+                <mat-select formControlName="videographers" multiple>
+                    <mat-select-trigger>
+                            {{form.value.videographers | formatNames}}
+                        </mat-select-trigger>
+                    <mat-option *ngFor="let person of videographers" [value]="person">{{person.first_name}} {{person.last_name}}</mat-option>
+                </mat-select>
             </mat-form-field>
         </div>
-        <div class="col-md-2">
+
+        <div class="col-md-6">
             <mat-form-field appearance="fill">
-                <mat-label>Quote</mat-label>
-                <input matInput type="text" formControlName="quote" autocomplete="off">
+                <mat-label>Assistants</mat-label>
+                <mat-select formControlName="assistants" multiple>
+                    <mat-select-trigger>
+                            {{form.value.assistants | formatNames}}
+                        </mat-select-trigger>
+                    <mat-option *ngFor="let person of assistants" [value]="person">{{person.first_name}} {{person.last_name}}</mat-option>
+                </mat-select>
             </mat-form-field>
-        </div>
-        <div class="col-md-2">
-            <mat-form-field appearance="fill">
-                <mat-label>Deposit</mat-label>
-                <input matInput type="text" formControlName="deposit" autocomplete="off">
-            </mat-form-field>
-        </div>
-    
-        <div class="col-md-2">
-            <mat-form-field appearance="fill">
-                <mat-label>Hours</mat-label>
-                <input matInput type="text" formControlName="hours" autocomplete="off">
-            </mat-form-field>
-        </div>
-        <div class="col-md-2">
-            <mat-form-field appearance="fill">
-                <mat-label># Staff</mat-label>
-                <input matInput type="text" formControlName="count" autocomplete="off">
-            </mat-form-field>
-        </div>
-        <div class="col-md-2">
-                <mat-checkbox matInput type="text" formControlName="include_photographer" autocomplete="off">Include Photographers in Proposal</mat-checkbox>
         </div>
     </div>
-  
-    <h2>Services</h2>
-    <div class="row">
 
+        <h2>Contract Details</h2>
+        <div class="row">
+            <div class="col-md-2">
+                <mat-form-field appearance="fill">
+                    <mat-label>Effective date</mat-label>
+                    <input matInput [matDatepicker]="pickered" formControlName="effective_date">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datepicker-toggle matSuffix [for]="pickered"></mat-datepicker-toggle>
+                    <mat-datepicker #pickered></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <mat-form-field appearance="fill">
+                    <mat-label>Quote</mat-label>
+                    <input matInput type="text" formControlName="quote" autocomplete="off">
+                </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <mat-form-field appearance="fill">
+                    <mat-label>Deposit</mat-label>
+                    <input matInput type="text" formControlName="deposit" autocomplete="off">
+                </mat-form-field>
+            </div>
 
-        <div class="col-md-1">
-
-            <mat-checkbox matInput type="text" formControlName="teaser" autocomplete="off">Teaser</mat-checkbox>
-
+            <div class="col-md-2">
+                <mat-form-field appearance="fill">
+                    <mat-label>Hours</mat-label>
+                    <input matInput type="text" formControlName="hours" autocomplete="off">
+                </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <mat-form-field appearance="fill">
+                    <mat-label># Staff</mat-label>
+                    <input matInput type="text" formControlName="count" autocomplete="off">
+                </mat-form-field>
+            </div>
+            <div class="col-md-2">
+                <mat-checkbox matInput type="text" formControlName="include_photographer" autocomplete="off">Include
+                    Photographers in Proposal</mat-checkbox>
+            </div>
         </div>
-        <div class="col-md-1">
+
+        <h2>Services</h2>
+        <div class="row">
 
 
-            <mat-checkbox matInput type="text" formControlName="highlights" autocomplete="off">Highlight
-            </mat-checkbox>
+            <div class="col-md-1">
 
+                <mat-checkbox matInput type="text" formControlName="teaser" autocomplete="off">Teaser</mat-checkbox>
+
+            </div>
+            <div class="col-md-1">
+
+
+                <mat-checkbox matInput type="text" formControlName="highlights" autocomplete="off">Highlight
+                </mat-checkbox>
+
+            </div>
+            <div class="col-md-1">
+
+
+                <mat-checkbox matInput type="text" formControlName="full" autocomplete="off">Full Edit
+                </mat-checkbox>
+
+            </div>
         </div>
-        <div class="col-md-1">
-
-
-            <mat-checkbox matInput type="text" formControlName="full" autocomplete="off">Full Edit
-            </mat-checkbox>
-
-        </div>
-    </div>
 
 
 

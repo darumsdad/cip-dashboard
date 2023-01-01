@@ -11,7 +11,7 @@ import {HttpClientModule} from '@angular/common/http';
 import { WeddingComponent } from './event/wedding/wedding.component';
 import { WeddingStatusComponent } from './event/wedding/wedding-status/wedding-status.component';
 import { EventListComponent } from './event/event-list/event-list.component';
-import { WeddingMainDetailsComponent } from './event/wedding/wedding-main-detail/wedding-main-details.component';
+import { FormatNames, WeddingMainDetailsComponent } from './event/wedding/wedding-main-detail/wedding-main-details.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { VenueSelectComponent } from './venue/venue-select/venue-select.component';
@@ -55,7 +55,7 @@ import { EmailStatusPipe , EmailOverallStatusPipe} from './event/utils';
 @NgModule({
   declarations: [
     AppComponent,
-    EmailStatusPipe,EmailOverallStatusPipe,
+    EmailStatusPipe,EmailOverallStatusPipe,FormatNames,
     //ContenteditableValueAccessor,
     WeddingComponent,
     WeddingStatusComponent,

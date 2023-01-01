@@ -42,18 +42,6 @@ export class WeddingAllDetailsComponent implements OnInit {
 
   loading: boolean = false;
   
-  formatPhone(event: any){
-    let input  = event.target.value
-    
-    if (input.length === 10)
-    {
-        if (!isNaN(input) )
-        {
-          this.form.get(event.target.name).patchValue(
-             "(" + input.substr(0,3) + ") " + input.substr(3,3) + "-" + input.substr(6) )
-        }  
-    }
- }
   
 
 }

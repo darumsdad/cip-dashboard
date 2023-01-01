@@ -108,6 +108,7 @@ export class ContractComponent implements OnInit {
 
     this.loading = true;
     
+
     let payload = {
       
       eventId: this.eventId,
@@ -146,9 +147,10 @@ export class ContractComponent implements OnInit {
   onCreateEmail() {
 
     this.loading = true;
+    const client_first_name = this.client.value.name.split(' ')[0];
     
     let payload = {
-      client: this.client.value.name,
+      client: client_first_name,
       type: 'contract_email'
     }
 

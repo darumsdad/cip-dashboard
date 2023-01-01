@@ -51,8 +51,6 @@ export class VenueSelectComponent implements OnInit {
   {
     console.log(event)
     let venue = this.venues.find(x => x.id === event)
-    console.log(venue)
-    console.log(this.venues)
     this.eds.applyVenue(venue);
   }
 
@@ -69,10 +67,6 @@ export class VenueSelectComponent implements OnInit {
 
       this.venues.push(result)
       this.eds.applyVenue(result);
-
-
-      //this.form.get('venueId').patchValue(result.id)
-
     });
   }
 

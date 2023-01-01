@@ -16,6 +16,23 @@ export class EventService {
     return this._events.asObservable()
   }
 
+  delete(id: any, callback: Function) {
+    this.http.delete(`${this.baseUrl}/${id}`).subscribe({
+      next: (result) => {
+          let currentSet = this._events.value;
+          let filteredSet = currentSet.filter(x => x.id !== id)
+          this._events.next(filteredSet);
+          callback()
+      }, 
+      error: (error) => {
+        alert(error.message)
+        callback();
+      }
+    })
+  }
+
+  
+
   load(callback: Function) {
     this.all().subscribe({
 
@@ -114,8 +131,6 @@ export class EventService {
     return this.http.put(`${this.baseUrl}/${id}`, data);
   }
 
-  delete(id: any): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${id}`);
-  }
+
 
 }

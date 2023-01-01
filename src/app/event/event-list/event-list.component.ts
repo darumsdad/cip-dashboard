@@ -86,9 +86,18 @@ statuses: any = STATUS_MAP;
     })
   }
 
-  clickRow(row: any) {
+  edit(row: any) {
     console.log(row)
     this.router.navigate(['wedding', row])
+  }
+
+  delete(row: any)
+  {
+    console.log(row)
+    if(confirm("Are you sure to delete "+ row.data.description)) {
+      this.loading = true;
+      this.eventService.delete(row.id, (() => {this.loading = false}).bind(this))
+    }
   }
 
   onNewEvent() {

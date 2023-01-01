@@ -25,11 +25,28 @@ export class PreweddingJotformSubmissionComponent implements OnInit {
 
   
     let changed  = changes.map(x => {
-      let c  = !(x.original === x.new) && x.original != ""
-      return c;
+      if (x.original !== x.new)
+      {
+        if (x.new === "" && (x.original === "" || x.original === null || x.origjnal === undefined))
+        {
+          return false;
+        }
+        
+        if (x.original !== null && x.original !== undefined && x.original !== "") {
+          return true;
+        }
+
+        return true;
+      }
+      else
+      {
+        return false
+      }
+      
+      
     }
       ).filter(x => x === true).length
-    let newFields = changes.map(x => x.original != x.new && (x.original === "" || x.original === undefined)).filter(x => x === true).length
+    let newFields = changes.map(x => x.original !== x.new && (x.original === "" || x.original === undefined)).filter(x => x === true).length
 
     return newFields + ' new fields and ' + changed + ' changed fields '
   }
