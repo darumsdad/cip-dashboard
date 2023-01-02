@@ -8,6 +8,7 @@ import { EventDetailService } from 'src/app/services/event-detail.service';
 import { EventService } from 'src/app/services/event.service';
 import { VenueService } from 'src/app/services/venue.service';
 import { VimeoService } from 'src/app/services/vimeo.service';
+import { SearchComponent } from 'src/app/video/search/search.component';
 import { VideoAddComponent } from '../video-add/video-add.component';
 
 @Component({
@@ -18,11 +19,10 @@ import { VideoAddComponent } from '../video-add/video-add.component';
 export class VideoListComponent implements OnInit {
   
   form: any;
-  videoTag: FormControl
+  url: FormControl
   type: FormControl
   videos: any;
-
-
+  
   constructor(public dialog: MatDialog,
     public es: EventService,
     public eds: EventDetailService,
@@ -54,55 +54,79 @@ export class VideoListComponent implements OnInit {
       })
     );
 
+  search()
+  {
+    
+    {
+      const dialogRef = this.dialog.open(SearchComponent, {
+        width: '100%',
+        height: '80%'
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        this.url.patchValue(result.details.link)
+      });
+    }
+  
+  }
+  
   ngOnInit(): void {
+
     this.form = this.eds.form.get('data');
-    this.videos = this.form.value.videos;
-    this.videoTag = new FormControl('')
+   
+    this.url = new FormControl('')
     this.type = new FormControl('')
 
     this.videosDataSource = new MatTableDataSource<any>()
 
     this.form.get('videos').valueChanges.subscribe(
     {
-        next: (updatedValues) => {
-          this.videos = updatedValues
-          if (updatedValues) {
-            let initialList = updatedValues.videos.map( x => {
+        
+        next: (videos) => {
+          this.videos = videos
+          if (videos) {
+            
+            let initialList = videos.videos.map( x => {
               return {
-                videoTag: x.videoTag,
+                uri: x.uri,
                 type: x.type,
                 loading: true
               }
             })
+            
             this._videos.next(initialList) // initial load
 
-            let currentValues = this._videos.value
+            let uris = videos.videos.map( video => video.uri).join(",")
 
-            currentValues.forEach(valueLookingForData => {
-              
-              this.vs.get(valueLookingForData.videoTag).subscribe(
-              {
-                  next: (restReply) => {
-                    
-                    // merge new data into initialList
-                    initialList = initialList.map(initialListValue => {
-                      if (initialListValue.videoTag === valueLookingForData.videoTag)
+            let search = {
+              uri: uris
+            }
+     
+            this.vs.searchVideo(search).subscribe(
+            {
+                next: (videos) => {
+                  if (!videos ||  !videos.data)
+                    return 
+                  videos.data.forEach( video => {
+                    let uri = video.uri
+                    initialList.forEach( initialVideo => {
+                      if (initialVideo.uri === uri)
                       {
-                         initialListValue.loading = false;
-                         initialListValue.details = restReply;
+                        initialVideo.loading = false;
+                        initialVideo.details = video
                       }
-                      return initialListValue;
                     })
-                    
-                    this._videos.next(initialList) // full data load
-                  },
-                  
-                  error: (error) => {
-                    console.log(error)
-                  }
-              })
+                  })
+ 
+                  this._videos.next(initialList) // full data load
+                },
+                
+                error: (error) => {
+                  console.log(error)
+                }
             })
-            console.log(currentValues)
+            
+            
           }
         }
       }
@@ -145,8 +169,16 @@ export class VideoListComponent implements OnInit {
         }
       }
 
+      let peices = this.url.value.split("/")
+      if (peices.length < 2)
+      {
+        alert("Invalid URL ")
+        return;
+      }
+
+      let uri = "/videos/" + peices[peices.length - 2]
       this.videos.videos.push({
-        videoTag: this.videoTag.value,
+        uri: uri,
         type: this.type.value
       })
 
@@ -160,6 +192,7 @@ export class VideoListComponent implements OnInit {
           
           this.form.get('videos').patchValue(videos);
           this.loading = false;
+          this.url.reset()
         },
         error: (error) => {
           alert(error.message)
@@ -171,7 +204,7 @@ export class VideoListComponent implements OnInit {
   onDelete(video: any) {
     
     this.loading = true;
-    this.videos.videos = this.videos.videos.filter(x => x.videoTag !== video.videoTag)
+    this.videos.videos = this.videos.videos.filter(x => x.uri !== video.uri)
 
     let save_payload = {
       data: this.videos,
@@ -190,36 +223,6 @@ export class VideoListComponent implements OnInit {
     })
   }
 
-  // private load() {
-  //   this.loading = true;
-
-  //   this.eventService.get(this.eventId).subscribe({
-  //     next: (event) => {
-  //       console.log(event);
-  //       this.dataSource.data = event.data.videos;
-  //       this.loading = false;
-  //     },
-  //     error: (error) => {
-  //       alert(error.mesage);
-  //       this.loading = false;
-  //     }
-  //   });
-  // }
-
-  // upload($event: any): void {
-  //   const dialogRef = this.dialog.open(VideoAddComponent, {
-  //     width: '650px',
-  //     data: {
-  //       eventId: this.eventId
-  //     }
-  //   });
-
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (!result)
-  //       return;
-  //     console.log(result);
-  //     this.load();
-  //   });
-  // }
+  
 
 }

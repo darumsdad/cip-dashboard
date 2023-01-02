@@ -43,6 +43,7 @@ import { CertificateComponent } from './documents/certificate/certificate.compon
 import { CallsheetEditComponent } from './wedding/callsheet-edit/callsheet-edit.component'
 import { EmailStatusPipe , EmailOverallStatusPipe} from './event/utils';
 import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
+import { SearchComponent } from './video/search/search.component';
 
 
 
@@ -83,6 +84,7 @@ import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
          CallsheetComponent,
          CertificateComponent,
          CallsheetEditComponent,
+         SearchComponent,
     
     
   ],

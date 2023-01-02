@@ -22,6 +22,10 @@ export class VimeoService {
     return this.http.get<any>(`${this.baseUrl}/${id}`);
   }
 
+  searchVideo(predicates: any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/search`,predicates);
+  }
+
   
 
 }
