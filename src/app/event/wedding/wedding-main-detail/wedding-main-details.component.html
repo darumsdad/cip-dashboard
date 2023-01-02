@@ -303,35 +303,74 @@
 
     </div>
 
-    <h2>Planner</h2>
+    <h2>Planner <button mat-icon-button matSuffix (click)="onSearch()"><mat-icon>search</mat-icon></button></h2>
+
+
+    <div class="row">
+        <div class="col-md-5">
+            <div *ngIf="search">
+                <mat-form-field appearance="fill">
+                    <input matInput placeholder="Search by first or last name" [matAutocomplete]="planner"
+                        [formControl]="planner_search" />
+                    <mat-autocomplete id="plannerFirstName" #planner="matAutocomplete"
+                        (optionSelected)="onPlannerSelected($event.option.value )">
+
+                        <div *ngIf="filteredPlanners | async as plannersList else waitingResponse">
+                            <mat-option *ngFor="let person of plannersList" [value]="person">
+                                <span>{{person.first_name}} {{person.last_name}}</span><br>
+                            </mat-option>
+
+                        </div>
+                        <ng-template #waitingResponse>
+                            <span
+                                style="display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; align-content: center; align-self: center">
+                                <mat-spinner *ngIf="loading_planners" [diameter]="20"></mat-spinner>
+                                <mat-icon *ngIf="loading_planners_error">error</mat-icon>
+                                <mat-option disabled="true">{{loading_planners_error ? "Error loading planners" :
+                                    "Please Wait..."}}</mat-option>
+                            </span>
+                        </ng-template>
+
+
+                    </mat-autocomplete>
+                </mat-form-field>
+            </div>
+        </div>
+
+
+
+    </div>
+
 
     <div class="row">
 
-        <div class="col-md-2">
-            <mat-form-field appearance="fill">
+        <div class="col-md-3">
+
+            <mat-form-field appearance="fill" autocomplete="off">
+                
                 <mat-label>Planner first name</mat-label>
                 <input matInput type="text" formControlName="planner_first_name" placeholder="planner"
                     autocomplete="off">
             </mat-form-field>
+
         </div>
 
-        <div class="col-md-2">
-            <mat-form-field appearance="fill">
+        <div class="col-md-3">
+            <mat-form-field appearance="fill" autocomplete="off">
                 <mat-label>Planner last name</mat-label>
                 <input matInput type="text" formControlName="planner_last_name" placeholder="planner"
                     autocomplete="off">
             </mat-form-field>
         </div>
 
-        <div class="col-md-2">
-            <mat-form-field appearance="fill">
+        <div class="col-md-3">
+            <mat-form-field appearance="fill" autocomplete="off">
                 <mat-label>Planner phone</mat-label>
                 <input matInput type="phone" name="planner_phone" formControlName="planner_phone" placeholder="Jane Doe"
                     autocomplete="off">
             </mat-form-field>
         </div>
 
-        <div class="col-md-1"></div>
 
         <div class="col-md-3">
             <mat-form-field appearance="fill">
@@ -342,6 +381,7 @@
         </div>
 
     </div>
+   
 
     <h2>Other</h2>
     <div class="row">
@@ -405,9 +445,10 @@
                 <mat-label>Videographers</mat-label>
                 <mat-select formControlName="videographers" multiple>
                     <mat-select-trigger>
-                            {{form.value.videographers | formatNames}}
-                        </mat-select-trigger>
-                    <mat-option *ngFor="let person of videographers" [value]="person">{{person.first_name}} {{person.last_name}}</mat-option>
+                        {{form.value.videographers | formatNames}}
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let person of videographers" [value]="person">{{person.first_name}}
+                        {{person.last_name}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
@@ -417,80 +458,81 @@
                 <mat-label>Assistants</mat-label>
                 <mat-select formControlName="assistants" multiple>
                     <mat-select-trigger>
-                            {{form.value.assistants | formatNames}}
-                        </mat-select-trigger>
-                    <mat-option *ngFor="let person of assistants" [value]="person">{{person.first_name}} {{person.last_name}}</mat-option>
+                        {{form.value.assistants | formatNames}}
+                    </mat-select-trigger>
+                    <mat-option *ngFor="let person of assistants" [value]="person">{{person.first_name}}
+                        {{person.last_name}}</mat-option>
                 </mat-select>
             </mat-form-field>
         </div>
     </div>
 
-        <h2>Contract Details</h2>
-        <div class="row">
-            <div class="col-md-2">
-                <mat-form-field appearance="fill">
-                    <mat-label>Effective date</mat-label>
-                    <input matInput [matDatepicker]="pickered" formControlName="effective_date">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
-                    <mat-datepicker-toggle matSuffix [for]="pickered"></mat-datepicker-toggle>
-                    <mat-datepicker #pickered></mat-datepicker>
-                </mat-form-field>
-            </div>
-            <div class="col-md-2">
-                <mat-form-field appearance="fill">
-                    <mat-label>Quote</mat-label>
-                    <input matInput type="text" formControlName="quote" autocomplete="off">
-                </mat-form-field>
-            </div>
-            <div class="col-md-2">
-                <mat-form-field appearance="fill">
-                    <mat-label>Deposit</mat-label>
-                    <input matInput type="text" formControlName="deposit" autocomplete="off">
-                </mat-form-field>
-            </div>
-
-            <div class="col-md-2">
-                <mat-form-field appearance="fill">
-                    <mat-label>Hours</mat-label>
-                    <input matInput type="text" formControlName="hours" autocomplete="off">
-                </mat-form-field>
-            </div>
-            <div class="col-md-2">
-                <mat-form-field appearance="fill">
-                    <mat-label># Staff</mat-label>
-                    <input matInput type="text" formControlName="count" autocomplete="off">
-                </mat-form-field>
-            </div>
-            <div class="col-md-2">
-                <mat-checkbox matInput type="text" formControlName="include_photographer" autocomplete="off">Include
-                    Photographers in Proposal</mat-checkbox>
-            </div>
+    <h2>Contract Details</h2>
+    <div class="row">
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Effective date</mat-label>
+                <input matInput [matDatepicker]="pickered" formControlName="effective_date">
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matSuffix [for]="pickered"></mat-datepicker-toggle>
+                <mat-datepicker #pickered></mat-datepicker>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Quote</mat-label>
+                <input matInput type="text" formControlName="quote" autocomplete="off">
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Deposit</mat-label>
+                <input matInput type="text" formControlName="deposit" autocomplete="off">
+            </mat-form-field>
         </div>
 
-        <h2>Services</h2>
-        <div class="row">
-
-
-            <div class="col-md-1">
-
-                <mat-checkbox matInput type="text" formControlName="teaser" autocomplete="off">Teaser</mat-checkbox>
-
-            </div>
-            <div class="col-md-1">
-
-
-                <mat-checkbox matInput type="text" formControlName="highlights" autocomplete="off">Highlight
-                </mat-checkbox>
-
-            </div>
-            <div class="col-md-1">
-
-
-                <mat-checkbox matInput type="text" formControlName="full" autocomplete="off">Full Edit
-                </mat-checkbox>
-
-            </div>
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label>Hours</mat-label>
+                <input matInput type="text" formControlName="hours" autocomplete="off">
+            </mat-form-field>
         </div>
+        <div class="col-md-2">
+            <mat-form-field appearance="fill">
+                <mat-label># Staff</mat-label>
+                <input matInput type="text" formControlName="count" autocomplete="off">
+            </mat-form-field>
+        </div>
+        <div class="col-md-2">
+            <mat-checkbox matInput type="text" formControlName="include_photographer" autocomplete="off">Include
+                Photographers in Proposal</mat-checkbox>
+        </div>
+    </div>
+
+    <h2>Services</h2>
+    <div class="row">
+
+
+        <div class="col-md-1">
+
+            <mat-checkbox matInput type="text" formControlName="teaser" autocomplete="off">Teaser</mat-checkbox>
+
+        </div>
+        <div class="col-md-1">
+
+
+            <mat-checkbox matInput type="text" formControlName="highlights" autocomplete="off">Highlight
+            </mat-checkbox>
+
+        </div>
+        <div class="col-md-1">
+
+
+            <mat-checkbox matInput type="text" formControlName="full" autocomplete="off">Full Edit
+            </mat-checkbox>
+
+        </div>
+    </div>
 
 
 

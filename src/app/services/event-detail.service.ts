@@ -1,11 +1,12 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { FormBuilder, FormControl, Validators } from '@angular/forms';
 
 
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { phoneValidation } from 'src/app/event/utils';
+import { Contact } from '../model/models';
+
 
 @Injectable({
   providedIn: 'root'
@@ -267,6 +268,10 @@ export class EventDetailService {
         
       }
     })
+  }
+
+  public planners() : Observable<Contact> {
+    return this.http.get<any>(`${this.baseUrl}/planners`);
   }
 
   private get(id: any): Observable<any> {

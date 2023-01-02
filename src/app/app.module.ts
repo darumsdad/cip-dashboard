@@ -42,6 +42,7 @@ import { CallsheetComponent } from './documents/callsheet/callsheet.component';
 import { CertificateComponent } from './documents/certificate/certificate.component';
 import { CallsheetEditComponent } from './wedding/callsheet-edit/callsheet-edit.component'
 import { EmailStatusPipe , EmailOverallStatusPipe} from './event/utils';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 
 
 
@@ -65,7 +66,7 @@ import { EmailStatusPipe , EmailOverallStatusPipe} from './event/utils';
     VenueAddComponent,
     DocumentsComponent,
     VenueDetailComponent,
-    
+ 
     VideoAddComponent,
     VideoListComponent,
     VenueListComponent,
@@ -98,7 +99,8 @@ import { EmailStatusPipe , EmailOverallStatusPipe} from './event/utils';
     NgbModule,
     ngfModule,
     GooglePlaceModule,
-    EditorModule
+    EditorModule,
+   
     
   ],
   providers: [],

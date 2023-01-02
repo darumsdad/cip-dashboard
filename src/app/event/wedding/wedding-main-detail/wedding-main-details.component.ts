@@ -1,7 +1,9 @@
-import { Component, OnInit, Pipe, PipeTransform } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { Component, OnInit, Pipe, PipeTransform, ViewChild } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { EventDetailService } from 'src/app/services/event-detail.service';
-import { Staff } from 'src/app/model/staff.model';
+import { Staff } from 'src/app/model/models';
+import { BehaviorSubject, map, Observable, startWith, Subscribable, ValueFromArray } from 'rxjs';
+import { MatAutocompleteTrigger } from '@angular/material/autocomplete';
 
 @Pipe({
   name: 'formatNames'
@@ -19,8 +21,18 @@ export class FormatNames implements PipeTransform {
 })
 export class WeddingMainDetailsComponent implements OnInit {
 
+  search: boolean = false;
+ 
+  private _planners : BehaviorSubject<any>
+  
+  filteredPlanners : Observable<any[]>;
 
-  constructor(public eventDetailService: EventDetailService) { }
+  planner_search: FormControl = new FormControl()
+
+  @ViewChild(MatAutocompleteTrigger) trigger: MatAutocompleteTrigger;
+  
+  constructor(public eventDetailService: EventDetailService) { 
+  }
 
   videographers: Staff[] = [
   {
@@ -66,15 +78,66 @@ export class WeddingMainDetailsComponent implements OnInit {
 
   ];
 
-
   form: FormGroup;
+  loading_planners: boolean = false;
+  loading_planners_error: boolean = false;
+
+  onSearch()
+  {
+    if (this.search)
+    {
+      this.search = false;
+    }
+    else
+    {
+      this.search = true;
+      if (!this._planners)
+      {
+        this.loading_planners = true;
+        this.eventDetailService.planners().subscribe({
+          next: (planners) => {
+            this._planners = new BehaviorSubject([])
+            this._planners.next(planners);
+            this.loading_planners = false;
+            this.loading_planners_error = false;
+            this.planner_search.setValue("")
+          },
+          error: (error) => {
+            alert(error.mesage)
+            this.loading_planners_error = true;
+            this.loading_planners = false;
+          }
+        })
+      }
+    }
+  }
+
+ 
+
+  onPlannerSelected(selected: any)
+  {
+    this.form.get('planner_first_name').patchValue(selected.first_name)
+    this.form.get('planner_last_name').patchValue(selected.last_name)
+    this.form.get('planner_phone').patchValue(selected.phone)
+    this.form.get('planner_email').patchValue(selected.email)
+    this.planner_search.reset()
+    this.onSearch()
+  }
  
   ngOnInit(): void {
+    
     this.eventDetailService.register(
       (() => { this.loading = true }).bind(this),
       (() => { this.loading = false }).bind(this))
     this.form = this.eventDetailService.form.get('data')
+ 
+    this.filteredPlanners = this.planner_search.valueChanges.pipe(
+      startWith(''),
+      map(predicate => this.filterPlanners(predicate || ''))
+    )
 
+    
+  
     this.form.get('videographers').valueChanges.subscribe((next) => {
       if (!next)
         return;
@@ -92,6 +155,18 @@ export class WeddingMainDetailsComponent implements OnInit {
     })
     
   }
+
+  filterPlanners(predicate: any): any {
+    if (!this._planners)
+    return []
+
+    const filterValue = predicate.toLowerCase()
+    return this._planners.value.filter(planner => {
+      return planner.first_name.toLowerCase().includes(filterValue) || planner.last_name.toLowerCase().includes(filterValue)
+    });
+
+  }
+ 
 
   loading: boolean = false;
 

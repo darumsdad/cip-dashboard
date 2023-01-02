@@ -8,7 +8,7 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
 import { CdkStepperModule } from '@angular/cdk/stepper';
 import { CdkTableModule } from '@angular/cdk/table';
 import { CdkTreeModule } from '@angular/cdk/tree';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatAutocompleteModule, MatAutocompleteTrigger } from '@angular/material/autocomplete';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatButtonModule } from '@angular/material/button';
@@ -56,6 +56,7 @@ import { NgxMaskModule, IConfig } from 'ngx-mask'
   imports: [
     GooglePlaceModule,
    
+   
     NgxMaskModule.forRoot()
   ],
   exports: [
@@ -63,6 +64,7 @@ import { NgxMaskModule, IConfig } from 'ngx-mask'
     A11yModule,
     CdkAccordionModule,
     ClipboardModule,
+  
     //CdkMenuModule,
     CdkStepperModule,
     CdkTableModule,
