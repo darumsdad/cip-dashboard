@@ -37,7 +37,7 @@ export class VenueService {
     return this.http.get<any[]>(this.baseUrl);
   }
 
-  addVideo(id: any, data: any): Observable<any> {
+  saveVideo(id: any, data: any): Observable<any> {
     return this.http.put<any>(`${this.baseUrl}/${id}/video`, data);
   }
 

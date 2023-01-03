@@ -61,16 +61,16 @@
 <div class="row mt-3">
     <div class="col-md-12">
         <h2> Videos For Proposal </h2>
-        <table mat-table [dataSource]="videosForProposalDataSource" appearance="fill">
+        <table mat-table [dataSource]="videosForProposalAsMatTableDataSource$ | async" appearance="fill">
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>Name</th>
-                <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+                <td mat-cell *matCellDef="let element">{{ element?.details?.name }}</td>
             </ng-container>
 
             <ng-container matColumnDef="link">
                 <th mat-header-cell *matHeaderCellDef>Link</th>
                 <td mat-cell *matCellDef="let element">
-                    <a href="{{element.link}}" target="_blank"><img src="{{ element.pictures.sizes[2].link}}"
+                    <a href="{{element?.details?.link}}" target="_blank"><img src="{{ element?.details?.pictures?.sizes[2]?.link}}"
                             alt=""></a>
             </ng-container>
 
@@ -86,35 +86,54 @@
             <tr mat-header-row *matHeaderRowDef="proposalColumns"></tr>
             <tr mat-row *matRowDef="let row; columns: proposalColumns"></tr>
         </table>
+        <div class="spinner-container" *ngIf="loading">
+            <mat-spinner></mat-spinner>
+        </div>
     </div>
 </div>
 &nbsp;
 <mat-divider></mat-divider>
 
+<div class="row">
+    <div class="col-md-4">
+        <mat-form-field appearance="fill">
+            <mat-label>Vimeo Url</mat-label>
+            <input matInput placeholder="key" [formControl]="url" type="text">
+            <button mat-icon-button matSuffix (click)="search()"><mat-icon>search</mat-icon></button>
+        </mat-form-field>
+
+    </div>
+
+    <div class="col-md-2">
+        <button mat-raised-button color="primary" [disabled]="!(url.value)" (click)="addVideoToVenue()" class="pull-left">
+         <mat-icon>add</mat-icon>Add To Venue</button>
+    </div>
+</div>
+
 <div class="row mt-3">
     <div class="col-md-12">
         <h2> Videos For Venue  </h2> 
-        <table mat-table [dataSource]="videosForVenueDataSource" appearance="fill">
+        <table mat-table [dataSource]="videosForVenueAsMatTableDataSource$ | async" appearance="fill">
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>Name</th>
-                <td mat-cell *matCellDef="let element">{{ element.video.name }}</td>
+                <td mat-cell *matCellDef="let element">{{ element?.details?.name }}</td>
             </ng-container>
 
             <ng-container matColumnDef="link">
                 <th mat-header-cell *matHeaderCellDef>Link</th>
                 <td mat-cell *matCellDef="let element">
-                    <a href="{{element.videolink}}" target="_blank"><img src="{{ element.video.pictures.sizes[2].link}}"
+                    <a href="{{element?.details?.link}}" target="_blank"><img src="{{ element?.details?.pictures?.sizes[2]?.link}}"
                             alt=""></a>
             </ng-container>
 
             <ng-container matColumnDef="actions">
                 <th mat-header-cell *matHeaderCellDef>Actions</th>
                 <td mat-cell *matCellDef="let element">
-                    <button (click)="addToProposal(element.video)" mat-raised-button color="primary">
+                    <button (click)="addToProposal(element.uri)" mat-raised-button color="primary">
                         <mat-icon>arrow_upward</mat-icon>Add To Proposal
                     </button>
                     &nbsp;
-                    <button (click)="delete_video_from_venue(element.videoTag)" mat-raised-button color="primary">
+                    <button (click)="delete_video_from_venue(element.uri)" mat-raised-button color="primary">
                         <mat-icon>delete</mat-icon>Delete
                     </button>
             </ng-container>

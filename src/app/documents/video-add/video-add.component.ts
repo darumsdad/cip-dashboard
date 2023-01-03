@@ -60,20 +60,20 @@ export class VideoAddComponent implements OnInit {
     }
     else
     {
-      this.venueService.addVideo(this.data.venueId, 
-        {
-          type: 'venue',
-          video: this.form.value
-        }).subscribe({
-        next: (result) => {
-          this.dialog.close(result);
-        },
-        error: (error) => {
-          alert(error.message)
-        }
-      })
+     
     }
-    
+    //  this.venueService.addVideo(this.data.venueId, 
+    //     {
+    //       type: 'venue',
+    //       video: this.form.value
+    //     }).subscribe({
+    //     next: (result) => {
+    //       this.dialog.close(result);
+    //     },
+    //     error: (error) => {
+    //       alert(error.message)
+    //     }
+    //   })
   }
 
   load($event: any) {

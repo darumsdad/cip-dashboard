@@ -134,23 +134,25 @@ export class VideoListComponent implements OnInit {
 
   }
 
+  
   onAddToVenue(video: any)
   {
-    console.log(video)
+    this.loading = true;
 
-    this.vns.addVideo(this.eds.venue.id, 
-      {
-        type: 'venue',
-        video: {
-          type: video.type,
-          video: video.details,
-          videoTag: video.videoTag
-        }
-      }).subscribe({
+    let save_payload = {
+      data: {
+        uri: video.uri
+      },
+      type: 'patchVenue'
+    }
+
+    this.vns.saveVideo(this.eds.venue.id, save_payload).subscribe({
       next: (result) => {
+        this.loading = false;
         this.snackBar.open('video added to venue: ' + this.eds.venue.name  + ' successfully!', 'Close', {
           duration: 3000
         });
+
       },
       error: (error) => {
         alert(error.message)
