@@ -2,6 +2,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -11,6 +12,7 @@ import { EventService } from 'src/app/services/event.service';
 
 import { VenueService } from 'src/app/services/venue.service';
 import { VimeoService } from 'src/app/services/vimeo.service';
+import { SearchComponent } from 'src/app/video/search/search.component';
 
 @Component({
   selector: 'app-venue-detail',
@@ -40,6 +42,7 @@ export class VenueDetailComponent implements OnInit {
     public vimeoService: VimeoService,
     private route: ActivatedRoute,
     private vs: VimeoService,
+    private snackBar: MatSnackBar,
     public dialog: MatDialog,
     public fb: FormBuilder,
   ) { }
@@ -248,7 +251,15 @@ export class VenueDetailComponent implements OnInit {
   }
 
   search() {
+    const dialogRef = this.dialog.open(SearchComponent, {
+      width: '100%',
+      height: '80%'
+    });
 
+    dialogRef.afterClosed().subscribe(result => {
+      this.url.patchValue(result.details.link)
+    });
+   
   }
 
   
@@ -323,8 +334,14 @@ export class VenueDetailComponent implements OnInit {
     this.venueService.saveVideo(this.venueId, save_payload).subscribe({
       next: (videos) => {
         this.loading = false;
+
+        this.snackBar.open('video added to venue: successfully!', 'Close', {
+          duration: 3000
+        });
+
         this.form.get("venueData").get("videosForProposal").patchValue(videos);
-        this.url.reset()
+        
+        
        
       },
       error: (error) => {

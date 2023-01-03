@@ -57,7 +57,7 @@ export class VideoListComponent implements OnInit {
   search()
   {
     
-    {
+     
       const dialogRef = this.dialog.open(SearchComponent, {
         width: '100%',
         height: '80%'
@@ -66,7 +66,7 @@ export class VideoListComponent implements OnInit {
       dialogRef.afterClosed().subscribe(result => {
         this.url.patchValue(result.details.link)
       });
-    }
+     
   
   }
   
