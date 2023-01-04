@@ -116,6 +116,7 @@ export class ContractComponent implements OnInit {
       venue: this.eventDetailService.venue.name,
       staff: this.form.value.count,
       venueState: this.eventDetailService.venue.state,
+      venueCity: this.eventDetailService.venue.city,
       effective_date: new Date(this.form.value.effective_date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: '2-digit'}), 
       client: this.client.value.name,
       date: new Date(this.form.value.date).toLocaleDateString('en-US', {year: 'numeric', month: 'long', day: '2-digit'}), 
