@@ -97,6 +97,12 @@ export class WeddingMainDetailsComponent implements OnInit {
         this.eventDetailService.planners().subscribe({
           next: (planners) => {
             this._planners = new BehaviorSubject([])
+            planners.forEach(element => {
+              if (element.first_name == "null") element.first_name = ""
+              if (element.last_name == "null") element.last_name = ""
+              if (element.phone == "null") element.phone = ""
+              if (element.email == "null") element.email = ""
+            });
             this._planners.next(planners);
             this.loading_planners = false;
             this.loading_planners_error = false;

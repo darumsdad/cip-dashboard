@@ -21,7 +21,7 @@ import { DocumentsComponent } from './documents/documents/documents.component';
 import { VenueListComponent } from './venue/venue-list/venue-list.component';
 import { VenueDetailComponent } from './venue/venue-detail/venue-detail.component';
  
-import { VideoAddComponent } from './documents/video-add/video-add.component';
+
 import { VideoListComponent } from './documents/video-list/video-list.component';
 import { GooglePlaceModule } from "ngx-google-places-autocomplete";
 import { EditorModule } from '@tinymce/tinymce-angular';
@@ -68,7 +68,7 @@ import { SearchComponent } from './video/search/search.component';
     DocumentsComponent,
     VenueDetailComponent,
  
-    VideoAddComponent,
+    
     VideoListComponent,
     VenueListComponent,
     ProposalComponent,

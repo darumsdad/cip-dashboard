@@ -2,11 +2,14 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import { EventService } from './event.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class VenueService {
+
+   
 
   private _venues = new BehaviorSubject([])
 
@@ -29,9 +32,50 @@ export class VenueService {
      
   }
 
+  delete(id: any, callback: Function) {
+
+    this.es.allForVenue(id).subscribe(
+      (next) => {
+        if (next != undefined && next.length > 0)
+        {
+          alert("Venue is attached to " + next.length + " events - it can not be deleted")
+          callback()
+        }
+        else
+        {
+          this.http.delete(`${this.baseUrl}/${id}`).subscribe({
+            next: (next) => {
+              let current = this._venues.value;
+              current = current.filter( item => item.id !== id)
+              this._venues.next(current)
+              callback()
+            },
+            error: (error) => {
+              alert(error.message)
+              callback()
+            }
+            
+          })
+        }
+      },
+      (error) => {
+        alert(error.message)
+        callback()
+      }
+    )
+
+   
+  }
+
+  private _delete(id: any): Observable<any> {
+
+    return this.http.delete(`${this.baseUrl}/${id}`);
+  }
+
   baseUrl = environment.baseUrl + '/venues';
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private es: EventService) { }
 
   getAll(): Observable<any[]> {
     return this.http.get<any[]>(this.baseUrl);
@@ -53,10 +97,7 @@ export class VenueService {
     return this.http.put(`${this.baseUrl}/${id}`, data);
   }
 
-  delete(id: any): Observable<any> {
-
-    return this.http.delete(`${this.baseUrl}/${id}`);
-  }
+  
 
 
   delete_video_from_venue(id: any, data: any) {

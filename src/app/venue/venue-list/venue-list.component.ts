@@ -24,12 +24,15 @@ loading: any;
     this.venueService.load(this.doneLoading.bind(this))
   }
 
-  clickRow(row: any) {
+  edit(row: any) {
     console.log(row)
     this.router.navigate(['venues', row])
   }
 
-  
+  delete(row: any) {
+    this.loading = true
+    this.venueService.delete(row,this.doneLoading.bind(this))
+  }
 
   private dataSource = new MatTableDataSource<any>();
   @ViewChild(MatSort) sort: MatSort;

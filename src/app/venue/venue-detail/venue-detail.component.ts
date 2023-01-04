@@ -7,7 +7,6 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { BehaviorSubject, map, Observable } from 'rxjs';
-import { VideoAddComponent } from 'src/app/documents/video-add/video-add.component';
 import { EventService } from 'src/app/services/event.service';
 
 import { VenueService } from 'src/app/services/venue.service';
@@ -209,9 +208,6 @@ export class VenueDetailComponent implements OnInit {
     }
   )
 
-
-    //this.load();
-
   }
 
   addVideoToVenue() {
@@ -261,10 +257,6 @@ export class VenueDetailComponent implements OnInit {
     });
    
   }
-
-  
-
-
 
   delete_video_from_venue(uri: any) {
 
@@ -351,116 +343,3 @@ export class VenueDetailComponent implements OnInit {
   }
 }
 
-
-// private load() {
-
-//   this.loading = true;
-
-//   this.venueService.get(this.venueId).subscribe({
-
-//     next: (venue) => {
-
-//       console.log(venue)
-//       this.form.patchValue(venue);
-
-//       if (venue.venueData) {
-
-//         this.videosForVenue = venue.venueData.videosForVenue
-//         let videos = this.videosForVenue
-//         if (videos) {
-
-//           let initialList = videos.map(x => {
-//             return {
-//               uri: x.uri,
-//               type: x.type,
-//               loading: true
-//             }
-//           })
-
-//           this._videosForVenue.next(initialList) // initial load
-
-//           let uris = videos.map(video => video.uri).join(",")
-
-//           let search = {
-//             uri: uris
-//           }
-
-//           this.vs.searchVideo(search).subscribe(
-//             {
-//               next: (videos) => {
-//                 if (!videos || !videos.data)
-//                   return
-//                 videos.data.forEach(video => {
-//                   let uri = video.uri
-//                   initialList.forEach(initialVideo => {
-//                     if (initialVideo.uri === uri) {
-//                       initialVideo.loading = false;
-//                       initialVideo.details = video
-//                     }
-//                   })
-//                 })
-
-//                 this._videosForVenue.next(initialList) // full data load
-//               },
-
-//               error: (error) => {
-//                 console.log(error)
-//               }
-//             })
-
-
-//         }
-//       }
-
-//       let videos = venue.venueData.videosForProposal
-//       if (videos) {
-
-//         let initialList = videos.map(x => {
-//           return {
-//             uri: x.uri,
-//             type: x.type,
-//             loading: true
-//           }
-//         })
-
-//         this._videosForProposal.next(initialList) // initial load
-
-//         let uris = videos.map(video => video.uri).join(",")
-
-//         let search = {
-//           uri: uris
-//         }
-
-//         this.vs.searchVideo(search).subscribe(
-//           {
-//             next: (videos) => {
-//               if (!videos || !videos.data)
-//                 return
-//               videos.data.forEach(video => {
-//                 let uri = video.uri
-//                 initialList.forEach(initialVideo => {
-//                   if (initialVideo.uri === uri) {
-//                     initialVideo.loading = false;
-//                     initialVideo.details = video
-//                   }
-//                 })
-//               })
-
-//               this._videosForProposal.next(initialList) // full data load
-//             },
-
-//             error: (error) => {
-//               console.log(error)
-//             }
-//           })
-
-//       }
-
-//       this.loading = false;
-//     },
-//     error: (error) => {
-//       alert(error.message)
-//       this.loading = false;
-//     }
-//   });
-// }
