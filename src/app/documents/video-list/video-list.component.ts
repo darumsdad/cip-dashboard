@@ -9,7 +9,7 @@ import { EventService } from 'src/app/services/event.service';
 import { VenueService } from 'src/app/services/venue.service';
 import { VimeoService } from 'src/app/services/vimeo.service';
 import { SearchComponent } from 'src/app/video/search/search.component';
-import { VideoAddComponent } from '../video-add/video-add.component';
+
 
 @Component({
   selector: 'app-video-list',

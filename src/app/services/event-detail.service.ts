@@ -270,7 +270,7 @@ export class EventDetailService {
     })
   }
 
-  public planners() : Observable<Contact> {
+  public planners() : Observable<Contact[]> {
     return this.http.get<any>(`${this.baseUrl}/planners`);
   }
 
