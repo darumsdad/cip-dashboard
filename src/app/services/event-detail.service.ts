@@ -81,6 +81,10 @@ export class EventDetailService {
         planner_last_name: [''],
         planner_phone: [''],
         planner_email: ['', [Validators.email]],
+        planner_company_name: [''],
+        planner_website: [''],
+        planner_social: [''],
+
         other_contact: [''],
 
         jotform_venue: [''],
@@ -270,7 +274,7 @@ export class EventDetailService {
     })
   }
 
-  public planners() : Observable<Contact[]> {
+  public planners() : Observable<any[]> {
     return this.http.get<any>(`${this.baseUrl}/planners`);
   }
 

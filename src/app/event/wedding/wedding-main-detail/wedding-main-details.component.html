@@ -306,22 +306,24 @@
     <h2>Planner <button mat-icon-button matSuffix (click)="onSearch()"><mat-icon>search</mat-icon></button></h2>
 
 
+    <div class="container-fluid">
     <div class="row">
         <div class="col-md-5">
-            <div *ngIf="search">
-                <mat-form-field appearance="fill">
+            <div class="container-fluid" *ngIf="search">
+                <mat-form-field style="width: 100%" appearance="fill">
                     <input matInput placeholder="Search by first or last name" [matAutocomplete]="planner"
                         [formControl]="planner_search" />
-                    <mat-autocomplete id="plannerFirstName" #planner="matAutocomplete"
+                    <mat-autocomplete  #planner="matAutocomplete"
                         (optionSelected)="onPlannerSelected($event.option.value )">
 
-                        <div *ngIf="filteredPlanners | async as plannersList else waitingResponse">
-                            <mat-option *ngFor="let person of plannersList" [value]="person">
-                                <span>{{person.first_name}} {{person.last_name}}</span><br>
+                        <!-- <div class="container-fluid" *ngIf="filteredPlanners | async as plannersList else waitingResponse"> -->
+                            <mat-option *ngFor="let person of filteredPlanners | async" [value]="person">
+                                   {{person.first_name}} {{person.last_name}} | {{person.company_name}} 
+                                   <!-- <small>{{person.website}}  </small>  -->
                             </mat-option>
 
-                        </div>
-                        <ng-template #waitingResponse>
+                        <!-- </div> -->
+                        <!-- <ng-template #waitingResponse>
                             <span
                                 style="display: flex; flex-direction: row; flex-wrap: nowrap; align-items: center; align-content: center; align-self: center">
                                 <mat-spinner *ngIf="loading_planners" [diameter]="20"></mat-spinner>
@@ -329,7 +331,7 @@
                                 <mat-option disabled="true">{{loading_planners_error ? "Error loading planners" :
                                     "Please Wait..."}}</mat-option>
                             </span>
-                        </ng-template>
+                        </ng-template> -->
 
 
                     </mat-autocomplete>
@@ -340,6 +342,7 @@
 
 
     </div>
+    </div>
 
 
     <div class="row">
@@ -347,7 +350,6 @@
         <div class="col-md-3">
 
             <mat-form-field appearance="fill" autocomplete="off">
-                
                 <mat-label>Planner first name</mat-label>
                 <input matInput type="text" formControlName="planner_first_name" placeholder="planner"
                     autocomplete="off">
@@ -381,6 +383,34 @@
         </div>
 
     </div>
+    <div class="row">
+
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Planner Company Name</mat-label>
+                <input matInput type="text" formControlName="planner_company_name" placeholder=""
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Planner website</mat-label>
+                <input matInput type="text" formControlName="planner_website" placeholder=""
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
+
+        <div class="col-md-3">
+            <mat-form-field appearance="fill">
+                <mat-label>Planner social</mat-label>
+                <input matInput type="text" formControlName="planner_social" placeholder=""
+                    autocomplete="off">
+            </mat-form-field>
+        </div>
+    </div>
+    
+
    
 
     <h2>Other</h2>

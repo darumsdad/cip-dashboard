@@ -258,6 +258,22 @@ export class VenueDetailComponent implements OnInit {
    
   }
 
+  save()
+  {
+    this.loading = true;
+    this.venueService.update(this.venueId,this.form.value).subscribe(
+      {
+        next: (next) => {
+          this.form.patchValue(next)
+          this.loading = false;
+        },
+        error: (error) => {
+          alert(error.message)
+        }
+      }
+    )
+  }
+
   delete_video_from_venue(uri: any) {
 
     let save_set = this.videosForVenue.filter(x => x.uri !== uri)
