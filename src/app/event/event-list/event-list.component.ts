@@ -1,7 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortable } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import * as e from 'express';
@@ -138,6 +138,7 @@ statuses: any = STATUS_MAP;
 
   ngAfterViewInit() {
     //this.dataSource.paginator = this.paginator;
+    this.sort.sort(({ id: 'date', start: 'asc'}) as MatSortable);
     this.dataSource.sort = this.sort;
   }
 

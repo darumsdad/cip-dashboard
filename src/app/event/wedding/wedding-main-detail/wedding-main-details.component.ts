@@ -98,10 +98,13 @@ export class WeddingMainDetailsComponent implements OnInit {
           next: (planners) => {
             this._planners = new BehaviorSubject([])
             planners.forEach(element => {
-              if (element.first_name == "null") element.first_name = ""
-              if (element.last_name == "null") element.last_name = ""
-              if (element.phone == "null") element.phone = ""
-              if (element.email == "null") element.email = ""
+              if (element.first_name == "null") element.first_name = null
+              if (element.last_name == "null") element.last_name = null
+              if (element.phone == "null") element.phone =null
+              if (element.email == "null") element.email = null
+              if (element.company_name == "null") element.company_name = null
+              if (element.social == "null") element.social =null
+              if (element.website == "null") element.website = null
             });
             this._planners.next(planners);
             this.loading_planners = false;
@@ -126,6 +129,9 @@ export class WeddingMainDetailsComponent implements OnInit {
     this.form.get('planner_last_name').patchValue(selected.last_name)
     this.form.get('planner_phone').patchValue(selected.phone)
     this.form.get('planner_email').patchValue(selected.email)
+    this.form.get('planner_website').patchValue(selected.website)
+    this.form.get('planner_social').patchValue(selected.social)
+    this.form.get('planner_company_name').patchValue(selected.company_name)
     this.planner_search.reset()
     this.onSearch()
   }
