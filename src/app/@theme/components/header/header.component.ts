@@ -5,6 +5,7 @@ import { UserData } from '../../../@core/data/users';
 import { LayoutService } from '../../../@core/utils';
 import { map, takeUntil } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { NbAuthJWTToken, NbAuthService } from '@nebular/auth';
 
 @Component({
   selector: 'ngx-header',
@@ -36,7 +37,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     },
   ];
 
-  currentTheme = 'default';
+  currentTheme = 'dark';
 
   userMenu = [ { title: 'Profile' }, { title: 'Log out' } ];
 
@@ -45,15 +46,33 @@ export class HeaderComponent implements OnInit, OnDestroy {
               private themeService: NbThemeService,
               private userService: UserData,
               private layoutService: LayoutService,
+              private authService: NbAuthService,
               private breakpointService: NbMediaBreakpointsService) {
+
+      
   }
 
   ngOnInit() {
     this.currentTheme = this.themeService.currentTheme;
 
-    this.userService.getUsers()
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((users: any) => this.user = users.nick);
+    //this.userService.getUsers()
+    //  .pipe(takeUntil(this.destroy$))
+    //  .subscribe((users: any) => this.user = users.david);
+
+    this.authService.onTokenChange()
+      .subscribe((token: NbAuthJWTToken) => {
+      
+        if (token.isValid()) {
+          let username = token.getPayload().username; // here we receive a payload from the token and assigns it to our `user` variable 
+          this.userService.getUsers()
+           .pipe(takeUntil(this.destroy$))
+           .subscribe((users: any) => {
+              this.user = users[username]
+           });
+
+        }
+        
+    });
 
     const { xl } = this.breakpointService.getBreakpointsMap();
     this.themeService.onMediaQueryChange()

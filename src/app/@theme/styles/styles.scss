@@ -30,4 +30,36 @@
   @include ngx-pace-theme();
 
   @include nb-overrides();
+
+  
+  ng2-smart-table {
+
+
+    .ng2-smart-actions {
+ 
+      //display: flex;
+    //  align-items: center;
+     // justify-content: center;
+    //  vertical-align: middle;
+
+   
+      a.ng2-smart-action {
+      
+
+        font-size: 1rem !important;
+        
+
+      
+      
+      }
+
+    }
+
+    // TODO: remove this hack, when it will be possible to identify the whole row in the edit state
+   
+  }
+
+  
 };
+
+ 

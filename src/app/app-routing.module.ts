@@ -8,10 +8,18 @@ import {
   NbRequestPasswordComponent,
   NbResetPasswordComponent,
 } from '@nebular/auth';
+import { AuthGuard } from './cip-pages/auth-guard.service';
 
 export const routes: Routes = [
   {
     path: 'pages',
+    canActivate: [AuthGuard], 
+    loadChildren: () => import('./cip-pages/cip-pages.module')
+      .then(m => m.CIPPagesModule),
+  },
+  {
+    path: 'ngx-pages',
+    canActivate: [AuthGuard], 
     loadChildren: () => import('./pages/pages.module')
       .then(m => m.PagesModule),
   },
