@@ -1,30 +1,38 @@
-<div class="row show-grid">
-    <div class="col-md-9">
-        <div>
-            <nb-card>
-                <nb-card-header>
-                    Events
-                </nb-card-header>
+ 
 
-                <nb-card-body>
-
-                    <ng2-smart-table (edit)="onEdit($event)" class="order-table" [settings]="settings" [source]="source"
-                        (custom)="onCustom($event)" (deleteConfirm)="onDeleteConfirm($event)">
-
-                    </ng2-smart-table>
-                </nb-card-body>
-            </nb-card>
-        </div>
-    </div>
+<div class="row">
     <div class="col-md-3">
-        <div class="col-md-12">
-            <nb-calendar-year-picker [size]="size" [(year)]="month" (yearChange)="onYearChange($event)"> </nb-calendar-year-picker>
-        </div>
-        <div class="col-md-12">
-            <nb-calendar-month-picker [(month)]="month" [date]="month"> </nb-calendar-month-picker>
-        </div>
-        <div class="col-md-12">
-            <div> <nb-calendar-day-picker [(date)]="month" (dateChange)="onDateChange($event)" [visibleDate]="month"> </nb-calendar-day-picker></div>
-        </div>
+        <nb-button-group>
+            <button (click)="onYearChange(year)" nbButton *ngFor="let year of years">{{year | date: 'yyyy' }}</button>
+        </nb-button-group>
+    </div>
+
+
+    <div class="col-md-2">
+        <h4>{{months[month]}} {{year}}</h4> 
+    </div>
+    <div class="col-md-7">
+        <nb-button-group>
+            <button (click)="onMonthChange(month)" nbButton *ngFor="let month of months">{{month}}</button>
+        </nb-button-group>
+    </div>
+
+
+  
+</div>
+
+
+
+<div class="row">
+    <div class="column left">
+        <ng2-smart-table (edit)="onEdit($event)" class="order-table" [settings]="settings" [source]="source"
+            (custom)="onCustom($event)" (deleteConfirm)="onDeleteConfirm($event)">
+        </ng2-smart-table>
+    </div>
+    <div class="column right">
+        <h2>{{month}}</h2>
+        <p>Some text..</p>
     </div>
 </div>
+
+ 

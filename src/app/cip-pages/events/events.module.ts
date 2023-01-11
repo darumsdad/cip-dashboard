@@ -12,6 +12,11 @@ import {
   NbIconModule,
   NbCalendarMonthPickerComponent,
   NbCalendarKitModule,
+  NbLayoutColumnComponent,
+  NbLayoutModule,
+  NbSidebarModule,
+  NbButtonGroupModule,
+  NbAlertModule,
 } from '@nebular/theme';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
 import { NgxEchartsModule } from 'ngx-echarts';
@@ -31,7 +36,12 @@ import { EventsDashboardComponent } from './events.component';
     NbCardModule,
     Ng2SmartTableModule,
     NbCalendarKitModule,
-    NbIconModule
+    NbIconModule,
+    NbLayoutModule,
+    NbSidebarModule,
+    NbButtonModule,
+    NbButtonGroupModule,
+    NbAlertModule
     
    
   ],

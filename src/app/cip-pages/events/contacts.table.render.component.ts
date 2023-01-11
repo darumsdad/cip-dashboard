@@ -16,7 +16,7 @@ export class ContactsTableRenderComponent implements ViewCell, OnInit {
   groom: any;
 
   ngOnInit() {
-    console.log(this.value)
+    
     this.bride = this.value[0];
     
     this.groom = this.value[1];

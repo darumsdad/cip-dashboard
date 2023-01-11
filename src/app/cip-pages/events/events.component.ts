@@ -1,7 +1,7 @@
 
 import { DatePipe } from '@angular/common';
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { NbCalendarSize, NbCalendarYearModelService, NbGlobalPhysicalPosition, NbThemeService, NbToastrConfig, NbToastrService } from '@nebular/theme';
+import { NbCalendarMonthModelService, NbCalendarSize, NbCalendarYearModelService, NbGlobalPhysicalPosition, NbThemeService, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import * as e from 'express';
 import { LocalDataSource } from 'ng2-smart-table';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
@@ -19,14 +19,31 @@ import { ContactsTableRenderComponent } from './contacts.table.render.component'
 })
 export class EventsDashboardComponent implements OnInit, OnDestroy {
 
-  month: any = new Date();
+  year: any = new Date().getFullYear();
+  month: any = new Date().getMonth();
+
   size: NbCalendarSize =  NbCalendarSize.LARGE
-   onCustom($event: any) {
+  years: any[];
+  months: string[];
+
+  map = {
+    'Jan':  0,
+    'Feb' : 1,
+    'Mar' : 2,
+    'Apr' : 3,
+    'May' : 4,
+    'Jun' : 5,
+    'Jul' : 6,
+    'Aug' : 7,
+    'Sep' : 8,
+    'Oct' : 9,
+    'Nov' : 10,
+    'Dec' : 11 }
+  
+  onCustom($event: any) {
  
   }
 
-
-  func : Function = this.format
   private error$ = new  Subject<any>() ;
   datePipe : DatePipe = new DatePipe('en-US');
 
@@ -46,11 +63,27 @@ export class EventsDashboardComponent implements OnInit, OnDestroy {
     columns: {
       description: {
         title: 'Description',
+        width: '30%',
+        type: 'text',
       },
       date: {
         title: 'Date',
         width: '10%',
-        valuePrepareFunction : (date) => { return this.datePipe.transform(date, 'MM/dd/yyyy') },
+        
+        filterFunction (cell?: any, search?:  any)  {
+
+          console.log("Filteringxxxx")
+          let epoch = Date.parse(cell)
+          let date = new Date(epoch)
+
+          let year = search[1];
+          let month = search[0];
+
+          return (date.getFullYear() === year && date.getMonth() === month)
+          
+        },
+        valuePrepareFunction : (date) => { return this.datePipe.transform(date, 'MM/dd/yy') },
+        
       },
       contacts: {
         title: 'Contacts',
@@ -60,10 +93,14 @@ export class EventsDashboardComponent implements OnInit, OnDestroy {
     },
   };
 
+ 
+
   source: LocalDataSource = new LocalDataSource();
 
   constructor(private es: EventService, private toastrService: NbToastrService,
-    private yearService: NbCalendarYearModelService<any> ) {
+    private yearService: NbCalendarYearModelService<any> ,
+    private monthService: NbCalendarMonthModelService<any> 
+    ) {
   }
 
   format(row: any, column: any)
@@ -78,19 +115,31 @@ export class EventsDashboardComponent implements OnInit, OnDestroy {
 
   onYearChange($event)
   {
-    console.log($event)
-    this.month = $event
+    this.year = $event.getFullYear()
+    
+    this.applyDateFilter();
   }
+
+  onMonthChange($event)
+  {
+    this.month = this.map[$event]
+    this.applyDateFilter();
+  }
+
 
   onDateChange($event)
   {
     console.log($event)
-    this.month = $event
+    //this.today = $event
   }
   
   ngOnInit(): void {
     
-    this.yearService.getViewYears
+    let years = this.yearService.getViewYears(new Date())
+    this.years = [years[1][3],years[2][0],years[2][1],years[2][2]]
+    console.log(this.monthService.createDaysGrid(new Date()))
+    this.months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+
     this.es.events.subscribe(
       (events) => {
         
@@ -121,12 +170,14 @@ export class EventsDashboardComponent implements OnInit, OnDestroy {
 
         console.log(data)
         this.source.load(data)
+
+        this.applyDateFilter()
+
       }
         
     );
 
     this.error$.asObservable().subscribe( (error) => {
-       
         const config : Partial<NbToastrConfig> = {
           status: 'danger',
           destroyByClick: true,
@@ -145,9 +196,6 @@ export class EventsDashboardComponent implements OnInit, OnDestroy {
       }
     )
 
-   
-
-
     this.es.load().subscribe(
     {
       error: (error) => this.error$.next('Something went wrong getting events: ' + error?.statusText)
@@ -156,6 +204,19 @@ export class EventsDashboardComponent implements OnInit, OnDestroy {
   
   }
   
+  applyDateFilter()
+  {
+    let filter = [this.month, this.year]
+    console.log(filter)
+    this.source.
+    addFilter(
+      {
+        field: 'date',
+        //search: this.datePipe.transform($event, 'MM/dd/yy')
+        search: filter
+      }, true); 
+  }
+
   onDeleteConfirm(event): void {
     if (window.confirm('Are you sure you want to delete?')) {
       event.confirm.resolve();
