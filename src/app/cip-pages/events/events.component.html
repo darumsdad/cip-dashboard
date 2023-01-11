@@ -1,4 +1,7 @@
  
+ 
+
+
 
 <div class="row">
     <div class="col-md-3">
@@ -9,18 +12,20 @@
 
 
     <div class="col-md-2">
-        <h4>{{months[month]}} {{year}}</h4> 
+        <h4>{{months[month]}} {{year}}</h4>
     </div>
     <div class="col-md-7">
         <nb-button-group>
+            <button (click)="clearMonth()" nbButton ghost status="info"><nb-icon
+                    icon="refresh-outline"></nb-icon></button>
             <button (click)="onMonthChange(month)" nbButton *ngFor="let month of months">{{month}}</button>
         </nb-button-group>
     </div>
 
 
-  
-</div>
 
+</div>
+&nbsp;
 
 
 <div class="row">
@@ -30,9 +35,23 @@
         </ng2-smart-table>
     </div>
     <div class="column right">
-        <h2>{{month}}</h2>
-        <p>Some text..</p>
+
+       
+<div *ngIf="events$ | async; else loading; let events">
+    <div [ngSwitch]="view">
+        <mwl-calendar-month-view [viewDate]="viewDate" [events]="events"
+            [refresh]="refresh" (dayClicked)="dayClicked($event.day)">
+        </mwl-calendar-month-view>
+     
     </div>
 </div>
 
- 
+    </div>
+</div>
+
+<ng-template #loading>
+    <div class="text-center">
+        <i class="fas fa-spin fa-spinner fa-5x"></i> <br />
+        Loading events...
+    </div>
+</ng-template>

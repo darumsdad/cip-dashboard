@@ -11,6 +11,7 @@
 @import '~bootstrap/scss/variables';
 @import '~bootstrap/scss/mixins';
 @import '~bootstrap/scss/grid';
+@import "~angular-calendar/css/angular-calendar.css";
 
 // loading progress bar theme
 @import './pace.theme';
@@ -32,6 +33,81 @@
   @include nb-overrides();
 
   
+  .cal-events {
+    display: none !important;
+  }
+
+  .cal-cell-row {
+    height: 100%;
+  }
+ 
+  .cal-month-view .cal-header .cal-cell {
+    font-size: xx-small;
+    color:nb-theme(color-primary-900);
+    
+  }
+
+  .cal-month-view .cal-day-cell.cal-in-month.cal-has-events {
+    cursor: pointer;
+    //background-color:palegoldenrod
+    background-color: nb-theme(color-success-default);
+  }
+
+  .cal-month-view .cal-day-cell.cal-today .cal-day-number {
+    font-size: 17px;
+    color:nb-theme(color-primary-900);
+    font-weight: bold;
+  
+    
+  }
+
+
+  .cal-month-view .cal-day-badge {
+    display: none !important;
+    margin-top: 0px;
+    margin-left: 2px;
+    display: flex;
+    min-width: 0px;
+    padding: 1px 3px;
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 1;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: bottom;
+    border-radius: 10px;
+}
+
+.cal-month-view .cal-cell {
+  float: left;
+  flex: 1;
+  
+  display: flex;
+  
+  
+}
+
+  .cal-month-view .cal-day-number {
+    font-size: 16px;
+    font-weight: 400;
+    opacity: 1;
+    margin-top: 2px;
+    margin-right: 2px;
+    float: right;
+    margin-bottom: 2px;
+    vertical-align: bottom;
+    
+    color: nb-theme(text-basic-color);
+}
+  
+  .cal-month-view .cal-day-cell {
+     height: 50px;
+     width: 60px;
+     min-height: 0px;
+     min-width: 0px;
+     background: nb-theme(background-basic-color-1);
+  }
+
   ng2-smart-table {
 
 

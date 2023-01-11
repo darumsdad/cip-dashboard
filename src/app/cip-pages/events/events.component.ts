@@ -1,44 +1,57 @@
 
 import { DatePipe } from '@angular/common';
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { NbCalendarMonthModelService, NbCalendarSize, NbCalendarYearModelService, NbGlobalPhysicalPosition, NbThemeService, NbToastrConfig, NbToastrService } from '@nebular/theme';
-import * as e from 'express';
+import { NbCalendarMonthModelService, NbCalendarYearModelService, NbGlobalPhysicalPosition, NbToastrConfig, NbToastrService } from '@nebular/theme';
 import { LocalDataSource } from 'ng2-smart-table';
-import { BehaviorSubject, Observable, Subject } from 'rxjs';
-import { map, takeWhile, tap } from 'rxjs/operators' ;
-import { SolarData } from '../../@core/data/solar';
+import { Observable, Subject } from 'rxjs';
+import { map } from 'rxjs/operators' ;
+
 import { EventService } from '../services/event.service';
 import { ContactsTableRenderComponent } from './contacts.table.render.component';
+import { CalendarEvent, CalendarView } from 'angular-calendar';
+import { HttpClient } from '@angular/common/http';
+import { STATUS_MAP } from './status';
 
- 
+
+interface Film {
+  id: number;
+  title: string;
+  release_date: string;
+}
+
+function getTimezoneOffsetString(date: Date): string {
+  const timezoneOffset = date.getTimezoneOffset();
+  const hoursOffset = String(
+    Math.floor(Math.abs(timezoneOffset / 60))
+  ).padStart(2, '0');
+  const minutesOffset = String(Math.abs(timezoneOffset % 60)).padEnd(2, '0');
+  const direction = timezoneOffset > 0 ? '-' : '+';
+
+  return `T00:00:00${direction}${hoursOffset}:${minutesOffset}`;
+}
 
 @Component({
   selector: 'app-events-dashboard',
   styleUrls: ['./events.component.scss'],
-  templateUrl: './events.component.html',
+  templateUrl: './events.component.html'
+  
 })
 export class EventsDashboardComponent implements OnInit, OnDestroy {
 
+  viewDate: Date = new Date();
+
+  refresh: any = new Subject();
+
+  events$: Observable<CalendarEvent<any>[]>;
+
   year: any = new Date().getFullYear();
   month: any = new Date().getMonth();
-
-  size: NbCalendarSize =  NbCalendarSize.LARGE
+  date: any = new Date()
+  
   years: any[];
   months: string[];
 
-  map = {
-    'Jan':  0,
-    'Feb' : 1,
-    'Mar' : 2,
-    'Apr' : 3,
-    'May' : 4,
-    'Jun' : 5,
-    'Jul' : 6,
-    'Aug' : 7,
-    'Sep' : 8,
-    'Oct' : 9,
-    'Nov' : 10,
-    'Dec' : 11 }
+  map = {'Jan':  0,'Feb' : 1,'Mar' : 2,'Apr' : 3,'May' : 4,'Jun' : 5,'Jul' : 6,'Aug' : 7,'Sep' : 8,'Oct' : 9,'Nov' : 10,'Dec' : 11 }
   
   onCustom($event: any) {
  
@@ -63,25 +76,28 @@ export class EventsDashboardComponent implements OnInit, OnDestroy {
     columns: {
       description: {
         title: 'Description',
-        width: '30%',
+        width: '20%',
         type: 'text',
+      },
+      status: {
+        title: 'Status',
+        width: '10%',
+        filter: {
+          type: 'list',
+          config : {
+            selectText: 'Select...',
+            list: STATUS_MAP.map(e => {
+              return {'value': e.name, 'title': e.name}
+            }),
+          }
+          
+        },
+        valuePrepareFunction : (id) => { return STATUS_MAP[id].name },
       },
       date: {
         title: 'Date',
         width: '10%',
-        
-        filterFunction (cell?: any, search?:  any)  {
-
-          console.log("Filteringxxxx")
-          let epoch = Date.parse(cell)
-          let date = new Date(epoch)
-
-          let year = search[1];
-          let month = search[0];
-
-          return (date.getFullYear() === year && date.getMonth() === month)
-          
-        },
+        filterFunction : this.dateFilter,
         valuePrepareFunction : (date) => { return this.datePipe.transform(date, 'MM/dd/yy') },
         
       },
@@ -93,14 +109,22 @@ export class EventsDashboardComponent implements OnInit, OnDestroy {
     },
   };
 
- 
-
   source: LocalDataSource = new LocalDataSource();
+  view: CalendarView = CalendarView.Month;
 
   constructor(private es: EventService, private toastrService: NbToastrService,
     private yearService: NbCalendarYearModelService<any> ,
-    private monthService: NbCalendarMonthModelService<any> 
+    private monthService: NbCalendarMonthModelService<any> ,
+    
     ) {
+  }
+
+  dateFilter(cell?: any, search?:  any)  {
+    let epoch = Date.parse(cell)
+    let date = new Date(epoch)
+    let year = search[1];
+    let month = search[0];
+    return (date.getFullYear() === year && (month < 0 || date.getMonth() === month))
   }
 
   format(row: any, column: any)
@@ -116,6 +140,8 @@ export class EventsDashboardComponent implements OnInit, OnDestroy {
   onYearChange($event)
   {
     this.year = $event.getFullYear()
+    this.viewDate.setFullYear(this.year)
+    this.refresh.next("")
     
     this.applyDateFilter();
   }
@@ -123,22 +149,74 @@ export class EventsDashboardComponent implements OnInit, OnDestroy {
   onMonthChange($event)
   {
     this.month = this.map[$event]
+    this.date.setMonth(this.month)
+    this.viewDate.setMonth(this.month)
+    this.refresh.next("")
+    console.log(this.date)
     this.applyDateFilter();
   }
 
-
   onDateChange($event)
   {
-    console.log($event)
-    //this.today = $event
+    this.year = $event.getFullYear();
+    this.month = $event.getMonth();
+    this.applyDateFilter();
   }
+
+  clearMonth()
+  {
+    this.month = -1
+    this.year = new Date().getFullYear();
+    this.applyDateFilter();
+  }
+
+  dayClicked({
+    date,
+    events,
+  }: {
+    date: Date;
+    events: CalendarEvent<any>[];
+  }): void {
+    
+  }
+
   
   ngOnInit(): void {
+    
+    console.log("fetching")
+    
     
     let years = this.yearService.getViewYears(new Date())
     this.years = [years[1][3],years[2][0],years[2][1],years[2][2]]
     console.log(this.monthService.createDaysGrid(new Date()))
     this.months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
+
+    this.events$ = 
+    this.events$ = this.es.events
+      
+      .pipe(
+        map((events: any) => 
+        
+          events.map((event: any) => {
+
+          let r = {
+            title: event.data.description,
+            start: new Date(
+              event.data.date
+            ),
+            color: {
+              primary: '#FFFF00',
+              secondary: '#FFFF00',
+            },
+            allDay: true,
+            meta: {
+              event,
+            },
+          };
+          return r;
+        }))
+      );
+  
 
     this.es.events.subscribe(
       (events) => {
@@ -148,6 +226,7 @@ export class EventsDashboardComponent implements OnInit, OnDestroy {
           let row = {
           'description' : x.data.description,
           'date': x.data.date,
+          'status': x.data.status,
           'contacts': 
             [
               {
