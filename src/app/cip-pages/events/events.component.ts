@@ -11,6 +11,7 @@ import { ContactsTableRenderComponent } from './contacts.table.render.component'
 import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { HttpClient } from '@angular/common/http';
 import { STATUS_MAP } from './status';
+import { VenueTableRenderComponent } from './venue.table.render.component';
 
 
 interface Film {
@@ -71,29 +72,42 @@ export class EventsDashboardComponent implements OnInit, OnDestroy {
       add: false,
       edit: true,
       delete: false,
+      width: '10%',
     },
+
   
     columns: {
       description: {
         title: 'Description',
-        width: '20%',
+        width: '30%',
         type: 'text',
       },
       status: {
         title: 'Status',
         width: '10%',
+        // filterFunction : (cell?: any, search?:  any) => { 
+        //   console.log(cell)
+        //   console.log(search)
+        // },
         filter: {
           type: 'list',
           config : {
             selectText: 'Select...',
             list: STATUS_MAP.map(e => {
-              return {'value': e.name, 'title': e.name}
+              return {'value': e.id, 'title': e.name}
             }),
           }
           
         },
-        valuePrepareFunction : (id) => { return STATUS_MAP[id].name },
+        valuePrepareFunction : (id) => { return STATUS_MAP.find(e => e.id === id).name },
       },
+      venue: {
+        title: 'Venue',
+        width: '20%',
+        type: 'custom',
+        renderComponent: VenueTableRenderComponent,
+      },
+
       date: {
         title: 'Date',
         width: '10%',
@@ -104,6 +118,7 @@ export class EventsDashboardComponent implements OnInit, OnDestroy {
       contacts: {
         title: 'Contacts',
         type: 'custom',
+        width: '20%',
         renderComponent: ContactsTableRenderComponent,
       }
     },
@@ -220,13 +235,20 @@ export class EventsDashboardComponent implements OnInit, OnDestroy {
 
     this.es.events.subscribe(
       (events) => {
-        
+        console.log(events)
         let data = events.map( (x) => {
 
           let row = {
           'description' : x.data.description,
           'date': x.data.date,
           'status': x.data.status,
+          'venue' : {
+            name: x.name,
+            address: x.address,
+            city: x.city,
+            state: x.state,
+            zip: x.zip
+          },
           'contacts': 
             [
               {

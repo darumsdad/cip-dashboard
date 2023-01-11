@@ -18,6 +18,7 @@ import {
   NbButtonGroupModule,
   NbAlertModule,
   NbCalendarModule,
+  NbPopoverModule,
 } from '@nebular/theme';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
@@ -30,6 +31,7 @@ import { ContactsTableRenderComponent } from './contacts.table.render.component'
 
 import { EventsDashboardComponent } from './events.component';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { VenueTableRenderComponent } from './venue.table.render.component';
 
 
 @NgModule({
@@ -46,6 +48,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
     NbButtonGroupModule,
     NbAlertModule,
     NbCalendarModule,
+    NbPopoverModule,
+    
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,
@@ -57,7 +61,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
   ],
   declarations: [
     EventsDashboardComponent,
-    ContactsTableRenderComponent
+    ContactsTableRenderComponent,
+    VenueTableRenderComponent,
     
     
   ],

@@ -1,13 +1,48 @@
 <!-- <div style="display: flex; vertical-align: middle;"> -->
-<div style="width: 100%;">
+<div style="width: 100%; font-size: small;">
     <div class="row">
-        <div style="display: flex; vertical-align: middle;" class="col-4 show-grid"><nb-icon icon="person-outline" status="info"></nb-icon>&nbsp;{{bride.first}} {{bride.last}}</div>
-        <div style="display: flex; vertical-align: middle;" class="col-3 show-grid"><nb-icon icon="phone-outline"></nb-icon>&nbsp;{{bride.phone}}  </div>
-        <div style="display: flex; vertical-align: middle;" class="col-5 show-grid"><nb-icon icon="email-outline"></nb-icon>&nbsp;{{bride.email}}</div>
+        <div style="display: flex; vertical-align: middle;" class="col-4 show-grid">
+
+            <button [nbPopover]="bride_template" nbPopoverPlacement="left" ghost nbButton><nb-icon
+                    icon="person-outline" status="danger"></nb-icon>
+                &nbsp;{{bride.first}} {{bride.last}}</button>
+        </div>
     </div>
+
     <div class="row">
-        <div  style="display: flex; vertical-align: middle;" class="col-4 show-grid"><nb-icon icon="person-outline" status="warning"></nb-icon>&nbsp;{{groom.first}} {{groom.last}}</div>
-        <div style="display: flex; vertical-align: middle;" class="col-3 show-grid"><nb-icon icon="phone-outline"></nb-icon>&nbsp;{{groom.phone}}</div>
-        <div style="display: flex; vertical-align: middle;" class="col-5 show-grid"><nb-icon icon="email-outline"></nb-icon>&nbsp;{{groom.email}}</div>
+        <div style="display: flex; vertical-align: middle;" class="col-4 show-grid">
+            <button [nbPopover]="groom_template" nbPopoverPlacement="left" ghost nbButton><nb-icon
+                    icon="person-outline" status="basic"></nb-icon>
+                &nbsp;{{groom.first}} {{groom.last}}</button>
+
+
+        </div>
     </div>
-</div>
+
+    <ng-template #bridet>
+        <nb-card   style="width: 500px;">
+            <nb-card-header>Bride</nb-card-header>
+            <nb-card-body>
+                <div class="row">
+                    <div style="display: flex; vertical-align: middle;" class="col-6 show-grid"><nb-icon
+                            icon="phone-outline"></nb-icon>&nbsp;{{bride.phone}}</div>
+                    <div style="display: flex; vertical-align: middle;" class="col-6 show-grid"><nb-icon
+                            icon="email-outline"></nb-icon>&nbsp;{{bride.email}}</div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </ng-template>
+
+    <ng-template #groomt>
+        <nb-card  style="width: 500px;">
+            <nb-card-header>Groom</nb-card-header>
+            <nb-card-body>
+                <div class="row">
+                    <div style="display: flex; vertical-align: middle;" class="col-6 show-grid"><nb-icon
+                            icon="phone-outline"></nb-icon>&nbsp;{{groom.phone}}</div>
+                    <div style="display: flex; vertical-align: middle;" class="col-6 show-grid"><nb-icon
+                            icon="email-outline"></nb-icon>&nbsp;{{groom.email}}</div>
+                </div>
+            </nb-card-body>
+        </nb-card>
+    </ng-template>
