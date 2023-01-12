@@ -105,6 +105,7 @@ export class EventsDashboardComponent implements OnInit, OnDestroy {
         title: 'Venue',
         width: '20%',
         type: 'custom',
+        filterFunction : this.venueFilter,
         renderComponent: VenueTableRenderComponent,
       },
 
@@ -140,6 +141,11 @@ export class EventsDashboardComponent implements OnInit, OnDestroy {
     let year = search[1];
     let month = search[0];
     return (date.getFullYear() === year && (month < 0 || date.getMonth() === month))
+  }
+
+  venueFilter(cell?: any, search?:  any)  {
+    console.log(cell)
+    return cell.name != undefined && cell.name.toLowerCase().includes(search.toLowerCase())
   }
 
   format(row: any, column: any)
